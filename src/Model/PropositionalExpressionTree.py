@@ -7,7 +7,7 @@ class PropositionalExpressionTree:
     def __init__(self, expr: PropositionalParser.ExprContext):
         self.expr = Expr.create(expr.children)
 
-# TerminalNodeImpl
+
 class Expr:
     @staticmethod
     def create(expr):
@@ -17,7 +17,7 @@ class Expr:
             return n
         if (op := Operation.create(expr)) is not None:
             return op
-        return Expr.create(expr[1])
+        return Expr.create(expr[1].children)
 
 
 class Atom(Expr):
@@ -32,8 +32,17 @@ class Atom(Expr):
                 return Atom(expr.symbol.text)
         return None
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
+
+    def __eq__(self, other):
+        return (
+                type(other) == type(self) and
+                self.name == other.name
+        )
+
+    def __str__(self):
+        return self.name
 
 
 class Not(Expr):
@@ -47,11 +56,20 @@ class Not(Expr):
                 type(expr) == PropositionalParser.ExprContext and
                 op.symbol.type == PropositionalParser.NOT
             ):
-                return Not(expr)
+                return Not(Expr.create(expr.children))
         return None
 
-    def __init__(self, expr: PropositionalParser.ExprContext):
-        self.expr = Expr.create(expr.children)
+    def __init__(self, expr: Expr):
+        self.expr = expr
+
+    def __eq__(self, other):
+        return (
+                type(other) == type(self) and
+                self.expr == other.expr
+        )
+
+    def __str__(self):
+        return f"!{str(self.expr)}"
 
 
 class Operation(Expr):
@@ -68,18 +86,28 @@ class Operation(Expr):
             ):
                 t = op.symbol.type
                 if t == PropositionalParser.AND:
-                    return And(lhs, rhs)
+                    return And(Expr.create(lhs.children), Expr.create(rhs.children))
                 if t == PropositionalParser.OR:
-                    return Or(lhs, rhs)
+                    return Or(Expr.create(lhs.children), Expr.create(rhs.children))
                 if t == PropositionalParser.IMPL:
-                    return Impl(lhs, rhs)
+                    return Impl(Expr.create(lhs.children), Expr.create(rhs.children))
                 if t == PropositionalParser.EQ:
-                    return Impl(lhs, rhs)
+                    return Eq(Expr.create(lhs.children), Expr.create(rhs.children))
         return None
 
-    def __init__(self, lhs: PropositionalParser.ExprContext, rhs: PropositionalParser.ExprContext):
-        self.lhs = Expr.create(lhs.children)
-        self.rhs = Expr.create(rhs.children)
+    def __init__(self, lhs: Expr, rhs: Expr):
+        self.lhs = lhs
+        self.rhs = rhs
+
+    def __eq__(self, other):
+        return (
+                type(other) == type(self) and
+                self.lhs == other.lhs and
+                self.rhs == other.rhs
+        )
+
+    def __str__(self):
+        return f"{type(self).__name__}({str(self.lhs)},{str(self.rhs)})"
 
 
 class And(Operation):

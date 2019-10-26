@@ -1,6 +1,5 @@
 grammar Propositional;
 
-
 expr :
     Atom |
     NOT expr |
