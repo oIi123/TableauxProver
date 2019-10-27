@@ -12,7 +12,7 @@ expr :
 
 predicate : PREDNAME terms CLOSECLAMP;
 
-quantor : QUANTOR_SIGN var varlist;
+quantor : (ALL_QUANTOR | EX_QUANTOR) var varlist;
 
 terms : term termlist;
 termlist : COMMA term termlist | ;
@@ -36,6 +36,7 @@ OPENCLAMP : '(';
 CLOSECLAMP : ')';
 COMMA : ',';
 
-QUANTOR_SIGN : '@' | '€';
+ALL_QUANTOR : '@';
+EX_QUANTOR : '€';
 
 WS : [ \t\r\n] -> skip;

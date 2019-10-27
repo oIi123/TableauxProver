@@ -8,7 +8,7 @@ import sys
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\17")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\20")
         buf.write("V\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
         buf.write("\t\b\4\t\t\t\4\n\t\n\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3")
         buf.write("\2\3\2\3\2\5\2 \n\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3")
@@ -16,25 +16,25 @@ def serializedATN():
         buf.write("\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\5\6")
         buf.write("C\n\6\3\7\3\7\5\7G\n\7\3\b\3\b\3\t\3\t\3\t\3\t\3\t\5\t")
         buf.write("P\n\t\3\n\3\n\3\n\3\n\3\n\2\3\2\13\2\4\6\b\n\f\16\20\22")
-        buf.write("\2\2\2V\2\37\3\2\2\2\4\62\3\2\2\2\6\66\3\2\2\2\b:\3\2")
-        buf.write("\2\2\nB\3\2\2\2\fF\3\2\2\2\16H\3\2\2\2\20O\3\2\2\2\22")
-        buf.write("Q\3\2\2\2\24\25\b\2\1\2\25 \5\4\3\2\26\27\7\t\2\2\27 ")
-        buf.write("\5\2\2\t\30\31\5\6\4\2\31\32\5\2\2\4\32 \3\2\2\2\33\34")
-        buf.write("\7\13\2\2\34\35\5\2\2\2\35\36\7\f\2\2\36 \3\2\2\2\37\24")
-        buf.write("\3\2\2\2\37\26\3\2\2\2\37\30\3\2\2\2\37\33\3\2\2\2 /\3")
-        buf.write("\2\2\2!\"\f\b\2\2\"#\7\7\2\2#.\5\2\2\t$%\f\7\2\2%&\7\6")
-        buf.write("\2\2&.\5\2\2\b\'(\f\6\2\2()\7\b\2\2).\5\2\2\7*+\f\5\2")
-        buf.write("\2+,\7\n\2\2,.\5\2\2\6-!\3\2\2\2-$\3\2\2\2-\'\3\2\2\2")
-        buf.write("-*\3\2\2\2.\61\3\2\2\2/-\3\2\2\2/\60\3\2\2\2\60\3\3\2")
-        buf.write("\2\2\61/\3\2\2\2\62\63\7\3\2\2\63\64\5\b\5\2\64\65\7\f")
-        buf.write("\2\2\65\5\3\2\2\2\66\67\7\16\2\2\678\5\16\b\289\5\20\t")
-        buf.write("\29\7\3\2\2\2:;\5\f\7\2;<\5\n\6\2<\t\3\2\2\2=>\7\r\2\2")
-        buf.write(">?\5\f\7\2?@\5\n\6\2@C\3\2\2\2AC\3\2\2\2B=\3\2\2\2BA\3")
-        buf.write("\2\2\2C\13\3\2\2\2DG\5\16\b\2EG\5\22\n\2FD\3\2\2\2FE\3")
-        buf.write("\2\2\2G\r\3\2\2\2HI\7\4\2\2I\17\3\2\2\2JK\7\r\2\2KL\5")
-        buf.write("\16\b\2LM\5\20\t\2MP\3\2\2\2NP\3\2\2\2OJ\3\2\2\2ON\3\2")
-        buf.write("\2\2P\21\3\2\2\2QR\7\5\2\2RS\5\b\5\2ST\7\f\2\2T\23\3\2")
-        buf.write("\2\2\b\37-/BFO")
+        buf.write("\2\3\3\2\16\17\2V\2\37\3\2\2\2\4\62\3\2\2\2\6\66\3\2\2")
+        buf.write("\2\b:\3\2\2\2\nB\3\2\2\2\fF\3\2\2\2\16H\3\2\2\2\20O\3")
+        buf.write("\2\2\2\22Q\3\2\2\2\24\25\b\2\1\2\25 \5\4\3\2\26\27\7\t")
+        buf.write("\2\2\27 \5\2\2\t\30\31\5\6\4\2\31\32\5\2\2\4\32 \3\2\2")
+        buf.write("\2\33\34\7\13\2\2\34\35\5\2\2\2\35\36\7\f\2\2\36 \3\2")
+        buf.write("\2\2\37\24\3\2\2\2\37\26\3\2\2\2\37\30\3\2\2\2\37\33\3")
+        buf.write("\2\2\2 /\3\2\2\2!\"\f\b\2\2\"#\7\7\2\2#.\5\2\2\t$%\f\7")
+        buf.write("\2\2%&\7\6\2\2&.\5\2\2\b\'(\f\6\2\2()\7\b\2\2).\5\2\2")
+        buf.write("\7*+\f\5\2\2+,\7\n\2\2,.\5\2\2\6-!\3\2\2\2-$\3\2\2\2-")
+        buf.write("\'\3\2\2\2-*\3\2\2\2.\61\3\2\2\2/-\3\2\2\2/\60\3\2\2\2")
+        buf.write("\60\3\3\2\2\2\61/\3\2\2\2\62\63\7\3\2\2\63\64\5\b\5\2")
+        buf.write("\64\65\7\f\2\2\65\5\3\2\2\2\66\67\t\2\2\2\678\5\16\b\2")
+        buf.write("89\5\20\t\29\7\3\2\2\2:;\5\f\7\2;<\5\n\6\2<\t\3\2\2\2")
+        buf.write("=>\7\r\2\2>?\5\f\7\2?@\5\n\6\2@C\3\2\2\2AC\3\2\2\2B=\3")
+        buf.write("\2\2\2BA\3\2\2\2C\13\3\2\2\2DG\5\16\b\2EG\5\22\n\2FD\3")
+        buf.write("\2\2\2FE\3\2\2\2G\r\3\2\2\2HI\7\4\2\2I\17\3\2\2\2JK\7")
+        buf.write("\r\2\2KL\5\16\b\2LM\5\20\t\2MP\3\2\2\2NP\3\2\2\2OJ\3\2")
+        buf.write("\2\2ON\3\2\2\2P\21\3\2\2\2QR\7\5\2\2RS\5\b\5\2ST\7\f\2")
+        buf.write("\2T\23\3\2\2\2\b\37-/BFO")
         return buf.getvalue()
 
 
@@ -50,11 +50,11 @@ class FOPLParser ( Parser ):
 
     literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "'|'", "'&'", "'->'", "'!'", "'<->'", "'('", "')'", 
-                     "','" ]
+                     "','", "'@'", "'\u00E2\u201A\u00AC'" ]
 
     symbolicNames = [ "<INVALID>", "PREDNAME", "VARNAME", "FUNCNAME", "OR", 
                       "AND", "IMPL", "NOT", "EQ", "OPENCLAMP", "CLOSECLAMP", 
-                      "COMMA", "QUANTOR_SIGN", "WS" ]
+                      "COMMA", "ALL_QUANTOR", "EX_QUANTOR", "WS" ]
 
     RULE_expr = 0
     RULE_predicate = 1
@@ -81,8 +81,9 @@ class FOPLParser ( Parser ):
     OPENCLAMP=9
     CLOSECLAMP=10
     COMMA=11
-    QUANTOR_SIGN=12
-    WS=13
+    ALL_QUANTOR=12
+    EX_QUANTOR=13
+    WS=14
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -170,7 +171,7 @@ class FOPLParser ( Parser ):
                 self.state = 21
                 self.expr(7)
                 pass
-            elif token in [FOPLParser.QUANTOR_SIGN]:
+            elif token in [FOPLParser.ALL_QUANTOR, FOPLParser.EX_QUANTOR]:
                 self.state = 22
                 self.quantor()
                 self.state = 23
@@ -322,9 +323,6 @@ class FOPLParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def QUANTOR_SIGN(self):
-            return self.getToken(FOPLParser.QUANTOR_SIGN, 0)
-
         def var(self):
             return self.getTypedRuleContext(FOPLParser.VarContext,0)
 
@@ -332,6 +330,12 @@ class FOPLParser ( Parser ):
         def varlist(self):
             return self.getTypedRuleContext(FOPLParser.VarlistContext,0)
 
+
+        def ALL_QUANTOR(self):
+            return self.getToken(FOPLParser.ALL_QUANTOR, 0)
+
+        def EX_QUANTOR(self):
+            return self.getToken(FOPLParser.EX_QUANTOR, 0)
 
         def getRuleIndex(self):
             return FOPLParser.RULE_quantor
@@ -351,10 +355,16 @@ class FOPLParser ( Parser ):
 
         localctx = FOPLParser.QuantorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_quantor)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 52
-            self.match(FOPLParser.QUANTOR_SIGN)
+            _la = self._input.LA(1)
+            if not(_la==FOPLParser.ALL_QUANTOR or _la==FOPLParser.EX_QUANTOR):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
             self.state = 53
             self.var()
             self.state = 54
@@ -625,7 +635,7 @@ class FOPLParser ( Parser ):
                 self.state = 74
                 self.varlist()
                 pass
-            elif token in [FOPLParser.PREDNAME, FOPLParser.NOT, FOPLParser.OPENCLAMP, FOPLParser.QUANTOR_SIGN]:
+            elif token in [FOPLParser.PREDNAME, FOPLParser.NOT, FOPLParser.OPENCLAMP, FOPLParser.ALL_QUANTOR, FOPLParser.EX_QUANTOR]:
                 self.enterOuterAlt(localctx, 2)
 
                 pass
