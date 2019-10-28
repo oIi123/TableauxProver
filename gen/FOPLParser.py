@@ -9,32 +9,34 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\20")
-        buf.write("V\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
+        buf.write("\\\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
         buf.write("\t\b\4\t\t\t\4\n\t\n\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3")
         buf.write("\2\3\2\3\2\5\2 \n\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3")
-        buf.write("\2\3\2\3\2\3\2\7\2.\n\2\f\2\16\2\61\13\2\3\3\3\3\3\3\3")
-        buf.write("\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\5\6")
-        buf.write("C\n\6\3\7\3\7\5\7G\n\7\3\b\3\b\3\t\3\t\3\t\3\t\3\t\5\t")
-        buf.write("P\n\t\3\n\3\n\3\n\3\n\3\n\2\3\2\13\2\4\6\b\n\f\16\20\22")
-        buf.write("\2\3\3\2\16\17\2V\2\37\3\2\2\2\4\62\3\2\2\2\6\66\3\2\2")
-        buf.write("\2\b:\3\2\2\2\nB\3\2\2\2\fF\3\2\2\2\16H\3\2\2\2\20O\3")
-        buf.write("\2\2\2\22Q\3\2\2\2\24\25\b\2\1\2\25 \5\4\3\2\26\27\7\t")
-        buf.write("\2\2\27 \5\2\2\t\30\31\5\6\4\2\31\32\5\2\2\4\32 \3\2\2")
-        buf.write("\2\33\34\7\13\2\2\34\35\5\2\2\2\35\36\7\f\2\2\36 \3\2")
-        buf.write("\2\2\37\24\3\2\2\2\37\26\3\2\2\2\37\30\3\2\2\2\37\33\3")
-        buf.write("\2\2\2 /\3\2\2\2!\"\f\b\2\2\"#\7\7\2\2#.\5\2\2\t$%\f\7")
-        buf.write("\2\2%&\7\6\2\2&.\5\2\2\b\'(\f\6\2\2()\7\b\2\2).\5\2\2")
-        buf.write("\7*+\f\5\2\2+,\7\n\2\2,.\5\2\2\6-!\3\2\2\2-$\3\2\2\2-")
-        buf.write("\'\3\2\2\2-*\3\2\2\2.\61\3\2\2\2/-\3\2\2\2/\60\3\2\2\2")
-        buf.write("\60\3\3\2\2\2\61/\3\2\2\2\62\63\7\3\2\2\63\64\5\b\5\2")
-        buf.write("\64\65\7\f\2\2\65\5\3\2\2\2\66\67\t\2\2\2\678\5\16\b\2")
-        buf.write("89\5\20\t\29\7\3\2\2\2:;\5\f\7\2;<\5\n\6\2<\t\3\2\2\2")
-        buf.write("=>\7\r\2\2>?\5\f\7\2?@\5\n\6\2@C\3\2\2\2AC\3\2\2\2B=\3")
-        buf.write("\2\2\2BA\3\2\2\2C\13\3\2\2\2DG\5\16\b\2EG\5\22\n\2FD\3")
-        buf.write("\2\2\2FE\3\2\2\2G\r\3\2\2\2HI\7\4\2\2I\17\3\2\2\2JK\7")
-        buf.write("\r\2\2KL\5\16\b\2LM\5\20\t\2MP\3\2\2\2NP\3\2\2\2OJ\3\2")
-        buf.write("\2\2ON\3\2\2\2P\21\3\2\2\2QR\7\5\2\2RS\5\b\5\2ST\7\f\2")
-        buf.write("\2T\23\3\2\2\2\b\37-/BFO")
+        buf.write("\2\3\2\3\2\3\2\7\2.\n\2\f\2\16\2\61\13\2\3\3\3\3\3\3\5")
+        buf.write("\3\66\n\3\3\3\3\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\6\3\6")
+        buf.write("\3\6\3\6\3\6\5\6F\n\6\3\7\3\7\5\7J\n\7\3\b\3\b\3\t\3\t")
+        buf.write("\3\t\3\t\3\t\5\tS\n\t\3\n\3\n\3\n\5\nX\n\n\3\n\3\n\3\n")
+        buf.write("\2\3\2\13\2\4\6\b\n\f\16\20\22\2\3\3\2\16\17\2^\2\37\3")
+        buf.write("\2\2\2\4\62\3\2\2\2\69\3\2\2\2\b=\3\2\2\2\nE\3\2\2\2\f")
+        buf.write("I\3\2\2\2\16K\3\2\2\2\20R\3\2\2\2\22T\3\2\2\2\24\25\b")
+        buf.write("\2\1\2\25 \5\4\3\2\26\27\7\t\2\2\27 \5\2\2\t\30\31\5\6")
+        buf.write("\4\2\31\32\5\2\2\4\32 \3\2\2\2\33\34\7\13\2\2\34\35\5")
+        buf.write("\2\2\2\35\36\7\f\2\2\36 \3\2\2\2\37\24\3\2\2\2\37\26\3")
+        buf.write("\2\2\2\37\30\3\2\2\2\37\33\3\2\2\2 /\3\2\2\2!\"\f\b\2")
+        buf.write("\2\"#\7\7\2\2#.\5\2\2\t$%\f\7\2\2%&\7\6\2\2&.\5\2\2\b")
+        buf.write("\'(\f\6\2\2()\7\b\2\2).\5\2\2\7*+\f\5\2\2+,\7\n\2\2,.")
+        buf.write("\5\2\2\6-!\3\2\2\2-$\3\2\2\2-\'\3\2\2\2-*\3\2\2\2.\61")
+        buf.write("\3\2\2\2/-\3\2\2\2/\60\3\2\2\2\60\3\3\2\2\2\61/\3\2\2")
+        buf.write("\2\62\65\7\3\2\2\63\66\5\b\5\2\64\66\3\2\2\2\65\63\3\2")
+        buf.write("\2\2\65\64\3\2\2\2\66\67\3\2\2\2\678\7\f\2\28\5\3\2\2")
+        buf.write("\29:\t\2\2\2:;\5\16\b\2;<\5\20\t\2<\7\3\2\2\2=>\5\f\7")
+        buf.write("\2>?\5\n\6\2?\t\3\2\2\2@A\7\r\2\2AB\5\f\7\2BC\5\n\6\2")
+        buf.write("CF\3\2\2\2DF\3\2\2\2E@\3\2\2\2ED\3\2\2\2F\13\3\2\2\2G")
+        buf.write("J\5\16\b\2HJ\5\22\n\2IG\3\2\2\2IH\3\2\2\2J\r\3\2\2\2K")
+        buf.write("L\7\4\2\2L\17\3\2\2\2MN\7\r\2\2NO\5\16\b\2OP\5\20\t\2")
+        buf.write("PS\3\2\2\2QS\3\2\2\2RM\3\2\2\2RQ\3\2\2\2S\21\3\2\2\2T")
+        buf.write("W\7\5\2\2UX\5\b\5\2VX\3\2\2\2WU\3\2\2\2WV\3\2\2\2XY\3")
+        buf.write("\2\2\2YZ\7\f\2\2Z\23\3\2\2\2\n\37-/\65EIRW")
         return buf.getvalue()
 
 
@@ -50,7 +52,7 @@ class FOPLParser ( Parser ):
 
     literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "'|'", "'&'", "'->'", "'!'", "'<->'", "'('", "')'", 
-                     "','", "'@'", "'\u00E2\u201A\u00AC'" ]
+                     "','", "'(A)'", "'(E)'" ]
 
     symbolicNames = [ "<INVALID>", "PREDNAME", "VARNAME", "FUNCNAME", "OR", 
                       "AND", "IMPL", "NOT", "EQ", "OPENCLAMP", "CLOSECLAMP", 
@@ -275,12 +277,12 @@ class FOPLParser ( Parser ):
         def PREDNAME(self):
             return self.getToken(FOPLParser.PREDNAME, 0)
 
+        def CLOSECLAMP(self):
+            return self.getToken(FOPLParser.CLOSECLAMP, 0)
+
         def terms(self):
             return self.getTypedRuleContext(FOPLParser.TermsContext,0)
 
-
-        def CLOSECLAMP(self):
-            return self.getToken(FOPLParser.CLOSECLAMP, 0)
 
         def getRuleIndex(self):
             return FOPLParser.RULE_predicate
@@ -304,9 +306,19 @@ class FOPLParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 48
             self.match(FOPLParser.PREDNAME)
-            self.state = 49
-            self.terms()
-            self.state = 50
+            self.state = 51
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [FOPLParser.VARNAME, FOPLParser.FUNCNAME]:
+                self.state = 49
+                self.terms()
+                pass
+            elif token in [FOPLParser.CLOSECLAMP]:
+                pass
+            else:
+                raise NoViableAltException(self)
+
+            self.state = 53
             self.match(FOPLParser.CLOSECLAMP)
         except RecognitionException as re:
             localctx.exception = re
@@ -358,16 +370,16 @@ class FOPLParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 52
+            self.state = 55
             _la = self._input.LA(1)
             if not(_la==FOPLParser.ALL_QUANTOR or _la==FOPLParser.EX_QUANTOR):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 53
+            self.state = 56
             self.var()
-            self.state = 54
+            self.state = 57
             self.varlist()
         except RecognitionException as re:
             localctx.exception = re
@@ -412,9 +424,9 @@ class FOPLParser ( Parser ):
         self.enterRule(localctx, 6, self.RULE_terms)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 56
+            self.state = 59
             self.term()
-            self.state = 57
+            self.state = 60
             self.termlist()
         except RecognitionException as re:
             localctx.exception = re
@@ -461,16 +473,16 @@ class FOPLParser ( Parser ):
         localctx = FOPLParser.TermlistContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_termlist)
         try:
-            self.state = 64
+            self.state = 67
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [FOPLParser.COMMA]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 59
+                self.state = 62
                 self.match(FOPLParser.COMMA)
-                self.state = 60
+                self.state = 63
                 self.term()
-                self.state = 61
+                self.state = 64
                 self.termlist()
                 pass
             elif token in [FOPLParser.CLOSECLAMP]:
@@ -522,17 +534,17 @@ class FOPLParser ( Parser ):
         localctx = FOPLParser.TermContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_term)
         try:
-            self.state = 68
+            self.state = 71
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [FOPLParser.VARNAME]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 66
+                self.state = 69
                 self.var()
                 pass
             elif token in [FOPLParser.FUNCNAME]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 67
+                self.state = 70
                 self.func()
                 pass
             else:
@@ -576,7 +588,7 @@ class FOPLParser ( Parser ):
         self.enterRule(localctx, 12, self.RULE_var)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 70
+            self.state = 73
             self.match(FOPLParser.VARNAME)
         except RecognitionException as re:
             localctx.exception = re
@@ -623,16 +635,16 @@ class FOPLParser ( Parser ):
         localctx = FOPLParser.VarlistContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_varlist)
         try:
-            self.state = 77
+            self.state = 80
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [FOPLParser.COMMA]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 72
+                self.state = 75
                 self.match(FOPLParser.COMMA)
-                self.state = 73
+                self.state = 76
                 self.var()
-                self.state = 74
+                self.state = 77
                 self.varlist()
                 pass
             elif token in [FOPLParser.PREDNAME, FOPLParser.NOT, FOPLParser.OPENCLAMP, FOPLParser.ALL_QUANTOR, FOPLParser.EX_QUANTOR]:
@@ -660,12 +672,12 @@ class FOPLParser ( Parser ):
         def FUNCNAME(self):
             return self.getToken(FOPLParser.FUNCNAME, 0)
 
+        def CLOSECLAMP(self):
+            return self.getToken(FOPLParser.CLOSECLAMP, 0)
+
         def terms(self):
             return self.getTypedRuleContext(FOPLParser.TermsContext,0)
 
-
-        def CLOSECLAMP(self):
-            return self.getToken(FOPLParser.CLOSECLAMP, 0)
 
         def getRuleIndex(self):
             return FOPLParser.RULE_func
@@ -687,11 +699,21 @@ class FOPLParser ( Parser ):
         self.enterRule(localctx, 16, self.RULE_func)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 79
+            self.state = 82
             self.match(FOPLParser.FUNCNAME)
-            self.state = 80
-            self.terms()
-            self.state = 81
+            self.state = 85
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [FOPLParser.VARNAME, FOPLParser.FUNCNAME]:
+                self.state = 83
+                self.terms()
+                pass
+            elif token in [FOPLParser.CLOSECLAMP]:
+                pass
+            else:
+                raise NoViableAltException(self)
+
+            self.state = 87
             self.match(FOPLParser.CLOSECLAMP)
         except RecognitionException as re:
             localctx.exception = re

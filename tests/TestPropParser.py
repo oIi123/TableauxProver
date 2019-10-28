@@ -236,7 +236,7 @@ class TestCorrectPropParser(unittest.TestCase):
         self.assertEqual(expr, tree.expr)
 
 
-class TestWrongPropParser(unittest.TestCase):
+class TestIncorrectPropParser(unittest.TestCase):
     def test_invalid_chars_1(self):
         nwff = "a?+ffs"
         self.assertRaises(RecognitionException, PropParser(nwff).parse)

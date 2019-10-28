@@ -10,7 +10,7 @@ expr :
     quantor expr |
     OPENCLAMP expr CLOSECLAMP;
 
-predicate : PREDNAME terms CLOSECLAMP;
+predicate : PREDNAME (terms |) CLOSECLAMP;
 
 quantor : (ALL_QUANTOR | EX_QUANTOR) var varlist;
 
@@ -21,7 +21,7 @@ term : var | func;
 var : VARNAME;
 varlist : COMMA var varlist |;
 
-func : FUNCNAME terms CLOSECLAMP;
+func : FUNCNAME (terms |) CLOSECLAMP;
 
 PREDNAME : [A-Z][A-Za-z0-9_]*'(';
 VARNAME : [a-z][A-Za-z0-9_]*;
@@ -36,7 +36,7 @@ OPENCLAMP : '(';
 CLOSECLAMP : ')';
 COMMA : ',';
 
-ALL_QUANTOR : '@';
-EX_QUANTOR : '€';
+ALL_QUANTOR : '(A)';
+EX_QUANTOR : '(E)';
 
 WS : [ \t\r\n] -> skip;

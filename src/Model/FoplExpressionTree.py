@@ -26,6 +26,8 @@ class Predicate(Expr):
     @staticmethod
     def create(expr):
         if len(expr) == 1 and type(expr[0]) == FOPLParser.PredicateContext:
+            if len(expr[0].children) == 2:
+                return Predicate(expr[0].children[0].symbol.text[:-1], [])
             predicate_name: TerminalNodeImpl = expr[0].children[0]
             terms: FOPLParser.TermsContext = expr[0].children[1]
             closing_bracket: TerminalNodeImpl = expr[0].children[2]
@@ -40,6 +42,13 @@ class Predicate(Expr):
     def __init__(self, name, terms):
         self.name = name
         self.terms = terms
+
+    def __eq__(self, other):
+        return (
+                type(other) == type(self) and
+                other.name == self.name and
+                other.terms == self.terms
+        )
 
     def __str__(self):
         return f"Pred({self.name},[{','.join([str(i) for i in self.terms])}])"
@@ -60,6 +69,9 @@ class Not(Expr):
 
     def __init__(self, expr: Expr):
         self.expr = expr
+
+    def __eq__(self, other):
+        return type(other) == type(self) and other.expr == self.expr
 
     def __str__(self):
         return f"Not({str(self.expr)})"
@@ -96,6 +108,13 @@ class Quantor(Expr):
     def __init__(self, var_list: list, expr: Expr):
         self.var_list = var_list
         self.expr = expr
+
+    def __eq__(self, other):
+        return (
+            type(other) == type(self) and
+            other.var_list == self.var_list and
+            other.expr == self.expr
+        )
 
     def __str__(self):
         return f"{type(self).__name__}([{','.join([str(i) for i in self.var_list])}],{str(self.expr)})"
@@ -196,6 +215,12 @@ class Var(Term):
     def __init__(self, name: str):
         self.name = name
 
+    def __eq__(self, other):
+        return (
+            type(other) == type(self) and
+            other.name == self.name
+        )
+
     def __str__(self):
         return f"Var({self.name})"
 
@@ -204,12 +229,21 @@ class Func(Term):
     @staticmethod
     def create(func_context: FOPLParser.FuncContext):
         name: TerminalNodeImpl = func_context.children[0]
+        if len(func_context.children) == 2:
+            return Func(name.symbol.text[:-1], [])
         terms: FOPLParser.TermsContext = func_context.children[1]
         return Func(name.symbol.text[:-1], Term.create(terms))
 
-    def __init__(self, name, terms):
+    def __init__(self, name: str, terms: list):
         self.name = name
         self.terms = terms
+
+    def __eq__(self, other):
+        return (
+            type(other) == type(self) and
+            other.name == self.name and
+            other.terms == self.terms
+        )
 
     def __str__(self):
         return f"Func({self.name},[{','.join([str(i) for i in self.terms])}])"
