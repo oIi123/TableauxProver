@@ -94,8 +94,8 @@ class BaseTableauxBuilder:
 
     def visited_Impl(self, impl: Impl):
         if self.visiting_false:
-            self.sequent[false_exprs].append(impl.lhs)
-            self.sequent[true_exprs].append(impl.rhs)
+            self.sequent[true_exprs].append(impl.lhs)
+            self.sequent[false_exprs].append(impl.rhs)
         else:
             # Create new fork -> Children of same TableauxBuilder type as self
             lhs = type(self)(sequent=copy.deepcopy(self.sequent))
