@@ -236,12 +236,14 @@ class Quantor(Expr):
 
 @visitor
 class ExistentialQuantor(Quantor):
-    pass
+    def __hash__(self):
+        return str(self).__hash__()
 
 
 @visitor
 class AllQuantor(Quantor):
-    pass
+    def __hash__(self):
+        return str(self).__hash__()
 
 
 class Operation(Expr):
