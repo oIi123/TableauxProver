@@ -354,6 +354,34 @@ class TestIncorrectFoplParser(unittest.TestCase):
         nwff = "P(x,f(x,))"
         self.assertRaises(RecognitionException, FoplParser(nwff).parse)
 
+    def test_arity_1(self):
+        nwff = "P(x,y)&P(x,y,z)"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
+    def test_arity_2(self):
+        nwff = "P(x,y,f())&P(x,y,f(x))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
+    def test_arity_3(self):
+        nwff = "P(x,y,f(x))&P(x,y,f(x))|P(x,y,f(a,b))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
+    def test_arity_4(self):
+        nwff = "P(x,y,f(x))->P(x,y,f(a,b))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
+    def test_arity_5(self):
+        nwff = "P(x,y,f(x))<->P(x,y,f(a,b))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
+    def test_arity_6(self):
+        nwff = "(A)a P(x,y,f(x))<->P(x,y,f(a,b))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
+    def test_arity_7(self):
+        nwff = "(E)a P(x,y,f(x))<->P(x,y,f(a,b))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
 
 if __name__ == '__main__':
     unittest.main()

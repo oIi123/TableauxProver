@@ -4,6 +4,7 @@ from antlr4.error.ErrorListener import *
 from gen.FOPLLexer import FOPLLexer
 from gen.FOPLParser import FOPLParser
 from src.Model.FoplExpressionTree import FoplExpressionTree
+from src.Parser.FoplValidator import FoplValidator
 
 
 class FoplParser:
@@ -28,8 +29,14 @@ class FoplParser:
         tree = parser.expr()
 
         if error_listener.handled_errors > 0:
-            raise RecognitionException("The input was not correct")
-        return FoplExpressionTree(tree)
+            raise RecognitionException("The input was not correct.")
+
+        expr_tree = FoplExpressionTree(tree)
+        validator = FoplValidator()
+        if not validator.validate(expr_tree.expr):
+            raise RecognitionException("Some Predicates or Functions do not have the same arity.")
+
+        return expr_tree
 
 
 class FoplParserErrorListener(ErrorListener):
