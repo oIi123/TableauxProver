@@ -444,6 +444,10 @@ class TestIncorrectFoplParser(unittest.TestCase):
         nwff = "P(x,f(x,))"
         self.assertRaises(RecognitionException, FoplParser(nwff).parse)
 
+    def test_atom_6(self):
+        nwff = "P(x_123)"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
     def test_arity_1(self):
         nwff = "P(x,y)&P(x,y,z)"
         self.assertRaises(RecognitionException, FoplParser(nwff).parse)
