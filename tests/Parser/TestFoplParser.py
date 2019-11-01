@@ -382,6 +382,10 @@ class TestIncorrectFoplParser(unittest.TestCase):
         nwff = "(E)a P(x,y,f(x))<->P(x,y,f(a,b))"
         self.assertRaises(RecognitionException, FoplParser(nwff).parse)
 
+    def test_arity_8(self):
+        nwff = "P(a, f(x,y,f(x,y)))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
 
 if __name__ == '__main__':
     unittest.main()

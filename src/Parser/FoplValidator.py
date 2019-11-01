@@ -3,8 +3,8 @@ from src.Model.FoplExpressionTree import *
 
 class FoplValidator:
     def __init__(self):
-        self.predicates: [Predicate] = []
-        self.functions: [Func] = []
+        self.predicates = {}
+        self.functions = {}
         self.valid = True
 
     def validate(self, expr: Expr) -> bool:
@@ -12,14 +12,13 @@ class FoplValidator:
         return self.valid
 
     def visited_Predicate(self, predicate: Predicate):
-        for pred in self.predicates:
-            if pred.name == predicate.name:
-                if len(pred.terms) != len(predicate.terms):
-                    self.valid = False
-                for term in predicate.terms:
-                    term.visit(self)
+        if predicate.name in self.predicates:
+            if len(predicate.terms) != self.predicates[predicate.name]:
+                self.valid = False
                 return
-        self.predicates.append(predicate)
+        else:
+            self.predicates[predicate.name] = len(predicate.terms)
+
         for term in predicate.terms:
             term.visit(self)
 
@@ -49,14 +48,13 @@ class FoplValidator:
         eq.rhs.visit(self)
 
     def visited_Func(self, func: Func):
-        for f in self.functions:
-            if f.name == func.name:
-                if len(f.terms) != len(func.terms):
-                    self.valid = False
-                for term in func.terms:
-                    term.visit(self)
+        if func.name in self.functions:
+            if len(func.terms) != self.functions[func.name]:
+                self.valid = False
                 return
-        self.functions.append(func)
+        else:
+            self.functions[func.name] = len(func.terms)
+
         for term in func.terms:
             term.visit(self)
 
