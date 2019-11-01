@@ -37,12 +37,6 @@ class PropositionalTableauxBuilder:
         children = f"children: [{[str(i) for i in self.children]}]\n"
         return exprs + atoms + children
 
-        #return f"[false: {[str(i) for i in self.sequent['false']]}\n" \
-        #       f"true: {[str(i) for i in self.sequent['true']]}\n" \
-        #       f"false_atoms: {[str(i) for i in self.sequent['false_atoms']]}\n" \
-        #       f"true_atoms: {[str(i) for i in self.sequent['true_atoms']]}\n" \
-        #       f"\nchildren: {ch}]"
-
     def visit(self):
         if len(self.children) > 0:
             for child in self.children:
