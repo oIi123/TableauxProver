@@ -71,7 +71,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_atom_8(self):
         wff = "(A)a Person(a,b)"
-        expr = AllQuantor([Var("a")], Predicate("Person", [Var("a"), Const("b")]))
+        expr = AllQuantor(Var("a"), Predicate("Person", [Var("a"), Const("b")]))
 
         tree = FoplParser(wff).parse()
 
@@ -80,7 +80,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_atom_9(self):
         wff = "(A)a,b Person(a,b)"
-        expr = AllQuantor([Var("a"), Var("b")], Predicate("Person", [Var("a"), Var("b")]))
+        expr = AllQuantor(Var("a"), AllQuantor(Var("b"), Predicate("Person", [Var("a"), Var("b")])))
 
         tree = FoplParser(wff).parse()
 
@@ -89,7 +89,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_atom_10(self):
         wff = "(E)a Person(a,b)"
-        expr = ExistentialQuantor([Var("a")], Predicate("Person", [Var("a"), Const("b")]))
+        expr = ExistentialQuantor(Var("a"), Predicate("Person", [Var("a"), Const("b")]))
 
         tree = FoplParser(wff).parse()
 
@@ -98,7 +98,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_atom_11(self):
         wff = "(E)a,b Person(a,b)"
-        expr = ExistentialQuantor([Var("a"), Var("b")], Predicate("Person", [Var("a"), Var("b")]))
+        expr = ExistentialQuantor(Var("a"), ExistentialQuantor(Var("b"), Predicate("Person", [Var("a"), Var("b")])))
 
         tree = FoplParser(wff).parse()
 
@@ -242,7 +242,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_all_quant_1(self):
         wff = "(A)a Person(a)"
-        expr = AllQuantor([Var("a")], Predicate("Person", [Var("a")]))
+        expr = AllQuantor(Var("a"), Predicate("Person", [Var("a")]))
 
         tree = FoplParser(wff).parse()
 
@@ -250,7 +250,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_all_quant_2(self):
         wff = "(A)a,b Person(a)"
-        expr = AllQuantor([Var("a"), Var("b")], Predicate("Person", [Var("a")]))
+        expr = AllQuantor(Var("a"), AllQuantor(Var("b"), Predicate("Person", [Var("a")])))
 
         tree = FoplParser(wff).parse()
 
@@ -258,7 +258,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_all_quant_3(self):
         wff = "(A)a , b Person(a)"
-        expr = AllQuantor([Var("a"), Var("b")], Predicate("Person", [Var("a")]))
+        expr = AllQuantor(Var("a"), AllQuantor(Var("b"), Predicate("Person", [Var("a")])))
 
         tree = FoplParser(wff).parse()
 
@@ -266,7 +266,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_ex_quant_1(self):
         wff = "(E)a Person(a)"
-        expr = ExistentialQuantor([Var("a")], Predicate("Person", [Var("a")]))
+        expr = ExistentialQuantor(Var("a"), Predicate("Person", [Var("a")]))
 
         tree = FoplParser(wff).parse()
 
@@ -274,7 +274,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_ex_quant_2(self):
         wff = "(E)a,b Person(a)"
-        expr = ExistentialQuantor([Var("a"), Var("b")], Predicate("Person", [Var("a")]))
+        expr = ExistentialQuantor(Var("a"), ExistentialQuantor(Var("b"), Predicate("Person", [Var("a")])))
 
         tree = FoplParser(wff).parse()
 
@@ -282,7 +282,7 @@ class TestCorrectFoplParser(unittest.TestCase):
 
     def test_ex_quant_3(self):
         wff = "(E)a , b Person(a)"
-        expr = ExistentialQuantor([Var("a"), Var("b")], Predicate("Person", [Var("a")]))
+        expr = ExistentialQuantor(Var("a"), ExistentialQuantor(Var("b"), Predicate("Person", [Var("a")])))
 
         tree = FoplParser(wff).parse()
 
@@ -309,9 +309,9 @@ class TestCorrectFoplParser(unittest.TestCase):
     def test_complex_1(self):
         wff = "(A)a (E)b Person(a)&Person(b)->Parent(a,b)"
         expr = AllQuantor(
-            [Var("a")],
+            Var("a"),
             ExistentialQuantor(
-                [Var("b")],
+                Var("b"),
                 Impl(
                     And(Predicate("Person", [Var("a")]), Predicate("Person", [Var("b")])),
                     Predicate("Parent", [Var("a"), Var("b")])
@@ -326,24 +326,27 @@ class TestCorrectFoplParser(unittest.TestCase):
     def test_complex_2(self):
         wff = "(A)a,b (E)c Person(a)&Person(b)&Person(c)&Parent(a,b)&Parent(b,c)->Grandparent(a,c)"
         expr = AllQuantor(
-            [Var("a"), Var("b")],
-            ExistentialQuantor(
-                [Var("c")],
-                Impl(
-                    And(
+            Var("a"),
+            AllQuantor(
+                Var("b"),
+                ExistentialQuantor(
+                    Var("c"),
+                    Impl(
                         And(
                             And(
                                 And(
-                                    Predicate("Person", [Var("a")]),
-                                    Predicate("Person", [Var("b")])
+                                    And(
+                                        Predicate("Person", [Var("a")]),
+                                        Predicate("Person", [Var("b")])
+                                    ),
+                                    Predicate("Person", [Var("c")])
                                 ),
-                                Predicate("Person", [Var("c")])
+                                Predicate("Parent", [Var("a"), Var("b")])
                             ),
-                            Predicate("Parent", [Var("a"), Var("b")])
+                            Predicate("Parent", [Var("b"), Var("c")])
                         ),
-                        Predicate("Parent", [Var("b"), Var("c")])
-                    ),
-                    Predicate("Grandparent", [Var("a"), Var("c")])
+                        Predicate("Grandparent", [Var("a"), Var("c")])
+                    )
                 )
             )
         )
@@ -396,7 +399,7 @@ class TestCorrectFoplParser(unittest.TestCase):
     def test_complex_5(self):
         wff = "(A)a (P(a)->K(f(a,b))&P(c))<->!(E(c,d)|K(a))"
         expr = AllQuantor(
-            [Var("a")],
+            Var("a"),
             Eq(
                 Impl(
                     Predicate("P", [Var("a")]),
