@@ -23,12 +23,6 @@ class BaseTableauxBuilder:
         self.done = False
         self.children = []
 
-    def __str__(self):
-        exprs = f"exprs: [false: {[str(i) for i in self.sequent[false_exprs]]} true: {[str(i) for i in self.sequent[true_exprs]]}]\n"
-        atoms = f"atoms: [false: {[str(i) for i in self.sequent[false_atoms]]} true: {[str(i) for i in self.sequent[true_atoms]]}]\n"
-        children = f"children: [{[str(i) for i in self.children]}]\n"
-        return exprs + atoms + children
-
     def visit(self):
         if len(self.children) > 0:
             for child in self.children:
