@@ -6,27 +6,33 @@ from src.Model.Visitor import visitor
 
 class FoplExpressionTree:
     def __init__(self, expr: FOPLParser.ExprContext):
-        self.expr = Expr.create(expr.children)
+        self.var_stack = []
+        self.constants = []
+        self.expr = Expr.create(expr.children, tree=self)
+
+    def add_const(self, name: str):
+        if name not in self.constants:
+            self.constants.append(name)
 
 
 class Expr:
     @staticmethod
-    def create(expr):
-        if (predicate := Predicate.create(expr)) is not None:
+    def create(expr, tree: FoplExpressionTree):
+        if (predicate := Predicate.create(expr, tree=tree)) is not None:
             return predicate
-        if (n := Not.create(expr)) is not None:
+        if (n := Not.create(expr, tree=tree)) is not None:
             return n
-        if (op := Operation.create(expr)) is not None:
+        if (op := Operation.create(expr, tree=tree)) is not None:
             return op
-        if (quantor := Quantor.create(expr)) is not None:
+        if (quantor := Quantor.create(expr, tree=tree)) is not None:
             return quantor
-        return Expr.create(expr[1].children)
+        return Expr.create(expr[1].children, tree=tree)
 
 
 @visitor
 class Predicate(Expr):
     @staticmethod
-    def create(expr):
+    def create(expr, tree: FoplExpressionTree):
         if len(expr) == 1 and type(expr[0]) == FOPLParser.PredicateContext:
             if len(expr[0].children) == 2:
                 return Predicate(expr[0].children[0].symbol.text[:-1], [])
@@ -39,7 +45,7 @@ class Predicate(Expr):
                 type(closing_bracket) == TerminalNodeImpl
             ):
                 if predicate_name.symbol.type == FOPLParser.PREDNAME:
-                    return Predicate(predicate_name.symbol.text[:-1], Term.create(terms))
+                    return Predicate(predicate_name.symbol.text[:-1], Term.create(terms, tree=tree))
 
     def __init__(self, name, terms):
         self.name = name
@@ -59,7 +65,7 @@ class Predicate(Expr):
 @visitor
 class Not(Expr):
     @staticmethod
-    def create(expr):
+    def create(expr, tree: FoplExpressionTree):
         if len(expr) == 2:
             op: TerminalNodeImpl = expr[0]
             expr: FOPLParser.ExprContext = expr[1]
@@ -68,7 +74,7 @@ class Not(Expr):
                 type(expr) == FOPLParser.ExprContext and
                 op.symbol.type == FOPLParser.NOT
             ):
-                return Not(Expr.create(expr.children))
+                return Not(Expr.create(expr.children, tree=tree))
 
     def __init__(self, expr: Expr):
         self.expr = expr
@@ -82,7 +88,7 @@ class Not(Expr):
 
 class Quantor(Expr):
     @staticmethod
-    def create(expr):
+    def create(expr, tree: FoplExpressionTree):
         if len(expr) == 2:
             quantor: FOPLParser.QuantorContext = expr[0]
             expr: FOPLParser.ExprContext = expr[1]
@@ -103,10 +109,16 @@ class Quantor(Expr):
                         var_list_context = var_list_context.children[2]
                     else:
                         break
+
+                # Add Variables to the Stack
+                tree.var_stack.extend([i.name for i in var_list])
+                q = None
                 if quantor.children[0].symbol.type == FOPLParser.ALL_QUANTOR:
-                    return AllQuantor(var_list, Expr.create(expr.children))
+                    q = AllQuantor(var_list, Expr.create(expr.children, tree=tree))
                 elif quantor.children[0].symbol.type == FOPLParser.EX_QUANTOR:
-                    return ExistentialQuantor(var_list, Expr.create(expr.children))
+                    q = ExistentialQuantor(var_list, Expr.create(expr.children, tree=tree))
+                tree.var_stack = tree.var_stack[:-len(var_list)]  # Pop the added Variables from Stack
+                return q
 
     def __init__(self, var_list: list, expr: Expr):
         self.var_list = var_list
@@ -135,7 +147,7 @@ class AllQuantor(Quantor):
 
 class Operation(Expr):
     @staticmethod
-    def create(expr):
+    def create(expr, tree: FoplExpressionTree):
         if len(expr) == 3:
             lhs: FOPLParser.ExprContext = expr[0]
             op: TerminalNodeImpl = expr[1]
@@ -147,13 +159,13 @@ class Operation(Expr):
             ):
                 t = op.symbol.type
                 if t == FOPLParser.AND:
-                    return And(Expr.create(lhs.children), Expr.create(rhs.children))
+                    return And(Expr.create(lhs.children, tree=tree), Expr.create(rhs.children, tree=tree))
                 if t == FOPLParser.OR:
-                    return Or(Expr.create(lhs.children), Expr.create(rhs.children))
+                    return Or(Expr.create(lhs.children, tree=tree), Expr.create(rhs.children, tree=tree))
                 if t == FOPLParser.IMPL:
-                    return Impl(Expr.create(lhs.children), Expr.create(rhs.children))
+                    return Impl(Expr.create(lhs.children, tree=tree), Expr.create(rhs.children, tree=tree))
                 if t == FOPLParser.EQ:
-                    return Eq(Expr.create(lhs.children), Expr.create(rhs.children))
+                    return Eq(Expr.create(lhs.children, tree=tree), Expr.create(rhs.children, tree=tree))
         return None
 
     def __init__(self, lhs: Expr, rhs: Expr):
@@ -193,16 +205,19 @@ class Eq(Operation):
 
 class Term:
     @staticmethod
-    def create(terms: FOPLParser.TermsContext):
+    def create(terms: FOPLParser.TermsContext, tree: FoplExpressionTree):
         t = []
         term_context: FOPLParser.TermContext = terms.children[0]
         term_list_context: FOPLParser.TermlistContext = terms.children[1]
         while True:
             if len(term_context.children) == 1:
                 if type(term_context.children[0]) == FOPLParser.VarContext:
-                    t.append(Var.create(term_context.children[0]))
+                    if term_context.children[0].children[0].symbol.text in tree.var_stack:
+                        t.append(Var.create(term_context.children[0]))
+                    else:
+                        t.append(Const.create(term_context.children[0], tree=tree))
                 elif type(term_context.children[0]) == FOPLParser.FuncContext:
-                    t.append(Func.create(term_context.children[0]))
+                    t.append(Func.create(term_context.children[0], tree=tree))
 
             if (
                     term_list_context.children is not None and
@@ -219,7 +234,7 @@ class Term:
 @visitor
 class Var(Term):
     @staticmethod
-    def create(var_context: FOPLParser.VarContext):
+    def create(var_context: FOPLParser.VarContext, tree: FoplExpressionTree = None):
         return Var(var_context.children[0].symbol.text)
 
     def __init__(self, name: str):
@@ -236,14 +251,35 @@ class Var(Term):
 
 
 @visitor
+class Const(Term):
+    @staticmethod
+    def create(var_context: FOPLParser.VarContext, tree: FoplExpressionTree):
+        name = var_context.children[0].symbol.text
+        tree.add_const(name)
+        return Const(name)
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def __eq__(self, other):
+        return (
+            type(other) == type(self) and
+            other.name == self.name
+        )
+
+    def __str__(self):
+        return f"Const({self.name})"
+
+
+@visitor
 class Func(Term):
     @staticmethod
-    def create(func_context: FOPLParser.FuncContext):
+    def create(func_context: FOPLParser.FuncContext, tree: FoplExpressionTree):
         name: TerminalNodeImpl = func_context.children[0]
         if len(func_context.children) == 2:
             return Func(name.symbol.text[:-1], [])
         terms: FOPLParser.TermsContext = func_context.children[1]
-        return Func(name.symbol.text[:-1], Term.create(terms))
+        return Func(name.symbol.text[:-1], Term.create(terms, tree=tree))
 
     def __init__(self, name: str, terms: list):
         self.name = name

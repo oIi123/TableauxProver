@@ -60,3 +60,6 @@ class FoplValidator:
 
     def visited_Var(self, var: Var):
         pass
+
+    def visited_Const(self, const: Const):
+        pass
