@@ -19,6 +19,8 @@ class FoplParser:
         stream = CommonTokenStream(lexer)
         parser = FOPLParser(stream)
 
+        parser.removeErrorListeners()
+        lexer.removeErrorListeners()
         error_listener = FoplParserErrorListener()
         parser.addErrorListener(error_listener)
         lexer.addErrorListener(error_listener)

@@ -1,6 +1,7 @@
 from antlr4.tree.Tree import TerminalNodeImpl
 
 from gen.PropositionalParser import PropositionalParser
+from src.Model.Visitor import visitor
 
 
 class PropositionalExpressionTree:
@@ -20,6 +21,7 @@ class Expr:
         return Expr.create(expr[1].children)
 
 
+@visitor
 class Atom(Expr):
     @staticmethod
     def create(expr):
@@ -45,6 +47,7 @@ class Atom(Expr):
         return self.name
 
 
+@visitor
 class Not(Expr):
     @staticmethod
     def create(expr):
@@ -69,7 +72,7 @@ class Not(Expr):
         )
 
     def __str__(self):
-        return f"!{str(self.expr)}"
+        return f"Not({str(self.expr)})"
 
 
 class Operation(Expr):
@@ -110,17 +113,21 @@ class Operation(Expr):
         return f"{type(self).__name__}({str(self.lhs)},{str(self.rhs)})"
 
 
+@visitor
 class And(Operation):
     pass
 
 
+@visitor
 class Or(Operation):
     pass
 
 
+@visitor
 class Impl(Operation):
     pass
 
 
+@visitor
 class Eq(Operation):
     pass

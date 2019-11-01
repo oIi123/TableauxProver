@@ -1,6 +1,7 @@
 from antlr4.tree.Tree import *
 
 from gen.FOPLParser import FOPLParser
+from src.Model.Visitor import visitor
 
 
 class FoplExpressionTree:
@@ -22,6 +23,7 @@ class Expr:
         return Expr.create(expr[1].children)
 
 
+@visitor
 class Predicate(Expr):
     @staticmethod
     def create(expr):
@@ -54,6 +56,7 @@ class Predicate(Expr):
         return f"Pred({self.name},[{','.join([str(i) for i in self.terms])}])"
 
 
+@visitor
 class Not(Expr):
     @staticmethod
     def create(expr):
@@ -120,10 +123,12 @@ class Quantor(Expr):
         return f"{type(self).__name__}([{','.join([str(i) for i in self.var_list])}],{str(self.expr)})"
 
 
+@visitor
 class ExistentialQuantor(Quantor):
     pass
 
 
+@visitor
 class AllQuantor(Quantor):
     pass
 
@@ -166,18 +171,22 @@ class Operation(Expr):
         return f"{type(self).__name__}({str(self.lhs)},{str(self.rhs)})"
 
 
+@visitor
 class And(Operation):
     pass
 
 
+@visitor
 class Or(Operation):
     pass
 
 
+@visitor
 class Impl(Operation):
     pass
 
 
+@visitor
 class Eq(Operation):
     pass
 
@@ -207,6 +216,7 @@ class Term:
         return t
 
 
+@visitor
 class Var(Term):
     @staticmethod
     def create(var_context: FOPLParser.VarContext):
@@ -225,6 +235,7 @@ class Var(Term):
         return f"Var({self.name})"
 
 
+@visitor
 class Func(Term):
     @staticmethod
     def create(func_context: FOPLParser.FuncContext):

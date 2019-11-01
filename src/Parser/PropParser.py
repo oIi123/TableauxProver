@@ -18,6 +18,8 @@ class PropParser:
         stream = CommonTokenStream(lexer)
         parser = PropositionalParser(stream)
 
+        parser.removeErrorListeners()
+        lexer.removeErrorListeners()
         error_listener = PropParserErrorListener()
         parser.addErrorListener(error_listener)
         lexer.addErrorListener(error_listener)
