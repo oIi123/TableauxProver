@@ -5,10 +5,14 @@ from src.Model.Visitor import visitor
 
 
 class FoplExpressionTree:
-    def __init__(self, expr: FOPLParser.ExprContext):
+    def __init__(self, expr_context: FOPLParser.ExprContext = None, expr=None, constants: [str] = None):
         self.var_stack = []
         self.constants = []
-        self.expr = Expr.create(expr.children, tree=self)
+        if expr is not None:
+            self.expr = expr
+            self.constants = [] if constants is None else constants
+        else:
+            self.expr = Expr.create(expr_context.children, tree=self)
 
     def add_const(self, name: str):
         if name not in self.constants:
