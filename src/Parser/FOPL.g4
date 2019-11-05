@@ -2,10 +2,10 @@ grammar FOPL;
 
 expr :
     predicate |
+    quantor expr |
     NOT expr |
     expr AND expr |
     expr OR expr |
-    quantor expr |
     expr IMPL expr |
     expr EQ expr |
     OPENCLAMP expr CLOSECLAMP;
