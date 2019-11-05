@@ -20,12 +20,12 @@ def serializedATN():
         buf.write("\2\2\2\4\62\3\2\2\2\69\3\2\2\2\b=\3\2\2\2\nE\3\2\2\2\f")
         buf.write("I\3\2\2\2\16K\3\2\2\2\20R\3\2\2\2\22T\3\2\2\2\24\25\b")
         buf.write("\2\1\2\25 \5\4\3\2\26\27\7\t\2\2\27 \5\2\2\t\30\31\5\6")
-        buf.write("\4\2\31\32\5\2\2\4\32 \3\2\2\2\33\34\7\13\2\2\34\35\5")
+        buf.write("\4\2\31\32\5\2\2\6\32 \3\2\2\2\33\34\7\13\2\2\34\35\5")
         buf.write("\2\2\2\35\36\7\f\2\2\36 \3\2\2\2\37\24\3\2\2\2\37\26\3")
         buf.write("\2\2\2\37\30\3\2\2\2\37\33\3\2\2\2 /\3\2\2\2!\"\f\b\2")
         buf.write("\2\"#\7\7\2\2#.\5\2\2\t$%\f\7\2\2%&\7\6\2\2&.\5\2\2\b")
-        buf.write("\'(\f\6\2\2()\7\b\2\2).\5\2\2\7*+\f\5\2\2+,\7\n\2\2,.")
-        buf.write("\5\2\2\6-!\3\2\2\2-$\3\2\2\2-\'\3\2\2\2-*\3\2\2\2.\61")
+        buf.write("\'(\f\5\2\2()\7\b\2\2).\5\2\2\6*+\f\4\2\2+,\7\n\2\2,.")
+        buf.write("\5\2\2\5-!\3\2\2\2-$\3\2\2\2-\'\3\2\2\2-*\3\2\2\2.\61")
         buf.write("\3\2\2\2/-\3\2\2\2/\60\3\2\2\2\60\3\3\2\2\2\61/\3\2\2")
         buf.write("\2\62\65\7\3\2\2\63\66\5\b\5\2\64\66\3\2\2\2\65\63\3\2")
         buf.write("\2\2\65\64\3\2\2\2\66\67\3\2\2\2\678\7\f\2\28\5\3\2\2")
@@ -177,7 +177,7 @@ class FOPLParser ( Parser ):
                 self.state = 22
                 self.quantor()
                 self.state = 23
-                self.expr(2)
+                self.expr(4)
                 pass
             elif token in [FOPLParser.OPENCLAMP]:
                 self.state = 25
@@ -232,26 +232,26 @@ class FOPLParser ( Parser ):
                         localctx = FOPLParser.ExprContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 37
-                        if not self.precpred(self._ctx, 4):
+                        if not self.precpred(self._ctx, 3):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
                         self.state = 38
                         self.match(FOPLParser.IMPL)
                         self.state = 39
-                        self.expr(5)
+                        self.expr(4)
                         pass
 
                     elif la_ == 4:
                         localctx = FOPLParser.ExprContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 40
-                        if not self.precpred(self._ctx, 3):
+                        if not self.precpred(self._ctx, 2):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                         self.state = 41
                         self.match(FOPLParser.EQ)
                         self.state = 42
-                        self.expr(4)
+                        self.expr(3)
                         pass
 
              
@@ -745,11 +745,11 @@ class FOPLParser ( Parser ):
          
 
             if predIndex == 2:
-                return self.precpred(self._ctx, 4)
+                return self.precpred(self._ctx, 3)
          
 
             if predIndex == 3:
-                return self.precpred(self._ctx, 3)
+                return self.precpred(self._ctx, 2)
          
 
 

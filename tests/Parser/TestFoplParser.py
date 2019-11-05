@@ -307,7 +307,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         self.assertEqual(tree.constants, ["a"])
 
     def test_complex_1(self):
-        wff = "(A)a (E)b Person(a)&Person(b)->Parent(a,b)"
+        wff = "(A)a (E)b (Person(a)&Person(b)->Parent(a,b))"
         expr = AllQuantor(
             Var("a"),
             ExistentialQuantor(
@@ -324,7 +324,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         self.assertEqual(tree.expr, expr)
 
     def test_complex_2(self):
-        wff = "(A)a,b (E)c Person(a)&Person(b)&Person(c)&Parent(a,b)&Parent(b,c)->Grandparent(a,c)"
+        wff = "(A)a,b (E)c (Person(a)&Person(b)&Person(c)&Parent(a,b)&Parent(b,c)->Grandparent(a,c))"
         expr = AllQuantor(
             Var("a"),
             AllQuantor(
@@ -397,7 +397,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         self.assertEqual(tree.constants, ["a", "b", "c", "d"])
 
     def test_complex_5(self):
-        wff = "(A)a (P(a)->K(f(a,b))&P(c))<->!(E(c,d)|K(a))"
+        wff = "(A)a (P(a)->K(f(a,b))&P(c)<->!(E(c,d)|K(a)))"
         expr = AllQuantor(
             Var("a"),
             Eq(
