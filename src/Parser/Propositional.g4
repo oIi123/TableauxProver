@@ -11,10 +11,10 @@ expr :
 
 Atom : [A-Za-z0-9]+;
 
-OR : '|';
-AND : '&';
+OR : '|' | '+';
+AND : '&' | '*';
 IMPL : '->';
-NOT : '!';
+NOT : '!' | '-';
 EQ : '<->';
 OPENCLAMP : '(';
 CLOSECLAMP : ')';

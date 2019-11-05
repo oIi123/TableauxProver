@@ -27,16 +27,16 @@ PREDNAME : [A-Z][A-Za-z0-9_]*'(';
 VARNAME : [a-z][A-Za-z0-9]*;
 FUNCNAME : [a-z][A-Za-z0-9_]*'(';
 
-OR : '|';
-AND : '&';
+OR : '|' | '+';
+AND : '&' | '*';
 IMPL : '->';
-NOT : '!';
+NOT : '!' | '-';
 EQ : '<->';
 OPENCLAMP : '(';
 CLOSECLAMP : ')';
 COMMA : ',';
 
-ALL_QUANTOR : '(A)';
-EX_QUANTOR : '(E)';
+ALL_QUANTOR : '(A)' | '/\\';
+EX_QUANTOR : '(E)' | '\\/';
 
 WS : [ \t\r\n] -> skip;
