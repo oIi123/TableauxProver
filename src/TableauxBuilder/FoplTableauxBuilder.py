@@ -108,18 +108,21 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
             self.process_quantor_unprocessed_constants()
 
     def process_quantor_unprocessed_constants(self):
+        """
+        Processes the quantor with the most unprocessed constants
+        :return:
+        """
         num_of_constants = len(self.sequent[established_constants])
-        for quantor, processed_constants in self.sequent[processed_true_quantor_expressions].items():
-            if len(processed_constants) != num_of_constants:
-                self.visiting_false = False
-                self.generate_existing_constant_expression(quantor)
-                return
-        for quantor, processed_constants in self.sequent[processed_false_quantor_expressions].items():
-            if len(processed_constants) != num_of_constants:
-                self.visiting_false = True
-                self.generate_existing_constant_expression(quantor)
-                return
-        raise Exception("There are no more Quantors with unprocessed constants")
+        # Tuple (Unprocessed_Constants, False_Side, Quantor)
+        options = [(num_of_constants - len(v), False, k) for k, v in self.sequent[processed_true_quantor_expressions].items() if len(v) != num_of_constants]
+        options.extend([(num_of_constants - len(v), True, k) for k, v in self.sequent[processed_false_quantor_expressions].items() if len(v) != num_of_constants])
+        options.sort(key=lambda tpl: tpl[0], reverse=True)
+
+        if len(options) > 0:
+            self.visiting_false = options[0][1]
+            self.generate_existing_constant_expression(options[0][2])
+        else:
+            raise Exception("There are no more Quantors with unprocessed constants")
 
     def check_unprocessed_quantor_expressions(self):
         """
