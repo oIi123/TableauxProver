@@ -71,6 +71,15 @@ class FOPLListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by FOPLParser#const.
+    def enterConst(self, ctx:FOPLParser.ConstContext):
+        pass
+
+    # Exit a parse tree produced by FOPLParser#const.
+    def exitConst(self, ctx:FOPLParser.ConstContext):
+        pass
+
+
     # Enter a parse tree produced by FOPLParser#varlist.
     def enterVarlist(self, ctx:FOPLParser.VarlistContext):
         pass

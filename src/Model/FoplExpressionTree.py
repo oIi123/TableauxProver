@@ -1,3 +1,4 @@
+from antlr4 import RecognitionException
 from antlr4.tree.Tree import *
 
 from gen.FOPLParser import FOPLParser
@@ -42,10 +43,14 @@ class Term:
         while True:
             if len(term_context.children) == 1:
                 if type(term_context.children[0]) == FOPLParser.VarContext:
-                    if term_context.children[0].children[0].symbol.text in tree.var_stack:
+                    name = term_context.children[0].children[0].symbol.text
+                    if name in tree.var_stack:
                         t.append(Var.create(term_context.children[0]))
                     else:
-                        t.append(Const.create(term_context.children[0], tree=tree))
+                        raise RecognitionException(f"The variable {name} is not in scope of an Quantor."
+                                                   "Begin with an Uppercase to turn into a Constant or add a Quantor.")
+                elif type(term_context.children[0]) == FOPLParser.ConstContext:
+                    t.append(Const.create(term_context.children[0], tree=tree))
                 elif type(term_context.children[0]) == FOPLParser.FuncContext:
                     t.append(Func.create(term_context.children[0], tree=tree))
 
