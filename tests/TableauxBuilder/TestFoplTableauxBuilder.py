@@ -78,6 +78,16 @@ class TestFoplTableauxBuilder(unittest.TestCase):
 
         self.assertFalse(builder.is_closed())
 
+    def test_not_closing_8(self):
+        # (A)x !(P(x)<->P(x,x))
+        expr = AllQuantor(Var("x"), Not(Eq(Predicate("P", [Var("x")]), Predicate("P", [Var("x"), Var("x")]))))
+        tree = FoplExpressionTree(expr=expr)
+
+        builder = FoplTableauxBuilder(tree)
+        self.run_builder(builder)
+
+        self.assertFalse(builder.is_closed())
+
     def test_closing_1(self):
         # !((E)x A(x)) -> (A)x !A(x)
         expr = Impl(Not(ExistentialQuantor(Var("x"), Predicate("A", [Var("x")]))), AllQuantor(Var("x"), Not(Predicate("A", [Var("x")]))))
