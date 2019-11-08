@@ -163,6 +163,9 @@ class Predicate(Expr):
     def __str__(self):
         return f"Pred({self.name},[{','.join([str(i) for i in self.terms])}])"
 
+    def priority(self, true_side: bool) -> int:
+        return 0
+
 
 @visitor
 class Not(Expr):
@@ -186,6 +189,9 @@ class Not(Expr):
 
     def __str__(self):
         return f"Not({str(self.expr)})"
+
+    def priority(self, true_side: bool) -> int:
+        return 0
 
 
 class Quantor(Expr):
@@ -253,11 +259,17 @@ class ExistentialQuantor(Quantor):
     def __hash__(self):
         return str(self).__hash__()
 
+    def priority(self, true_side: bool) -> int:
+        return 1 if true_side else 2
+
 
 @visitor
 class AllQuantor(Quantor):
     def __hash__(self):
         return str(self).__hash__()
+
+    def priority(self, true_side: bool) -> int:
+        return 2 if true_side else 1
 
 
 class Operation(Expr):
@@ -300,19 +312,23 @@ class Operation(Expr):
 
 @visitor
 class And(Operation):
-    pass
+    def priority(self, true_side: bool) -> int:
+        return 0 if true_side else 1
 
 
 @visitor
 class Or(Operation):
-    pass
+    def priority(self, true_side: bool) -> int:
+        return 1 if true_side else 0
 
 
 @visitor
 class Impl(Operation):
-    pass
+    def priority(self, true_side: bool) -> int:
+        return 1 if true_side else 0
 
 
 @visitor
 class Eq(Operation):
-    pass
+    def priority(self, true_side: bool) -> int:
+        return 1

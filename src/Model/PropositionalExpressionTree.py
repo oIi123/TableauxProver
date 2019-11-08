@@ -46,6 +46,9 @@ class Atom(Expr):
     def __str__(self):
         return self.name
 
+    def priority(self, true_side: bool) -> int:
+        return 0
+
 
 @visitor
 class Not(Expr):
@@ -73,6 +76,9 @@ class Not(Expr):
 
     def __str__(self):
         return f"Not({str(self.expr)})"
+
+    def priority(self, true_side: bool) -> int:
+        return 0
 
 
 class Operation(Expr):
@@ -115,19 +121,23 @@ class Operation(Expr):
 
 @visitor
 class And(Operation):
-    pass
+    def priority(self, true_side: bool) -> int:
+        return 0 if true_side else 1
 
 
 @visitor
 class Or(Operation):
-    pass
+    def priority(self, true_side: bool) -> int:
+        return 1 if true_side else 0
 
 
 @visitor
 class Impl(Operation):
-    pass
+    def priority(self, true_side: bool) -> int:
+        return 1 if true_side else 0
 
 
 @visitor
 class Eq(Operation):
-    pass
+    def priority(self, true_side: bool) -> int:
+        return 1

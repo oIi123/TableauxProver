@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from src.Model.PropositionalExpressionTree import Expr, Not, And, Impl, Or, Eq
 import copy
 
@@ -22,6 +24,40 @@ class BaseTableauxBuilder:
             }
         self.done = False
         self.children = []
+
+    def auto_resolve(self, debug=False):
+        while not self.is_done():
+            if debug:
+                self.print()
+            if len(self.children) > 0:
+                for child in self.children:
+                    child.auto_resolve()
+                return
+
+            # Options Tuple (Priority, False_Side, Expression)
+            options = [(expr.priority(False), True, expr) for expr in self.sequent[false_exprs]]
+            options.extend([(expr.priority(True), False, expr) for expr in self.sequent[true_exprs]])
+            options.sort(key=lambda tpl: tpl[0])
+
+            if len(options) == 0:
+                self.process_quantor_unprocessed_constants()
+                continue
+
+            self.visit_expr(options[0][1], options[0][2])
+
+    def visit_expr(self, false_side, expr):
+        self.visiting_false = false_side
+        expr.visit(self)
+        self.sequent[false_exprs if false_side else true_exprs].remove(expr)
+
+
+    @abstractmethod
+    def is_done(self) -> bool:
+        pass
+
+    @abstractmethod
+    def process_quantor_unprocessed_constants(self) -> bool:
+        pass
 
     def visit(self):
         if len(self.children) > 0:

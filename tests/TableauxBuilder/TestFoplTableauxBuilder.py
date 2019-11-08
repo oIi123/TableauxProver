@@ -5,16 +5,12 @@ from src.TableauxBuilder.FoplTableauxBuilder import FoplTableauxBuilder
 
 
 class TestFoplTableauxBuilder(unittest.TestCase):
-    def run_builder(self, builder: FoplTableauxBuilder):
-        while not builder.is_done():
-            builder.visit()
-
     def test_not_closing_1(self):
         # P()
         tree = FoplExpressionTree(expr=Predicate("P", []))
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -24,7 +20,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -34,7 +30,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -44,7 +40,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -54,7 +50,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -64,7 +60,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -74,7 +70,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -84,7 +80,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -94,7 +90,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -107,7 +103,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -120,7 +116,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -136,7 +132,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -152,7 +148,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -168,7 +164,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -181,7 +177,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -197,7 +193,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -213,7 +209,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -229,7 +225,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -245,7 +241,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -264,7 +260,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
     """
@@ -279,7 +275,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        self.run_builder(builder)
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
     """

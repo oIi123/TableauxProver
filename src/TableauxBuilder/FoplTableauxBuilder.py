@@ -157,7 +157,7 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
         established_constants_copy = copy.deepcopy(self.sequent[established_constants])
         # Remove already processed constants from list
         for const in self.sequent[processed_quantor_expressions][quantor]:
-            if const in established_constants:
+            if const in established_constants_copy:
                 established_constants_copy.remove(const)
         # Copy expression in quantor scope with all possible mappings
         for const in established_constants_copy:
