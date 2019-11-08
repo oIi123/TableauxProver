@@ -460,6 +460,14 @@ class TestIncorrectFoplParser(unittest.TestCase):
         nwff = "P(X,y)"
         self.assertRaises(RecognitionException, FoplParser(nwff).parse)
 
+    def test_invalid_scope_override_1(self):
+        nwff = "(A)x (P(x) -> (E)x P(x))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
+    def test_invalid_scope_override_2(self):
+        nwff = "(E)x (P(x) -> (A)x P(x))"
+        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+
 
 if __name__ == '__main__':
     unittest.main()

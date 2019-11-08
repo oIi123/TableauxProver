@@ -213,7 +213,12 @@ class Quantor(Expr):
                         break
 
                 # Add Variables to the Stack
-                tree.var_stack.extend([i.name for i in var_list])
+                variable_name_list = [i.name for i in var_list]
+                for n in variable_name_list:
+                    if n in tree.var_stack:
+                        raise RecognitionException(f"The variable {n} is already in scope of another Quantor."
+                                                   "Change the name of the Variable.")
+                tree.var_stack.extend(variable_name_list)
                 q = None
                 if quantor.children[0].symbol.type == FOPLParser.ALL_QUANTOR:
                     q = AllQuantor.create_recursive(var_list, Expr.create(expr.children, tree=tree))
