@@ -245,9 +245,6 @@ class TestFoplTableauxBuilder(unittest.TestCase):
 
         self.assertTrue(builder.is_closed())
 
-    # Not yet terminating Tests:
-    # TODO: Change FoplTreeBuilder to perform a breadth search instead of depth search
-    """
     def test_closing_12(self):
         # ((E)x F(x)|G(x)) <-> (((E)x F(x))|((E)x G(x)))
         expr = Eq(
@@ -263,10 +260,10 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
-    """
 
-    """
-    def test_closing_13(self):
+# This test does not terminate
+"""
+    def test_not_closing_9(self):
         # ((A)x (E)y F(x,y)) -> ((E)y (A)x F(x,y))
         expr = Impl(
             AllQuantor(Var("x"), ExistentialQuantor(Var("y"), Predicate("F", [Var("x"), Var("y")]))),
@@ -275,11 +272,10 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         tree = FoplExpressionTree(expr=expr)
 
         builder = FoplTableauxBuilder(tree)
-        builder.auto_resolve()
+        builder.auto_resolve(True)
 
         self.assertTrue(builder.is_closed())
-    """
-
+"""
 
 if __name__ == '__main__':
     unittest.main()
