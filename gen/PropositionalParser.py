@@ -34,8 +34,8 @@ class PropositionalParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "<INVALID>", "'|'", "'&'", "'->'", "'!'", 
-                     "'<->'", "'('", "')'" ]
+    literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "'->'", "<INVALID>", "'<->'", "'('", "')'" ]
 
     symbolicNames = [ "<INVALID>", "Atom", "OR", "AND", "IMPL", "NOT", "EQ", 
                       "OPENCLAMP", "CLOSECLAMP", "WS" ]

@@ -19,11 +19,11 @@ def serializedATN():
         buf.write("\2\3\2\13\2\4\6\b\n\f\16\20\22\2\3\3\2\16\17\2^\2\37\3")
         buf.write("\2\2\2\4\62\3\2\2\2\69\3\2\2\2\b=\3\2\2\2\nE\3\2\2\2\f")
         buf.write("I\3\2\2\2\16K\3\2\2\2\20R\3\2\2\2\22T\3\2\2\2\24\25\b")
-        buf.write("\2\1\2\25 \5\4\3\2\26\27\7\t\2\2\27 \5\2\2\t\30\31\5\6")
-        buf.write("\4\2\31\32\5\2\2\6\32 \3\2\2\2\33\34\7\13\2\2\34\35\5")
+        buf.write("\2\1\2\25 \5\4\3\2\26\27\5\6\4\2\27\30\5\2\2\t\30 \3\2")
+        buf.write("\2\2\31\32\7\t\2\2\32 \5\2\2\b\33\34\7\13\2\2\34\35\5")
         buf.write("\2\2\2\35\36\7\f\2\2\36 \3\2\2\2\37\24\3\2\2\2\37\26\3")
-        buf.write("\2\2\2\37\30\3\2\2\2\37\33\3\2\2\2 /\3\2\2\2!\"\f\b\2")
-        buf.write("\2\"#\7\7\2\2#.\5\2\2\t$%\f\7\2\2%&\7\6\2\2&.\5\2\2\b")
+        buf.write("\2\2\2\37\31\3\2\2\2\37\33\3\2\2\2 /\3\2\2\2!\"\f\7\2")
+        buf.write("\2\"#\7\7\2\2#.\5\2\2\b$%\f\6\2\2%&\7\6\2\2&.\5\2\2\7")
         buf.write("\'(\f\5\2\2()\7\b\2\2).\5\2\2\6*+\f\4\2\2+,\7\n\2\2,.")
         buf.write("\5\2\2\5-!\3\2\2\2-$\3\2\2\2-\'\3\2\2\2-*\3\2\2\2.\61")
         buf.write("\3\2\2\2/-\3\2\2\2/\60\3\2\2\2\60\3\3\2\2\2\61/\3\2\2")
@@ -51,8 +51,8 @@ class FOPLParser ( Parser ):
     sharedContextCache = PredictionContextCache()
 
     literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "'|'", "'&'", "'->'", "'!'", "'<->'", "'('", "')'", 
-                     "','", "'(A)'", "'(E)'" ]
+                     "<INVALID>", "<INVALID>", "'->'", "<INVALID>", "'<->'", 
+                     "'('", "')'", "','" ]
 
     symbolicNames = [ "<INVALID>", "PREDNAME", "VARNAME", "FUNCNAME", "OR", 
                       "AND", "IMPL", "NOT", "EQ", "OPENCLAMP", "CLOSECLAMP", 
@@ -106,8 +106,9 @@ class FOPLParser ( Parser ):
             return self.getTypedRuleContext(FOPLParser.PredicateContext,0)
 
 
-        def NOT(self):
-            return self.getToken(FOPLParser.NOT, 0)
+        def quantor(self):
+            return self.getTypedRuleContext(FOPLParser.QuantorContext,0)
+
 
         def expr(self, i:int=None):
             if i is None:
@@ -116,9 +117,8 @@ class FOPLParser ( Parser ):
                 return self.getTypedRuleContext(FOPLParser.ExprContext,i)
 
 
-        def quantor(self):
-            return self.getTypedRuleContext(FOPLParser.QuantorContext,0)
-
+        def NOT(self):
+            return self.getToken(FOPLParser.NOT, 0)
 
         def OPENCLAMP(self):
             return self.getToken(FOPLParser.OPENCLAMP, 0)
@@ -167,17 +167,17 @@ class FOPLParser ( Parser ):
                 self.state = 19
                 self.predicate()
                 pass
-            elif token in [FOPLParser.NOT]:
+            elif token in [FOPLParser.ALL_QUANTOR, FOPLParser.EX_QUANTOR]:
                 self.state = 20
-                self.match(FOPLParser.NOT)
+                self.quantor()
                 self.state = 21
                 self.expr(7)
                 pass
-            elif token in [FOPLParser.ALL_QUANTOR, FOPLParser.EX_QUANTOR]:
-                self.state = 22
-                self.quantor()
+            elif token in [FOPLParser.NOT]:
                 self.state = 23
-                self.expr(4)
+                self.match(FOPLParser.NOT)
+                self.state = 24
+                self.expr(6)
                 pass
             elif token in [FOPLParser.OPENCLAMP]:
                 self.state = 25
@@ -206,26 +206,26 @@ class FOPLParser ( Parser ):
                         localctx = FOPLParser.ExprContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 31
-                        if not self.precpred(self._ctx, 6):
+                        if not self.precpred(self._ctx, 5):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 6)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 5)")
                         self.state = 32
                         self.match(FOPLParser.AND)
                         self.state = 33
-                        self.expr(7)
+                        self.expr(6)
                         pass
 
                     elif la_ == 2:
                         localctx = FOPLParser.ExprContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 34
-                        if not self.precpred(self._ctx, 5):
+                        if not self.precpred(self._ctx, 4):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 5)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
                         self.state = 35
                         self.match(FOPLParser.OR)
                         self.state = 36
-                        self.expr(6)
+                        self.expr(5)
                         pass
 
                     elif la_ == 3:
@@ -737,11 +737,11 @@ class FOPLParser ( Parser ):
 
     def expr_sempred(self, localctx:ExprContext, predIndex:int):
             if predIndex == 0:
-                return self.precpred(self._ctx, 6)
+                return self.precpred(self._ctx, 5)
          
 
             if predIndex == 1:
-                return self.precpred(self._ctx, 5)
+                return self.precpred(self._ctx, 4)
          
 
             if predIndex == 2:
