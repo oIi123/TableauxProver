@@ -74,18 +74,6 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
                     return False
             return True
 
-    def is_closed(self):
-        if len(self.children) == 0:
-            for true_atom in self.sequent[true_atoms]:
-                if true_atom in self.sequent[false_atoms]:
-                    return True
-        else:
-            for child in self.children:
-                if not child.is_closed():
-                    return False
-            return True
-        return False
-
     def visit(self):
         if len(self.children) > 0:
             for child in self.children:
@@ -105,9 +93,9 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
             self.sequent[true_exprs].remove(expr)
         else:
             # All Expressions are processed  -> Process quantors with unprocessed constants
-            self.process_quantor_unprocessed_constants()
+            self.process_multiprocess_exprs()
 
-    def process_quantor_unprocessed_constants(self):
+    def process_multiprocess_exprs(self):
         """
         Processes the quantor with the most unprocessed constants
         :return:

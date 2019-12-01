@@ -7,6 +7,7 @@ false_exprs = "false"
 true_exprs = "true"
 false_atoms = "false_atoms"
 true_atoms = "true_atoms"
+considered_impls = "considered_impls"
 
 
 class BaseTableauxBuilder:
@@ -21,17 +22,18 @@ class BaseTableauxBuilder:
                 true_exprs: [],
                 false_atoms: [],
                 true_atoms: [],
+                considered_impls: [],
             }
         self.done = False
         self.children = []
 
-    def auto_resolve(self, debug=False):
+    def auto_resolve(self, debug=False, depth=0):
         while not self.is_done():
             if debug:
-                self.print()
+                self.print(depth)
             if len(self.children) > 0:
                 for child in self.children:
-                    child.auto_resolve()
+                    child.auto_resolve(debug, depth+1)
                 return
 
             # Options Tuple (Priority, False_Side, Expression)
@@ -40,7 +42,7 @@ class BaseTableauxBuilder:
             options.sort(key=lambda tpl: tpl[0])
 
             if len(options) == 0:
-                self.process_quantor_unprocessed_constants()
+                self.process_multiprocess_exprs()
                 continue
 
             self.visit_expr(options[0][1], options[0][2])
@@ -48,7 +50,9 @@ class BaseTableauxBuilder:
     def visit_expr(self, false_side, expr):
         self.visiting_false = false_side
         expr.visit(self)
-        self.sequent[false_exprs if false_side else true_exprs].remove(expr)
+        side = false_exprs if false_side else true_exprs
+        if expr in self.sequent[side]:
+            self.sequent[side].remove(expr)
 
 
     @abstractmethod
@@ -56,8 +60,20 @@ class BaseTableauxBuilder:
         pass
 
     @abstractmethod
-    def process_quantor_unprocessed_constants(self) -> bool:
+    def process_multiprocess_exprs(self) -> bool:
         pass
+
+    def is_closed(self):
+        if len(self.children) == 0:
+            for true_atom in self.sequent[true_atoms]:
+                if true_atom in self.sequent[false_atoms]:
+                    return True
+        else:
+            for child in self.children:
+                if not child.is_closed():
+                    return False
+            return True
+        return False
 
     def visit(self):
         if len(self.children) > 0:
