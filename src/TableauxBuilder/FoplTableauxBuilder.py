@@ -7,21 +7,7 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
     constant_idx = 0
 
     def __init__(self, tree: FoplExpressionTree = None, sequent: dict = None):
-        if sequent is not None:
-            super().__init__(sequent=sequent)
-        else:
-            super().__init__(tree.expr, sequent)
-            self.sequent = {
-                false_exprs: [tree.expr],
-                true_exprs: [],
-                false_atoms: [],
-                true_atoms: [],
-                # Dictionary Mapping Quantors to its already processed constants
-                processed_true_quantor_expressions: dict(),
-                processed_false_quantor_expressions: dict(),
-                established_constants: tree.constants,
-                variable_constant_mapping: dict(),
-            }
+        super().__init__(tree=tree, sequent=sequent)
 
         self.variable_constant_mapper = VariableConstantMapper(self.sequent[variable_constant_mapping])
 
@@ -121,8 +107,12 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
                 return False
         return True
 
-    def generate_existing_constant_expression(self, quantor: Quantor):
-        processed_quantor_expressions = processed_false_quantor_expressions if self.visiting_false else processed_true_quantor_expressions
+    def generate_existing_constant_expression(self, quantor: Quantor, processed_quantor_expressions: str = None, append_to: str = None):
+        if processed_quantor_expressions is None:
+            processed_quantor_expressions = processed_false_quantor_expressions if self.visiting_false else processed_true_quantor_expressions
+
+        if append_to is None:
+            append_to = false_exprs if self.visiting_false else true_exprs
 
         if len(self.sequent[established_constants]) == 0:
             # If no Constants exist, generate a new one
@@ -150,7 +140,7 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
             self.sequent[variable_constant_mapping][quantor.variable.name] = const
             expr_copy = copy.deepcopy(quantor.expr)
             self.variable_constant_mapper.map_expr(expr_copy)
-            self.sequent[false_exprs if self.visiting_false else true_exprs].append(expr_copy)
+            self.sequent[append_to].append(expr_copy)
 
         # Add constants to list of already processed constants
         self.sequent[processed_quantor_expressions][quantor].extend(established_constants_copy)

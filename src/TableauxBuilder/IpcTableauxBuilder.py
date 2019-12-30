@@ -4,6 +4,12 @@ from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTablea
 
 
 class IpcTableauxBuilder(PropositionalTableauxBuilder):
+    def is_done(self):
+        if super().is_done():
+            return len(self.sequent[certain_falsehood_exprs]) == 0 and len(self.sequent[processed_true_impls]) == 0
+        else:
+            return False
+
     def process_multiprocess_exprs(self) -> bool:
         options = [(expr.priority(False), expr) for expr in self.sequent[certain_falsehood_exprs]]
         options.sort(key=lambda tpl: tpl[0])

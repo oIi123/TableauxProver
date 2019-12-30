@@ -13,23 +13,31 @@ processed_false_quantor_expressions = "processed_false_quantor_expressions"
 established_constants = "established_constants"
 variable_constant_mapping = "variable_constant_mapping"
 certain_falsehood_exprs = "certain_falsehood_exprs"
+processed_certain_false_exquantor_exprs = "processed_certain_false_exquantor_exprs"
+processed_certain_false_allquantor_exprs = "processed_certain_false_allquantor_exprs"
 
 
 class BaseTableauxBuilder:
     visiting_false = True
     visiting_certain_falsehood_exprs = False
 
-    def __init__(self, expr: Expr = None, sequent: dict = None):
+    def __init__(self, expr: Expr = None, sequent: dict = None, **kwargs):
         if sequent is not None:
             self.sequent = sequent
         else:
             self.sequent = {
-                false_exprs: [expr],
+                false_exprs: [expr if 'tree' not in kwargs else kwargs['tree'].expr],
                 true_exprs: [],
                 false_atoms: [],
                 true_atoms: [],
                 certain_falsehood_exprs: [],
                 processed_true_impls: dict(),
+                processed_true_quantor_expressions: dict(),
+                processed_false_quantor_expressions: dict(),
+                processed_certain_false_exquantor_exprs: dict(),
+                processed_certain_false_allquantor_exprs: dict(),
+                established_constants: None if 'tree' not in kwargs else kwargs['tree'].constants,
+                variable_constant_mapping: dict(),
             }
         self.done = False
         self.children = []
