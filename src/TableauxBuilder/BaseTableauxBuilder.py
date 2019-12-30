@@ -7,11 +7,17 @@ false_exprs = "false"
 true_exprs = "true"
 false_atoms = "false_atoms"
 true_atoms = "true_atoms"
-considered_impls = "considered_impls"
+processed_true_impls = "processed_true_impls"
+processed_true_quantor_expressions = "processed_true_quantor_expressions"
+processed_false_quantor_expressions = "processed_false_quantor_expressions"
+established_constants = "established_constants"
+variable_constant_mapping = "variable_constant_mapping"
+certain_falsehood_exprs = "certain_falsehood_exprs"
 
 
 class BaseTableauxBuilder:
     visiting_false = True
+    visiting_certain_falsehood_exprs = False
 
     def __init__(self, expr: Expr = None, sequent: dict = None):
         if sequent is not None:
@@ -22,7 +28,8 @@ class BaseTableauxBuilder:
                 true_exprs: [],
                 false_atoms: [],
                 true_atoms: [],
-                considered_impls: [],
+                certain_falsehood_exprs: [],
+                processed_true_impls: dict(),
             }
         self.done = False
         self.children = []
@@ -45,6 +52,7 @@ class BaseTableauxBuilder:
                 self.process_multiprocess_exprs()
                 continue
 
+            self.visiting_certain_falsehood_exprs = False
             self.visit_expr(options[0][1], options[0][2])
 
     def visit_expr(self, false_side, expr):
@@ -54,6 +62,9 @@ class BaseTableauxBuilder:
         if expr in self.sequent[side]:
             self.sequent[side].remove(expr)
 
+    def clear_false(self):
+        self.sequent[false_exprs] = []
+        self.sequent[false_atoms] = []
 
     @abstractmethod
     def is_done(self) -> bool:

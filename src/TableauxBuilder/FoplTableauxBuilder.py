@@ -2,11 +2,6 @@ from src.Model.FoplExpressionTree import *
 from src.TableauxBuilder.BaseTableauxBuilder import *
 from src.TableauxBuilder.VariableConsantMapper import VariableConstantMapper
 
-processed_true_quantor_expressions = "processed_true_quantor_expressions"
-processed_false_quantor_expressions = "processed_false_quantor_expressions"
-established_constants = "established_constants"
-variable_constant_mapping = "variable_constant_mapping"
-
 
 class FoplTableauxBuilder(BaseTableauxBuilder):
     constant_idx = 0

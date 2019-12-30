@@ -1,70 +1,79 @@
 from src.Model.PropositionalExpressionTree import Impl, Atom
 from src.TableauxBuilder.BaseTableauxBuilder import *
+from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTableauxBuilder
 
 
-class IpcTableauxBuilder(BaseTableauxBuilder):
-    def print(self, indent=0):
-        tab = "\t" * indent
-        print(f"{tab}done: {self.is_done()}, closed: {self.is_closed()}")
-        if len(self.children) == 0:
-            false_e = f"\n\t\t{tab}".join([str(i) for i in self.sequent[false_exprs]])
-            true_e = f"\n\t\t{tab}".join([str(i) for i in self.sequent[true_exprs]])
-            exprs = f"{tab}exprs: [" \
-                    f"\n\t{tab}false: [\n\t\t{tab}{false_e}\n\t{tab}]," \
-                    f"\n\t{tab}true: [\n\t\t{tab}{true_e}\n\t{tab}]\n{tab}],"
-            print(exprs)
-            false_a = f"\n\t\t{tab}".join([str(i) for i in self.sequent[false_atoms]])
-            true_a = f"\n\t\t{tab}".join([str(i) for i in self.sequent[true_atoms]])
-            atoms = f"{tab}atoms: [" \
-                    f"\n\t{tab}false: [\n\t\t{tab}{false_a}\n\t{tab}]," \
-                    f"\n\t{tab}true: [\n\t\t{tab}{true_a}\n\t{tab}]\n{tab}],"
-            print(atoms)
-            impls = f"\n\t\t".join([str(i) for i in self.sequent[considered_impls]])
-            print(f"{tab}considered_impls: [\n\t{tab}{impls}\n{tab}],")
-        print(f"{tab}children: [")
-        for child in self.children:
-            print(f"\t{tab}[")
-            child.print(indent+1)
-            print(f"\t{tab}],")
-        print(f"{tab}]")
+class IpcTableauxBuilder(PropositionalTableauxBuilder):
+    def process_multiprocess_exprs(self) -> bool:
+        options = [(expr.priority(False), expr) for expr in self.sequent[certain_falsehood_exprs]]
+        options.sort(key=lambda tpl: tpl[0])
 
-    def is_done(self) -> bool:
-        if len(self.children) == 0:
-            for true_atom in self.sequent[true_atoms]:
-                if true_atom in self.sequent[false_atoms]:
-                    return True
-            if len(self.sequent[false_exprs]) == len(self.sequent[true_exprs]) == 0:
-                return len(self.sequent[considered_impls]) == 0
-            else:
-                return False
+        if len(options) > 0:
+            self.visiting_certain_falsehood_exprs = True
+            expr = options[0][1]
+            expr.visit(self)
+            if expr in self.sequent[certain_falsehood_exprs]:
+                self.sequent[certain_falsehood_exprs].remove(expr)
+        elif len(self.sequent[processed_true_impls]) > 0:
+            # calculate least processed true impl
+            kv_list = [(k, v) for k, v in self.sequent[processed_true_impls].items()]
+            kv_list.sort(key=lambda x: x[1])
+
+            # increase process counter for true impl
+            self.sequent[processed_true_impls][kv_list[0][0]] += 1
+            self.sequent[true_exprs].append(kv_list[0][0])
         else:
-            for child in self.children:
-                if not child.is_done():
-                    return False
-            return True
+            raise Exception("No more multiprocess expressions available")
 
-    def process_multiprocess_exprs(self):
-        if len(self.sequent[considered_impls]) > 0:
-            self.sequent[true_exprs].append(self.sequent[considered_impls][0])
+    def visited_Not(self, n: Not):
+        if self.visiting_false or self.visiting_certain_falsehood_exprs:
+            self.clear_false()
+            self.sequent[true_exprs].append(n.expr)
+        else:
+            self.sequent[certain_falsehood_exprs].append(n.expr)
+
+    def visited_And(self, a: And):
+        if self.visiting_certain_falsehood_exprs:
+            lhs = type(self)(sequent=copy.deepcopy(self.sequent))
+            rhs = type(self)(sequent=copy.deepcopy(self.sequent))
+
+            lhs.clear_false()
+            rhs.clear_false()
+
+            lhs.sequent[certain_falsehood_exprs].remove(a)
+            rhs.sequent[certain_falsehood_exprs].remove(a)
+
+            lhs.sequent[certain_falsehood_exprs].append(a.lhs)
+            rhs.sequent[certain_falsehood_exprs].append(a.rhs)
+
+            self.children.append(lhs)
+            self.children.append(rhs)
+        else:
+            super().visited_And(a)
+
+    def visited_Or(self, o: Or):
+        if self.visiting_certain_falsehood_exprs:
+            self.sequent[certain_falsehood_exprs].append(o.lhs)
+            self.sequent[certain_falsehood_exprs].append(o.rhs)
+        else:
+            super().visited_Or(o)
 
     def visited_Impl(self, impl: Impl):
-        if self.visiting_false:
+        if self.visiting_certain_falsehood_exprs or self.visiting_false:
+            self.clear_false()
             self.sequent[true_exprs].append(impl.lhs)
-            self.sequent[false_exprs] = [impl.rhs]
-            self.sequent[false_atoms] = []
+            self.sequent[false_exprs].append(impl.rhs)
         else:
-            # Create new fork -> Children of same TableauxBuilder type as self
             lhs = type(self)(sequent=copy.deepcopy(self.sequent))
-            lhs.sequent[true_exprs].remove(impl)
-            lhs.sequent[considered_impls].append(impl)
-            lhs.sequent[false_exprs] = [impl.lhs]
-            self.children.append(lhs)
-
             rhs = type(self)(sequent=copy.deepcopy(self.sequent))
-            rhs.sequent[true_exprs].remove(impl)
-            rhs.sequent[considered_impls].append(impl)
-            rhs.sequent[true_exprs].append(impl.rhs)
-            self.children.append(rhs)
 
-    def visited_Atom(self, atom: Atom):
-        self.sequent[false_atoms if self.visiting_false else true_atoms].append(atom)
+            lhs.sequent[true_exprs].remove(impl)
+            rhs.sequent[false_exprs].remove(impl)
+
+            if impl not in lhs.sequent[processed_true_impls]:
+                lhs.sequent[processed_true_impls][impl] = 0
+            lhs.sequent[false_exprs].append(impl.lhs)
+            rhs.sequent[true_exprs].append(impl.rhs)
+
+            self.children.append(lhs)
+            self.children.append(rhs)
