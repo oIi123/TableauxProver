@@ -26,6 +26,62 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
             return True
         return False
 
+    def process_multiprocess_exprs(self) -> bool:
+        """
+        Processes the quantor with the most unprocessed constants or the implication that has been reprocessed
+        the least
+        """
+        options = [(expr.priority(False), expr) for expr in self.sequent[certain_falsehood_exprs]]
+        options.sort(key=lambda tpl: tpl[0])
+
+        if len(options) > 0:
+            self.visiting_certain_falsehood_exprs = True
+            expr = options[0][1]
+            expr.visit(self)
+            if expr in self.sequent[certain_falsehood_exprs]:
+                self.sequent[certain_falsehood_exprs].remove(expr)
+        else:
+            # If all certain falsehood expressions are processed, reprocess the quantor expressions or implications
+
+            num_of_constants = len(self.sequent[established_constants])
+            # Tuple: (expression, priority, false_side_or_certain_false)
+            #   priority is either the number of unprocessed constants or
+            #   reprocess_idx_true_impl - max(number_unprocessed_contants)
+            expr_list = [(k, num_of_constants - len(v), 0) for k, v in self.sequent[processed_true_quantor_expressions].items() if len(v) != num_of_constants]
+            expr_list.extend([(k, num_of_constants - len(v), 1) for k, v in self.sequent[processed_false_quantor_expressions].items() if len(v) != num_of_constants])
+            expr_list.extend([(k, num_of_constants - len(v), 2) for k, v in self.sequent[processed_certain_false_exquantor_exprs].items() if len(v) != num_of_constants])
+
+            max_number_unprocessed_constants = max(expr_list, key=lambda tpl: tpl[1])
+            repr_exprs_list = [(k, v - max_number_unprocessed_constants, 0) for k, v in self.sequent[processed_true_impls].items()]
+            repr_exprs_list.extend([(k, v - max_number_unprocessed_constants, 2) for k, v in self.sequent[processed_certain_false_allquantor_exprs].items()])
+
+            expr_list.sort(key=lambda tpl: tpl[0], reverse=True)
+            repr_exprs_list.sort(key=lambda tpl: tpl[0], reverse=True)
+
+            if len(expr_list) == len(repr_exprs_list) == 0:
+                raise Exception("There are no expressions to reprocess")
+            else:
+                if len(expr_list) == 0:
+                    expr_list = [(None, -1, 0)]
+                if len(repr_exprs_list) == 0:
+                    repr_exprs_list = [(None, -1, 0)]
+
+                if expr_list[0][1] > repr_exprs_list[0][1]:
+                    # Reprocess quantor expression
+                    self.visiting_certain_falsehood_exprs = expr_list[0][2] == 2
+                    self.visiting_false = expr_list[0][2]
+                    self.generate_existing_constant_expression(expr_list[0][0])
+                else:
+                    # Reprocess true implication or certain falsehood allquantor
+                    if repr_exprs_list[0][2] == 2:
+                        self.visiting_false = True
+                        self.generate_new_constant_expression(repr_exprs_list[0][0])
+                    else:
+                        self.visiting_false = False
+                        repr_exprs_list[0][0].visit(self)
+
+                    self.sequent[processed_certain_false_allquantor_exprs if self.visiting_false else processed_true_impls][repr_exprs_list[0][0]] += 1
+
     def visited_ExistentialQuantor(self, quantor: ExistentialQuantor):
         if self.visiting_certain_falsehood_exprs or self.visiting_false:
             processed_quantor_exprs = processed_certain_false_exquantor_exprs if self.visiting_certain_falsehood_exprs else processed_false_quantor_expressions
@@ -38,7 +94,7 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
             self.generate_new_constant_expression(quantor)
             self.clear_false()
 
-            if self.visiting_certain_falsehood_exprs:
-                self.sequent[processed_certain_false_allquantor_exprs].append(quantor)
+            if self.visiting_certain_falsehood_exprs and quantor not in self.sequent[processed_certain_false_allquantor_exprs]:
+                self.sequent[processed_certain_false_allquantor_exprs][quantor] = 0
         else:
             self.generate_existing_constant_expression(quantor)
