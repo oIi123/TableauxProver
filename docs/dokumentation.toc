@@ -23,20 +23,22 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {1.2.2}Induktive Formationsregeln}{4}{subsection.1.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.3}Intuitionistische Logik}{5}{section.1.3}%
+\contentsline {subsection}{\numberline {1.2.3}Objektvariablen und Objektkonstanten}{5}{subsection.1.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.3}Intuitionistische Logik}{6}{section.1.3}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {1.3.1}Implikation im Intuitionismus}{6}{subsection.1.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.3.2}Nicht beweisbarer Satz $\perp $}{6}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.2}Nicht beweisbarer Satz $\perp $}{7}{subsection.1.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.4}Tableaux}{6}{section.1.4}%
+\contentsline {section}{\numberline {1.4}Tableaux}{7}{section.1.4}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {1.4.1}Klassische Aussagenlogik}{7}{subsection.1.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.2}Klassische Prädikatenlogik 1. Ordnung}{9}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.2}Klassische Prädikatenlogik 1. Ordnung}{10}{subsection.1.4.2}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {1.4.3}Nichtklassische Aussagenlogik}{10}{subsection.1.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.4}Nichtklassische Prädikatenlogik}{11}{subsection.1.4.4}%
+\contentsline {subsection}{\numberline {1.4.4}Nichtklassische Prädikatenlogik}{12}{subsection.1.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {2}Beispiel Code-schnipsel einbinden}{13}{chapter.2}%
+\contentsline {chapter}{\numberline {2}Beispiel Code-schnipsel einbinden}{14}{chapter.2}%

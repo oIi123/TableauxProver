@@ -122,6 +122,15 @@ Die in Abschnitt \ref{clamps_and_prio} definierten Prioritäten der Junktoren, t
 \item Äquivalenz ($\leftrightarrow$)
 \end{enumerate}
 
+\subsection{Objektvariablen und Objektkonstanten}
+In der Formel $\forall x P(x)$ wird der Term x in P(x) als gebundene Variable bezeichnet, da diese über den Allquantor quantifiziert wird. Im gegensatz dazu wird der Term x in der Formel K(x) als freie Variable bezeichnet, da diese nicht quantifiziert wird. Wie oben bereits erwähnt wurde, wird das Diskursuniversum von der in dieser Arbeit erarbeiteten Implementierung dynamisch erweitert. Die freien Variablen werden dabei als initiale Elemente des Diskursuniversum verwendet. Generell wird zwischen Objektvariablen und Objektkonstanten unterschieden:
+
+Ein Term x ist eine Objektvariable gdw. diese eine gebundene Variable ist.
+
+Ein Term x ist eine Objektkonstante gdw. diese eine freie Variable und im Diskursuniversum enthalten ist.
+
+Mit dem Diskursuniversum {Aristoteles, Platon} und der Formel $\forall x Mensch(x) \wedge Philosoph(Aristoteles)$ wird also x als Objektvariable und Aristoteles als Objektkonstante bezeichnet. Wird der Allquantor umgeschrieben zu $Mensch(Aristoteles) \wedge Mensch(Platon) \wedge Philosoph(Aristoteles)$ so sind sowohl Aristoteles als auch Platon Objektkonstanten.
+
 \section{Intuitionistische Logik}
 Die Intuitionistische oder auch nichtklassiche Logik ist ein anderes logisches Paradigma. Anstelle von wahren und falschen Aussagen und Atomen, behandelt die intuitionistische Logik beweisbare bzw. widerlegbare Aussagen und Atome. Beispielsweise wird die Aussage $\alpha\vee\neg\alpha$ in klassischer Logik als ``\textit{$\alpha$ trifft entweder zu, oder $\alpha$ trifft nicht zu}'' interpretiert. Die intuitionistische Interpretation lautet hingegen ``\textit{$\alpha$ ist beweisbar, oder $\alpha$ ist widerlegbar}''.
 
