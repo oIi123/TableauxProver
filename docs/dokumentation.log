@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.6)  7 JAN 2020 10:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.6)  7 JAN 2020 10:48
 entering extended mode
 **./dokumentation.tex
 (dokumentation.tex
@@ -1957,44 +1957,43 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 [3]
 Package acronym Info: Label `acro:wff' newly defined as it shall be overridden
-although it is yet undefined on input line 97.
+although it is yet undefined on input line 99.
 
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
 [4]
 
-LaTeX Warning: Citation 'B62' on page 5 undefined on input line 126.
-
-
 LaTeX Warning: Citation 'B62' on page 5 undefined on input line 128.
 
 
-LaTeX Warning: Citation 'B62' on page 5 undefined on input line 138.
+LaTeX Warning: Citation 'B62' on page 5 undefined on input line 130.
 
 
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
 [5]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 142.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 142.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 142.
 
+LaTeX Warning: Citation 'B62' on page 6 undefined on input line 140.
 
-LaTeX Warning: Citation 'DGHP99' on page 6 undefined on input line 143.
-
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 144.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 144.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 144.
 
 LaTeX Warning: Citation 'DGHP99' on page 6 undefined on input line 145.
 
 
-LaTeX Warning: Citation 'DGHP99' on page 6 undefined on input line 148.
+LaTeX Warning: Citation 'DGHP99' on page 6 undefined on input line 147.
 
 
-LaTeX Warning: Citation 'BK82' on page 6 undefined on input line 150.
+LaTeX Warning: Citation 'DGHP99' on page 6 undefined on input line 150.
+
+
+LaTeX Warning: Citation 'BK82' on page 6 undefined on input line 152.
 
 
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
@@ -2002,102 +2001,100 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 [6]
 
-LaTeX Warning: Citation 'KB14' on page 7 undefined on input line 157.
+LaTeX Warning: Citation 'KB14' on page 7 undefined on input line 159.
 
-<images/Tableaux_And_Prop_Logic.png, id=165, 432.11438pt x 310.15875pt>
+<images/Tableaux_And_Prop_Logic.png, id=166, 432.11438pt x 310.15875pt>
 File: images/Tableaux_And_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_And_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_And_Prop_Logic.png  used on input line
- 161.
+ 163.
 (pdftex.def)             Requested size: 302.478pt x 217.10963pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 162.
+(Font)              <10.95> on input line 164.
 
 Package nag Warning: `center' environment in figure.
-(nag)                Maybe you want \centering instead on input line 164.
+(nag)                Maybe you want \centering instead on input line 166.
 
-<images/Tableaux_Or_Prop_Logic.png, id=169, 432.11438pt x 310.15875pt>
+<images/Tableaux_Or_Prop_Logic.png, id=170, 432.11438pt x 310.15875pt>
 File: images/Tableaux_Or_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_Or_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_Or_Prop_Logic.png  used on input line 
-171.
+173.
 (pdftex.def)             Requested size: 302.478pt x 217.10963pt.
 
 Package nag Warning: `center' environment in figure.
-(nag)                Maybe you want \centering instead on input line 174.
+(nag)                Maybe you want \centering instead on input line 176.
 
-
-Overfull \vbox (7.89444pt too high) has occurred while \output is active []
-
-
-[7 <./images/Tableaux_And_Prop_Logic.png>]
-<images/Tableaux_Rules_Prop_Logic.png, id=177, 1028.34187pt x 392.21532pt>
+<images/Tableaux_Rules_Prop_Logic.png, id=171, 1028.34187pt x 392.21532pt>
 File: images/Tableaux_Rules_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_Rules_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_Rules_Prop_Logic.png  used on input li
-ne 179.
+ne 181.
 (pdftex.def)             Requested size: 514.16968pt x 196.10718pt.
 
-Overfull \hbox (58.9255pt too wide) in paragraph at lines 179--180
+Overfull \hbox (58.9255pt too wide) in paragraph at lines 181--182
  [] 
  []
 
 
 Package nag Warning: `center' environment in figure.
-(nag)                Maybe you want \centering instead on input line 182.
+(nag)                Maybe you want \centering instead on input line 184.
 
 
-LaTeX Warning: Citation 'KB14' on page 8 undefined on input line 185.
-
-
-LaTeX Warning: Citation 'DGHP99' on page 8 undefined on input line 188.
-
-
-LaTeX Warning: Citation 'KB14' on page 8 undefined on input line 190.
+LaTeX Warning: Citation 'KB14' on page 7 undefined on input line 187.
 
 
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
-[8 <./images/Tableaux_Or_Prop_Logic.png>]
-<images/Tableaux_Rules_Pred_Logic.png, id=186, 339.51843pt x 346.29375pt>
-File: images/Tableaux_Rules_Pred_Logic.png Graphic file (type png)
-<use images/Tableaux_Rules_Pred_Logic.png>
-Package pdftex.def Info: images/Tableaux_Rules_Pred_Logic.png  used on input li
-ne 196.
-(pdftex.def)             Requested size: 237.66127pt x 242.40396pt.
+[7]
+Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
-Package nag Warning: `center' environment in figure.
-(nag)                Maybe you want \centering instead on input line 199.
+[8 <./images/Tableaux_And_Prop_Logic.png> <./images/Tableaux_Or_Prop_Logic.png>
+]
+
+LaTeX Warning: Citation 'DGHP99' on page 9 undefined on input line 190.
 
 
-LaTeX Warning: Citation 'B62' on page 9 undefined on input line 205.
+LaTeX Warning: Citation 'KB14' on page 9 undefined on input line 192.
 
 
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
 [9 <./images/Tableaux_Rules_Prop_Logic.png>]
+<images/Tableaux_Rules_Pred_Logic.png, id=192, 339.51843pt x 346.29375pt>
+File: images/Tableaux_Rules_Pred_Logic.png Graphic file (type png)
+<use images/Tableaux_Rules_Pred_Logic.png>
+Package pdftex.def Info: images/Tableaux_Rules_Pred_Logic.png  used on input li
+ne 198.
+(pdftex.def)             Requested size: 237.66127pt x 242.40396pt.
+
+
+Package nag Warning: `center' environment in figure.
+(nag)                Maybe you want \centering instead on input line 201.
+
 
 LaTeX Warning: Citation 'B62' on page 10 undefined on input line 207.
 
-<images/Tableaux_Impl_IPC.png, id=194, 467.49657pt x 310.15875pt>
-File: images/Tableaux_Impl_IPC.png Graphic file (type png)
-<use images/Tableaux_Impl_IPC.png>
-Package pdftex.def Info: images/Tableaux_Impl_IPC.png  used on input line 221.
-(pdftex.def)             Requested size: 327.24536pt x 217.10963pt.
 
-Package nag Warning: `center' environment in figure.
-(nag)                Maybe you want \centering instead on input line 224.
+LaTeX Warning: Citation 'B62' on page 10 undefined on input line 209.
 
 
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
 [10 <./images/Tableaux_Rules_Pred_Logic.png>]
+<images/Tableaux_Impl_IPC.png, id=200, 467.49657pt x 310.15875pt>
+File: images/Tableaux_Impl_IPC.png Graphic file (type png)
+<use images/Tableaux_Impl_IPC.png>
+Package pdftex.def Info: images/Tableaux_Impl_IPC.png  used on input line 223.
+(pdftex.def)             Requested size: 327.24536pt x 217.10963pt.
 
-LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 230.
+
+Package nag Warning: `center' environment in figure.
+(nag)                Maybe you want \centering instead on input line 226.
 
 
 LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 232.
@@ -2105,21 +2102,25 @@ LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 232.
 
 LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 234.
 
-<images/Tableaux_Quantors_IFOPL.png, id=202, 339.51843pt x 346.29375pt>
-File: images/Tableaux_Quantors_IFOPL.png Graphic file (type png)
-<use images/Tableaux_Quantors_IFOPL.png>
-Package pdftex.def Info: images/Tableaux_Quantors_IFOPL.png  used on input line
- 240.
-(pdftex.def)             Requested size: 237.66127pt x 242.40396pt.
 
-Package nag Warning: `center' environment in figure.
-(nag)                Maybe you want \centering instead on input line 243.
-
-) (content/02kapitel.tex
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
 [11 <./images/Tableaux_Impl_IPC.png>]
+
+LaTeX Warning: Citation 'DGHP99' on page 12 undefined on input line 236.
+
+<images/Tableaux_Quantors_IFOPL.png, id=209, 339.51843pt x 346.29375pt>
+File: images/Tableaux_Quantors_IFOPL.png Graphic file (type png)
+<use images/Tableaux_Quantors_IFOPL.png>
+Package pdftex.def Info: images/Tableaux_Quantors_IFOPL.png  used on input line
+ 242.
+(pdftex.def)             Requested size: 237.66127pt x 242.40396pt.
+
+Package nag Warning: `center' environment in figure.
+(nag)                Maybe you want \centering instead on input line 245.
+
+) (content/02kapitel.tex
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
@@ -2161,7 +2162,7 @@ Package logreq Info: Writing requests to 'dokumentation.run.xml'.
 Here is how much of TeX's memory you used:
  39914 strings out of 492484
  762118 string characters out of 3121601
- 1481085 words of memory out of 3000000
+ 1481086 words of memory out of 3000000
  43266 multiletter control sequences out of 15000+200000
  80734 words of font info for 125 fonts, out of 3000000 for 9000
  1143 hyphenation exceptions out of 8191
@@ -2183,9 +2184,9 @@ TeX 2.9/fonts/type1/public/lm/lmro12.pfb><C:/Users/olive/AppData/Local/Programs
 /MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/olive/AppData/Local/Pr
 ograms/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Users/olive/AppData/Loca
 l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on dokumentation.pdf (18 pages, 353764 bytes).
+Output written on dokumentation.pdf (18 pages, 354319 bytes).
 PDF statistics:
- 304 PDF objects out of 1000 (max. 8388607)
+ 305 PDF objects out of 1000 (max. 8388607)
  62 named destinations out of 1000 (max. 500000)
  26328 words of extra memory for PDF output out of 29859 (max. 10000000)
 
