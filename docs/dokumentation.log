@@ -1,40 +1,50 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2019.10.19)  1 DEC 2019 13:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.6)  7 JAN 2020 09:56
 entering extended mode
 **./dokumentation.tex
 (dokumentation.tex
-LaTeX2e <2018-12-01>
-(ads/header.tex ("C:\Program Files\MiKTeX 2.9\tex/latex/nag\nag.sty"
+LaTeX2e <2019-10-01> patch level 3
+(ads/header.tex
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/nag\nag.sty"
 Package: nag 2011/11/25 0.7 warning about old commands (ulmi)
 \c@nag@c=\count80
 \c@nag@sins=\count81
 Package nag Info: Loaded nag-l2tabu.cfg  on input line 552.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/nag\nag-l2tabu.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/nag\nag-l2tabu.cfg
+"
 File: nag-l2tabu.cfg 2010/05/17 v2.11 l2tabu rules for nag.sty (ulmi)
 )
 Package nag Info: Loaded nag-orthodox.cfg  on input line 552.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/nag\nag-orthodox.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/nag\nag-orthodox.c
+fg"
 File: nag-orthodox.cfg 2006/04/19 v1.8 strict rules for nag.sty (ulmi)
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/koma-script\scrreprt.cls"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/koma-script\scrrep
+rt.cls"
 Document Class: scrreprt 2019/10/12 v3.27 KOMA-Script document class (report)
-("C:\Program Files\MiKTeX 2.9\tex/latex/koma-script\scrkbase.sty"
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/koma-script\scrkba
+se.sty"
 Package: scrkbase 2019/10/12 v3.27 KOMA-Script package (KOMA-Script-dependent b
 asics and keyval usage)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/koma-script\scrbase.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/koma-script\scrbas
+e.sty"
 Package: scrbase 2019/10/12 v3.27 KOMA-Script package (KOMA-Script-independent 
 basics and keyval usage)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\keyval.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\keyval.st
+y"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/koma-script\scrlfile.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/koma-script\scrlfi
+le.sty"
 Package: scrlfile 2019/10/12 v3.27 KOMA-Script package (loading files)
 )))
-("C:\Program Files\MiKTeX 2.9\tex/latex/koma-script\tocbasic.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/koma-script\tocbas
+ic.sty"
 Package: tocbasic 2019/10/12 v3.27 KOMA-Script package (handling toc-files)
 \scr@dte@tocline@numberwidth=\skip41
 \scr@dte@tocline@numbox=\box27
@@ -77,11 +87,14 @@ Class scrreprt Warning: deprecated option `enabledeprecatedfontcommands'.
 
 Class scrreprt Info: File `scrsize12pt.clo' used to setup font sizes on input l
 ine 2417.
-("C:\Program Files\MiKTeX 2.9\tex/latex/koma-script\scrsize12pt.clo"
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/koma-script\scrsiz
+e12pt.clo"
 File: scrsize12pt.clo 2019/10/12 v3.27 KOMA-Script font size class option (12pt
 )
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/koma-script\typearea.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/koma-script\typear
+ea.sty"
 Package: typearea 2019/10/12 v3.27 KOMA-Script package (type area)
 \ta@bcor=\skip42
 \ta@div=\count82
@@ -176,75 +189,88 @@ Class scrreprt Info: Using old \@makefntext due to compatibility level
 (scrreprt)           less than 3.22 on input line 6981.
 Class scrreprt Info: Redefining `\numberline' on input line 6994.
 \bibindent=\dimen102
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/xstring\xstring.sty"
-("C:\Program Files\MiKTeX 2.9\tex/generic/xstring\xstring.tex"
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xstring\xstring.st
+y"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/xstring\xstring.
+tex"
 \integerpart=\count92
 \decimalpart=\count93
 )
 Package: xstring 2019/02/06 v1.83 String manipulations (CT)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/base\inputenc.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\inputenc.sty"
 Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/base\fontenc.sty"
+) ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\fontenc.sty
+"
 Package: fontenc 2018/08/11 v2.0j Standard LaTeX package
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/base\t1enc.def"
+ ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\t1enc.def"
 File: t1enc.def 2018/08/11 v2.0j Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-))
-(ads/einstellungen_liste.tex) (einstellungen.tex) (lang/strings.tex)
-(lang/de.tex) ("C:\Program Files\MiKTeX 2.9\tex/generic/babel\babel.sty"
-Package: babel 2019/09/27 3.34 The Babel package
-
-("C:\Program Files\MiKTeX 2.9\tex/generic/babel\switch.def"
-File: switch.def 2019/09/27 3.34 Babel switching mechanism
+)) (ads/einstellungen_liste.tex) (einstellungen.tex) (lang/strings.tex)
+(lang/de.tex)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/babel\babel.sty"
+Package: babel 2019/11/14 3.36 The Babel package
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/babel\switch.def
+"
+File: switch.def 2019/11/14 3.36 Babel switching mechanism
 )
 *************************************
 * Local config file bblopts.cfg used
 *
-("C:\Program Files\MiKTeX 2.9\tex/latex/arabi\bblopts.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/arabi\bblopts.cfg"
 File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
  babel
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/babel-english\english.ldf"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/babel-english\engl
+ish.ldf"
 Language: english 2017/06/06 v3.3r English support from the babel system
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/babel\babel.def"
-File: babel.def 2019/09/27 3.34 Babel common definitions
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/babel\babel.def"
+File: babel.def 2019/11/14 3.36 Babel common definitions
 \babel@savecnt=\count94
 \U@D=\dimen103
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/babel\txtbabel.def")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/babel\txtbabel.d
+ef")
 \bbl@dirlevel=\count95
 )
-\l@canadian = a dialect from \language\l@american 
-\l@australian = a dialect from \language\l@british 
-\l@newzealand = a dialect from \language\l@british 
+Package babel Info: \l@canadian = using hyphenrules for english
+(babel)             (\language0) on input line 102.
+Package babel Info: \l@australian = using hyphenrules for ukenglish
+(babel)             (\language72) on input line 105.
+Package babel Info: \l@newzealand = using hyphenrules for ukenglish
+(babel)             (\language72) on input line 108.
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/babel-german\ngerman.ldf"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/babel-german\ngerm
+an.ldf"
 Language: ngerman 2018/12/08 v2.11 German support for babel (post-1996 orthogra
 phy)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/babel-german\ngermanb.ldf"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/babel-german\ngerm
+anb.ldf"
 Language: ngermanb 2018/12/08 v2.11 German support for babel (post-1996 orthogr
 aphy)
 Package babel Info: Making " an active character on input line 121.
 )))
-("C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.sty"
-Package: geometry 2018/04/16 v5.8 Page Geometry
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/geometry-de\geomet
+ry.sty"
+Package: geometry 2010/09/12 v5.6 Page Geometry
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\ifpdf.sty"
-Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/iftex\ifpdf.sty"
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/iftex\iftex.sty"
+Package: iftex 2019/11/07 v1.0c TeX engine tests
+))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/iftex\ifvtex.sty
+"
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\ifvtex.sty"
-Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
-Package ifvtex Info: VTeX not detected.
-)
-("C:\Program Files\MiKTeX 2.9\tex/generic/ifxetex\ifxetex.sty"
-Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/iftex\ifxetex.st
+y"
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
 )
 \Gm@cnth=\count96
 \Gm@cntv=\count97
@@ -259,18 +285,21 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutvoffset=\dimen111
 \Gm@dimlist=\toks17
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.cfg"))
-("C:\Program Files\MiKTeX 2.9\tex/latex/microtype\microtype.sty"
-Package: microtype 2019/10/10 v2.7c Micro-typographical refinements (RS)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/geometry\geometry.
+cfg"))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/microtype\microtyp
+e.sty"
+Package: microtype 2019/11/18 v2.7d Micro-typographical refinements (RS)
 \MT@toks=\toks18
 \MT@count=\count99
 LaTeX Info: Redefining \textls on input line 790.
 \MT@outer@kern=\dimen112
-LaTeX Info: Redefining \textmicrotypecontext on input line 1347.
+LaTeX Info: Redefining \textmicrotypecontext on input line 1354.
 \MT@listname@count=\count100
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/microtype\microtype-pdftex.def"
-File: microtype-pdftex.def 2019/10/10 v2.7c Definitions specific to pdftex (RS)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/microtype\microtyp
+e-pdftex.def"
+File: microtype-pdftex.def 2019/11/18 v2.7d Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 914.
 LaTeX Info: Redefining \lslig on input line 914.
@@ -278,19 +307,23 @@ LaTeX Info: Redefining \lslig on input line 914.
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/microtype\microtype.cfg"
-File: microtype.cfg 2019/10/10 v2.7c microtype main configuration file (RS)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/microtype\microtyp
+e.cfg"
+File: microtype.cfg 2019/11/18 v2.7d microtype main configuration file (RS)
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/setspace\setspace.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/setspace\setspace.
+sty"
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/base\makeidx.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\makeidx.sty"
 Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/csquotes\csquotes.sty"
-Package: csquotes 2019/05/10 v5.2e context-sensitive quotations (JAW)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/csquotes\csquotes.
+sty"
+Package: csquotes 2019-12-02 v5.2i context-sensitive quotations (JAW)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/etoolbox\etoolbox.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/etoolbox\etoolbox.
+sty"
 Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count101
 )
@@ -302,20 +335,23 @@ Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
 \csq@tshold=\count107
 \csq@ltx@everypar=\toks19
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/csquotes\csquotes.def"
-File: csquotes.def 2019/05/10 v5.2e csquotes generic definitions (JAW)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/csquotes\csquotes.
+def"
+File: csquotes.def 2019-12-02 v5.2i csquotes generic definitions (JAW)
 )
 Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
 Package csquotes Info: ... configuration file loaded successfully.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/csquotes\csquotes.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/csquotes\csquotes.
+cfg"
 File: csquotes.cfg 
 )
 Package csquotes Info: Enabling multilingual quotes.
 Package csquotes Info: Redefining alias 'german' -> 'german/quotes'.
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\longtable.sty"
-Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)+ FMi change
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\longtable.st
+y"
+Package: longtable 2019/02/06 v4.12 Multi-page Table package (DPC)
 \LTleft=\skip59
 \LTright=\skip60
 \LTpre=\skip61
@@ -334,7 +370,8 @@ Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)+ FMi change
 )
 Class scrreprt Info: longtable captions redefined on input line 59.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/enumitem\enumitem.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/enumitem\enumitem.
+sty"
 Package: enumitem 2019/06/20 v3.9 Customized lists
 \labelindent=\skip63
 \enit@outerparindent=\dimen114
@@ -343,33 +380,38 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
 \enit@count@id=\count113
 \enitdp@description=\count114
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\graphicx.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\graphicx.
+sty"
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\graphics.sty"
-Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\graphics.
+sty"
+Package: graphics 2019/11/01 v1.3d Standard LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\trig.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\trig.sty"
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\graphics.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics-cfg\graph
+ics.cfg"
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 99.
+Package graphics Info: Driver file: pdftex.def on input line 105.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-def\pdftex.def"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics-def\pdfte
+x.def"
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen115
 \Gin@req@width=\dimen116
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/pdfpages\pdfpages.sty"
-Package: pdfpages 2019/09/21 v0.5n Insert pages of external PDF documents (AM)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pdfpages\pdfpages.
+sty"
+Package: pdfpages 2019/11/21 v0.5o Insert pages of external PDF documents (AM)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/base\ifthen.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ifthen.sty"
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\calc.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\calc.sty"
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count115
 \calc@Bcount=\count116
@@ -382,22 +424,27 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count117
 \calc@Cskip=\skip66
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/eso-pic\eso-pic.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/eso-pic\eso-pic.st
+y"
 Package: eso-pic 2018/04/12 v2.0h eso-pic (RN)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\atbegshi.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\atbegsh
+i.sty"
 Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\infwarerr.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\infware
+rr.sty"
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\ltxcmds.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\ltxcmds
+.sty"
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/xcolor\xcolor.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xcolor\xcolor.sty"
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\color.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics-cfg\color
+.cfg"
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
@@ -414,8 +461,9 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 \AM@pagewidth=\dimen119
 \AM@pageheight=\dimen120
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/pdfpages\pppdftex.def"
-File: pppdftex.def 2019/09/21 v0.5n Pdfpages driver for pdfTeX (AM)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pdfpages\pppdftex.
+def"
+File: pppdftex.def 2019/11/21 v0.5o Pdfpages driver for pdfTeX (AM)
 )
 \AM@pagebox=\box34
 \AM@global@opts=\toks22
@@ -423,7 +471,7 @@ File: pppdftex.def 2019/09/21 v0.5n Pdfpages driver for pdfTeX (AM)
 \c@AM@survey=\count118
 \AM@templatesizebox=\box35
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/float\float.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/float\float.sty"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count119
 \float@exts=\toks24
@@ -431,8 +479,8 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks25
 \@floatcapt=\box37
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\array.sty"
-Package: array 2018/12/30 v2.4k Tabular extension package (FMi)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\array.sty"
+Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
 \col@sep=\dimen121
 \ar@mcellbox=\box38
 \extrarowheight=\dimen122
@@ -441,11 +489,13 @@ Package: array 2018/12/30 v2.4k Tabular extension package (FMi)
 \backup@length=\skip68
 \ar@cellbox=\box39
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/eurosym\eurosym.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/eurosym\eurosym.st
+y"
 Package: eurosym 1998/08/06 v1.1 European currency symbol ``Euro''
 \@eurobox=\box40
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/wrapfig\wrapfig.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/wrapfig\wrapfig.st
+y"
 \wrapoverhang=\dimen123
 \WF@size=\dimen124
 \c@WF@wrappedlines=\count120
@@ -453,35 +503,50 @@ Package: eurosym 1998/08/06 v1.1 European currency symbol ``Euro''
 \WF@everypar=\toks27
 Package: wrapfig 2003/01/31  v 3.6
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/utilities\pgffor.sty"
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/utilities\pgfrcs.sty"
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/utilities\pgfutil-common.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/utilities\pgff
+or.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/utilities\pgfr
+cs.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\pg
+futil-common.tex"
 \pgfutil@everybye=\toks28
 \pgfutil@tempdima=\dimen125
 \pgfutil@tempdimb=\dimen126
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/utilities\pgfutil-common-lists.te
-x")) ("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/utilities\pgfutil-latex.def"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\pg
+futil-common-lists.tex"))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\pg
+futil-latex.def"
 \pgfutil@abb=\box42
-("C:\Program Files\MiKTeX 2.9\tex/latex/ms\everyshi.sty"
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ms\everyshi.sty"
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
 ))
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/utilities\pgfrcs.code.tex"
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf\pgf.revision.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\pg
+frcs.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf\pgf.revision
+.tex")
 Package: pgfrcs 2019/08/03 v3.1.4b (3.1.4b)
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/utilities\pgfkeys.sty"
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/utilities\pgfkeys.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/utilities\pgfk
+eys.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\pg
+fkeys.code.tex"
 \pgfkeys@pathtoks=\toks29
 \pgfkeys@temptoks=\toks30
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/utilities\pgfkeysfiltered.code.te
-x"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\pg
+fkeysfiltered.code.tex"
 \pgfkeys@tmptoks=\toks31
-))) ("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/math\pgfmath.sty"
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmath.code.tex"
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathcalc.code.tex"
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathutil.code.tex"
+)))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/math\pgfmath.s
+ty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+calc.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+util.code.tex"
 \pgf@x=\dimen127
 \pgf@xa=\dimen128
 \pgf@xb=\dimen129
@@ -495,7 +560,8 @@ x"
 \c@pgf@countc=\count123
 \c@pgf@countd=\count124
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathparser.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+parser.code.tex"
 \pgfmath@dimen=\dimen135
 \pgfmath@count=\count125
 \pgfmath@box=\box43
@@ -503,36 +569,41 @@ x"
 \pgfmath@stack@operand=\toks33
 \pgfmath@stack@operation=\toks34
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.code.tex"
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.basic.code.
-tex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.trigonometr
-ic.code.tex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.random.code
-.tex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.comparison.
-code.tex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.base.code.t
-ex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.round.code.
-tex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.misc.code.t
-ex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfunctions.integerarit
-hmetics.code.tex")))
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmathfloat.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.basic.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.trigonometric.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.random.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.comparison.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.base.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.round.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.misc.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+functions.integerarithmetics.code.tex")))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+float.code.tex"
 \c@pgfmathroundto@lastzeros=\count126
 )))
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/utilities\pgffor.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\pg
+ffor.code.tex"
 Package: pgffor 2019/08/03 v3.1.4b (3.1.4b)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmath.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+.code.tex")
 \pgffor@iter=\dimen136
 \pgffor@skip=\dimen137
 \pgffor@stack=\toks35
 \pgffor@toks=\toks36
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/footmisc\footmisc.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/footmisc\footmisc.
+sty"
 Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
 \FN@temptoken=\toks37
 \footnotemargin=\dimen138
@@ -547,15 +618,18 @@ Package footmisc Info: Declaring symbol style lamport* on input line 903.
 Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
 .
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/acronym\acronym.sty"
-Package: acronym 2015/03/21 v1.41 Support for acronyms (Tobias Oetiker)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/acronym\acronym.st
+y"
+Package: acronym 2019/11/11 v1.42 Support for acronyms (Tobias Oetiker)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/bigfoot\suffix.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/bigfoot\suffix.sty
+"
 Package: suffix 2006/07/15 1.5a Variant command support
 )
 \AC@clearlist=\toks38
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\listings.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\listings.
+sty"
 \lst@mode=\count129
 \lst@gtempboxa=\box44
 \lst@token=\toks39
@@ -569,42 +643,54 @@ Package: suffix 2006/07/15 1.5a Variant command support
 \lst@lineno=\count134
 \lst@maxwidth=\dimen142
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstmisc.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstmisc.s
+ty"
 File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
 \c@lstnumber=\count135
 \lst@skipnumbers=\count136
 \lst@framebox=\box45
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\listings.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\listings.
+cfg"
 File: listings.cfg 2019/09/10 1.8c listings configuration
 ))
 Package: listings 2019/09/10 1.8c (Carsten Heinz)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/todonotes\todonotes.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/todonotes\todonote
+s.sty"
 Package: todonotes 2019/01/24 v1.1.2 Todonotes source and documentation.
 Package: todonotes 2018/11/22
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/xkeyval\xkeyval.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xkeyval\xkeyval.st
+y"
 Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/xkeyval\xkeyval.tex"
-("C:\Program Files\MiKTeX 2.9\tex/generic/xkeyval\xkvutils.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/xkeyval\xkeyval.
+tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/xkeyval\xkvutils
+.tex"
 \XKV@toks=\toks40
 \XKV@tempa@toks=\toks41
 )
 \XKV@depth=\count137
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/frontendlayer\tikz.sty"
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/basiclayer\pgf.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/frontendlayer\
+tikz.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/basiclayer\pgf
+.sty"
 Package: pgf 2019/08/03 v3.1.4b (3.1.4b)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/basiclayer\pgfcore.sty"
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/systemlayer\pgfsys.sty"
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/systemlayer\pgfsys.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/basiclayer\pgf
+core.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/systemlayer\pg
+fsys.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/systemlayer\
+pgfsys.code.tex"
 Package: pgfsys 2019/08/03 v3.1.4b (3.1.4b)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/utilities\pgfkeys.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\pg
+fkeys.code.tex")
 \pgf@x=\dimen143
 \pgf@y=\dimen144
 \pgf@xa=\dimen145
@@ -626,33 +712,40 @@ Package: pgfsys 2019/08/03 v3.1.4b (3.1.4b)
 \t@pgf@tokc=\toks44
 \pgf@sys@id@count=\count142
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/systemlayer\pgf.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/systemlayer\
+pgf.cfg"
 File: pgf.cfg 2019/08/03 v3.1.4b (3.1.4b)
 )
 Driver file for pgf: pgfsys-pdftex.def
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/systemlayer\pgfsys-pdftex.def"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/systemlayer\
+pgfsys-pdftex.def"
 File: pgfsys-pdftex.def 2019/08/03 v3.1.4b (3.1.4b)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/systemlayer\pgfsys-common-pdf.def
-"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/systemlayer\
+pgfsys-common-pdf.def"
 File: pgfsys-common-pdf.def 2019/08/03 v3.1.4b (3.1.4b)
 )))
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.t
-ex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/systemlayer\
+pgfsyssoftpath.code.tex"
 File: pgfsyssoftpath.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgfsyssoftpath@smallbuffer@items=\count143
 \pgfsyssoftpath@bigbuffer@items=\count144
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/systemlayer\pgfsysprotocol.code.t
-ex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/systemlayer\
+pgfsysprotocol.code.tex"
 File: pgfsysprotocol.code.tex 2019/08/03 v3.1.4b (3.1.4b)
-)) ("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcore.code.tex"
+))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcore.code.tex"
 Package: pgfcore 2019/08/03 v3.1.4b (3.1.4b)
- ("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfmath.code.tex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/math\pgfint.code.tex")
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex
-"
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfmath
+.code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/math\pgfint.
+code.tex")
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorepoints.code.tex"
 File: pgfcorepoints.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgf@picminx=\dimen153
 \pgf@picmaxx=\dimen154
@@ -669,104 +762,112 @@ File: pgfcorepoints.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgf@zx=\dimen165
 \pgf@zy=\dimen166
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorepathconstruct.c
-ode.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorepathconstruct.code.tex"
 File: pgfcorepathconstruct.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgf@path@lastx=\dimen167
 \pgf@path@lasty=\dimen168
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorepathusage.code.
-tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorepathusage.code.tex"
 File: pgfcorepathusage.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgf@shorten@end@additional=\dimen169
 \pgf@shorten@start@additional=\dimen170
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorescopes.code.tex
-"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorescopes.code.tex"
 File: pgfcorescopes.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgfpic=\box46
 \pgf@hbox=\box47
 \pgf@layerbox@main=\box48
 \pgf@picture@serial@count=\count145
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcoregraphicstate.co
-de.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcoregraphicstate.code.tex"
 File: pgfcoregraphicstate.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgflinewidth=\dimen171
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcoretransformations
-.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcoretransformations.code.tex"
 File: pgfcoretransformations.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgf@pt@x=\dimen172
 \pgf@pt@y=\dimen173
 \pgf@pt@temp=\dimen174
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorequick.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorequick.code.tex"
 File: pgfcorequick.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcoreobjects.code.te
-x"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcoreobjects.code.tex"
 File: pgfcoreobjects.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorepathprocessing.
-code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorepathprocessing.code.tex"
 File: pgfcorepathprocessing.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorearrows.code.tex
-"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorearrows.code.tex"
 File: pgfcorearrows.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgfarrowsep=\dimen175
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcoreshade.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcoreshade.code.tex"
 File: pgfcoreshade.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgf@max=\dimen176
 \pgf@sys@shading@range@num=\count146
 \pgf@shadingcount=\count147
-) ("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcoreimage.code.te
-x"
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcoreimage.code.tex"
 File: pgfcoreimage.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcoreexternal.code.t
-ex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcoreexternal.code.tex"
 File: pgfcoreexternal.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgfexternal@startupbox=\box49
 ))
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorelayers.code.tex
-"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorelayers.code.tex"
 File: pgfcorelayers.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcoretransparency.co
-de.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcoretransparency.code.tex"
 File: pgfcoretransparency.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorepatterns.code.t
-ex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorepatterns.code.tex"
 File: pgfcorepatterns.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/basiclayer\pgfcorerdf.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\p
+gfcorerdf.code.tex"
 File: pgfcorerdf.code.tex 2019/08/03 v3.1.4b (3.1.4b)
-))) ("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/modules\pgfmoduleshapes.code.
-tex"
+)))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/modules\pgfm
+oduleshapes.code.tex"
 File: pgfmoduleshapes.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgfnodeparttextbox=\box50
-) ("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/modules\pgfmoduleplot.code.tex"
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/modules\pgfm
+oduleplot.code.tex"
 File: pgfmoduleplot.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/compatibility\pgfcomp-version-0-65.
-sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/compatibility\
+pgfcomp-version-0-65.sty"
 Package: pgfcomp-version-0-65 2019/08/03 v3.1.4b (3.1.4b)
 \pgf@nodesepstart=\dimen177
 \pgf@nodesepend=\dimen178
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/pgf/compatibility\pgfcomp-version-1-18.
-sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/compatibility\
+pgfcomp-version-1-18.sty"
 Package: pgfcomp-version-1-18 2019/08/03 v3.1.4b (3.1.4b)
 ))
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlaye
+r/tikz\tikz.code.tex"
 Package: tikz 2019/08/03 v3.1.4b (3.1.4b)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/libraries\pgflibraryplothandlers.
-code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/libraries\pg
+flibraryplothandlers.code.tex"
 File: pgflibraryplothandlers.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgf@plot@mark@count=\count148
 \pgfplotmarksize=\dimen179
@@ -788,7 +889,8 @@ File: pgflibraryplothandlers.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \tikznumberofcurrentchild=\count151
 \tikz@fig@count=\count152
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/modules\pgfmodulematrix.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/modules\pgfm
+odulematrix.code.tex"
 File: pgfmodulematrix.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 \pgfmatrixcurrentrow=\count153
 \pgfmatrixcurrentcolumn=\count154
@@ -796,28 +898,29 @@ File: pgfmodulematrix.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
 \tikz@expandcount=\count156
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/frontendlayer/tikz/libraries\tikz
-librarytopaths.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlaye
+r/tikz/libraries\tikzlibrarytopaths.code.tex"
 File: tikzlibrarytopaths.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )))
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/frontendlayer/tikz/libraries\tikz
-librarypositioning.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlaye
+r/tikz/libraries\tikzlibrarypositioning.code.tex"
 File: tikzlibrarypositioning.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/frontendlayer/tikz/libraries\tikz
-libraryshadows.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlaye
+r/tikz/libraries\tikzlibraryshadows.code.tex"
 File: tikzlibraryshadows.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/frontendlayer/tikz/libraries\tikz
-libraryfadings.code.tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlaye
+r/tikz/libraries\tikzlibraryfadings.code.tex"
 File: tikzlibraryfadings.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/libraries\pgflibraryfadings.code.
-tex"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/libraries\pg
+flibraryfadings.code.tex"
 File: pgflibraryfadings.code.tex 2019/08/03 v3.1.4b (3.1.4b)
 )))
 \c@@todonotes@numberoftodonotes=\count157
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\lmodern.sty"
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\lmodern.sty"
 Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -852,111 +955,147 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hyperref.sty"
-Package: hyperref 2019/09/12 v6.88i Hypertext links for LaTeX
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\hyperref.
+sty"
+Package: hyperref 2019/11/10 v7.00c Hypertext links for LaTeX
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\hobsub-hyperref.sty"
-Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
-
-
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\hobsub-generic.sty"
-Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
-Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
-Package hobsub Info: Skipping package `infwarerr' (already loaded).
-Package hobsub Info: Skipping package `ltxcmds' (already loaded).
-Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX not detected.
-Package hobsub Info: Skipping package `ifvtex' (already loaded).
-Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
-Package hobsub Info: Skipping package `ifpdf' (already loaded).
-Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
-Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
-Package: pdftexcmds 2019/07/25 v0.30 Utility functions of pdfTeX for LuaTeX (HO
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pdftexcmds\pdftexc
+mds.sty"
+Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
 )
-Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\kvsetke
+ys.sty"
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\etexcmd
+s.sty"
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/iftex\ifluatex.s
+ty"
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+)))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\kvdefin
+ekeys.sty"
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\pdfesca
+pe.sty"
 Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
-Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
 )
-Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
-Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
-)
-Package hobsub Info: Skipping package `hobsub' (already loaded).
-Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
-Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
-Package: xcolor-patch 2016/05/16 xcolor patch
-Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
-Package hobsub Info: Skipping package `atbegshi' (already loaded).
-Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\hycolor.s
+ty"
 Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\xcolor-pa
+tch.sty"
+Package: xcolor-patch 2016/05/16 xcolor patch
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\hopatch.s
+ty"
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+)))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\letltxmac
+ro.sty"
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\auxhook.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\auxhook.s
+ty"
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\kvoptions.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\kvoptions
+.sty"
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
 \@linkdim=\dimen188
 \Hy@linkcounter=\count158
 \Hy@pagecounter=\count159
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\pd1enc.def"
-File: pd1enc.def 2019/09/12 v6.88i Hyperref: PDFDocEncoding definition (HO)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\pd1enc.de
+f"
+File: pd1enc.def 2019/11/10 v7.00c Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\intcalc
+.sty"
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+)
 \Hy@SavedSpaceFactor=\count160
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/00miktex\hyperref.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/00miktex\hyperref.
+cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 442
-4.
-Package hyperref Info: Hyper figures OFF on input line 4550.
-Package hyperref Info: Link nesting OFF on input line 4555.
-Package hyperref Info: Hyper index ON on input line 4558.
-Package hyperref Info: Plain pages OFF on input line 4565.
-Package hyperref Info: Backreferencing OFF on input line 4570.
+Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 440
+9.
+Package hyperref Info: Hyper figures OFF on input line 4535.
+Package hyperref Info: Link nesting OFF on input line 4540.
+Package hyperref Info: Hyper index ON on input line 4543.
+Package hyperref Info: Plain pages OFF on input line 4550.
+Package hyperref Info: Backreferencing OFF on input line 4555.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4803.
+Package hyperref Info: Bookmarks ON on input line 4788.
 \c@Hy@tempcnt=\count161
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/url\url.sty"
+ ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/url\url.sty"
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5156.
+LaTeX Info: Redefining \url on input line 5147.
 \XeTeXLinkMargin=\dimen189
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\bitset.
+sty"
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\bigintc
+alc.sty"
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+))
 \Fld@menulength=\count162
 \Field@Width=\dimen190
 \Fld@charsize=\dimen191
-Package hyperref Info: Hyper figures OFF on input line 6411.
-Package hyperref Info: Link nesting OFF on input line 6416.
-Package hyperref Info: Hyper index ON on input line 6419.
-Package hyperref Info: backreferencing OFF on input line 6426.
-Package hyperref Info: Link coloring OFF on input line 6431.
-Package hyperref Info: Link coloring with OCG OFF on input line 6436.
-Package hyperref Info: PDF/A mode OFF on input line 6441.
-LaTeX Info: Redefining \ref on input line 6481.
-LaTeX Info: Redefining \pageref on input line 6485.
+Package hyperref Info: Hyper figures OFF on input line 6418.
+Package hyperref Info: Link nesting OFF on input line 6423.
+Package hyperref Info: Hyper index ON on input line 6426.
+Package hyperref Info: backreferencing OFF on input line 6433.
+Package hyperref Info: Link coloring OFF on input line 6438.
+Package hyperref Info: Link coloring with OCG OFF on input line 6443.
+Package hyperref Info: PDF/A mode OFF on input line 6448.
+LaTeX Info: Redefining \ref on input line 6488.
+LaTeX Info: Redefining \pageref on input line 6492.
 \Hy@abspage=\count163
 \c@Item=\count164
 \c@Hfootnote=\count165
 )
 Package hyperref Info: Driver: hpdftex.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hpdftex.def"
-File: hpdftex.def 2019/09/12 v6.88i Hyperref driver for pdfTeX
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\hpdftex.d
+ef"
+File: hpdftex.def 2019/11/10 v7.00c Hyperref driver for pdfTeX
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\atveryend
+.sty"
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+)
 \Fld@listcount=\count166
 \c@bookmark@seq@number=\count167
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\rerunfilecheck.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\rerunfile
+check.sty"
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\uniquec
+ounter.sty"
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-82.
+85.
 )
 \Hy@SectionHShift=\skip69
 )
@@ -965,21 +1104,23 @@ Package hyperref Info: Option `linktocpage' set `true' on input line 116.
 Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 116.
 
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\bookmark.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\bookmark.
+sty"
 Package: bookmark 2019/06/04 v1.27 PDF bookmarks (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\bkm-pdftex.def"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\bkm-pdfte
+x.def"
 File: bkm-pdftex.def 2019/06/04 v1.27 bookmark driver for pdfTeX (HO)
 \BKM@id=\count168
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex\biblatex.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex\biblatex.
+sty"
 Package: biblatex 2019/08/31 v3.13a programmable bibliographies (PK/MW)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/logreq\logreq.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/logreq\logreq.sty"
 Package: logreq 2010/08/04 v1.0 xml request logger
 \lrq@indent=\count169
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/logreq\logreq.def"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/logreq\logreq.def"
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
 \c@tabx@nest=\count170
@@ -1033,18 +1174,19 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 \bibhang=\skip77
 \blx@bcfin=\read2
 \blx@bcfout=\write4
-\blx@langwohyphens=\language82
+\blx@langwohyphens=\language78
 \c@mincomprange=\count277
 \c@maxcomprange=\count278
 \c@mincompwidth=\count279
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex\blx-dm.def"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex\blx-dm.de
+f"
 File: blx-dm.def 2019/08/31 v3.13a biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
-Package biblatex Info: ... file 'numeric-comp.dbx' not found.
+Package biblatex Info: ... file 'alphabetic.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \c@afterword=\count280
@@ -1132,13 +1274,15 @@ Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex\blx-compat.def"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex\blx-compa
+t.def"
 File: blx-compat.def 2019/08/31 v3.13a biblatex compatibility (PK/MW)
 )
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex\biblatex.def"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex\biblatex.
+def"
 File: biblatex.def 2019/08/31 v3.13a biblatex compatibility (PK/MW)
 \c@textcitecount=\count348
 \c@textcitetotal=\count349
@@ -1154,37 +1298,32 @@ File: biblatex.def 2019/08/31 v3.13a biblatex compatibility (PK/MW)
 \biburllcskip=\muskip14
 \c@smartand=\count356
 )
-Package biblatex Info: Trying to load bibliography style 'numeric-comp'...
-Package biblatex Info: ... file 'numeric-comp.bbx' found.
+Package biblatex Info: Trying to load bibliography style 'alphabetic'...
+Package biblatex Info: ... file 'alphabetic.bbx' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex/bbx\numeric-comp.bbx"
-File: numeric-comp.bbx 2019/08/31 v3.13a biblatex bibliography style (PK/MW)
-Package biblatex Info: Trying to load bibliography style 'numeric'...
-Package biblatex Info: ... file 'numeric.bbx' found.
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex/bbx\numeric.bbx"
-File: numeric.bbx 2019/08/31 v3.13a biblatex bibliography style (PK/MW)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex/bbx\alpha
+betic.bbx"
+File: alphabetic.bbx 2019/08/31 v3.13a biblatex bibliography style (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex/bbx\standard.bbx"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex/bbx\stand
+ard.bbx"
 File: standard.bbx 2019/08/31 v3.13a biblatex bibliography style (PK/MW)
 \c@bbx:relatedcount=\count357
 \c@bbx:relatedtotal=\count358
-)))
-Package biblatex Info: Trying to load citation style 'numeric-comp'...
-Package biblatex Info: ... file 'numeric-comp.cbx' found.
+))
+Package biblatex Info: Trying to load citation style 'alphabetic'...
+Package biblatex Info: ... file 'alphabetic.cbx' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex/cbx\numeric-comp.cbx"
-File: numeric-comp.cbx 2019/08/31 v3.13a biblatex citation style (PK/MW)
-\c@cbx@tempcnta=\count359
-\c@cbx@tempcntb=\count360
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex/cbx\alpha
+betic.cbx"
+File: alphabetic.cbx 2019/08/31 v3.13a biblatex citation style (PK/MW)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
 Package biblatex Info: Redefining '\footcitetext'.
 Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\supercite'.
 Package biblatex Info: Redefining '\textcite'.
 Package biblatex Info: Redefining '\textcites'.
 Package biblatex Info: Redefining '\cites'.
@@ -1194,70 +1333,80 @@ Package biblatex Info: Redefining '\smartcites'.
 Package biblatex Info: Trying to load configuration file...
 Package biblatex Info: ... file 'biblatex.cfg' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex\biblatex.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex\biblatex.
+cfg"
 File: biblatex.cfg 
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries/base\glossaries.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries/base\gl
+ossaries.sty"
 Package: glossaries 2019/09/28 v4.43 (NLCT)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/mfirstuc\mfirstuc.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/mfirstuc\mfirstuc.
+sty"
 Package: mfirstuc 2017/11/14 v2.06 (NLCT)
 \@glsmfirst=\toks45
 \@glsmrest=\toks46
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/textcase\textcase.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/textcase\textcase.
+sty"
 Package: textcase 2019/09/14 v1.00 Text only upper/lower case changing (DPC)
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/xfor\xfor.sty"
+) ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xfor\xfor.sty"
 Package: xfor 2009/02/05 v1.05 (NLCT)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/datatool\datatool-base.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/datatool\datatool-
+base.sty"
 Package: datatool-base 2019/09/27 v2.32 (NLCT)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsmath.sty"
-Package: amsmath 2018/12/01 v2.17b AMS math features
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsmath.st
+y"
+Package: amsmath 2019/11/16 v2.17d AMS math features
 \@mathmargin=\skip92
 
 For additional information on amsmath, use the `?' option.
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amstext.sty"
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amstext.st
+y"
 Package: amstext 2000/06/29 v2.01 AMS text
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsgen.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsgen.sty
+"
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks47
 \ex@=\dimen192
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsbsy.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsbsy.sty
+"
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen193
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsopn.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsopn.sty
+"
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count361
-LaTeX Info: Redefining \frac on input line 223.
-\uproot@=\count362
-\leftroot@=\count363
-LaTeX Info: Redefining \overline on input line 385.
-\classnum@=\count364
-\DOTSCASE@=\count365
-LaTeX Info: Redefining \ldots on input line 482.
-LaTeX Info: Redefining \dots on input line 485.
-LaTeX Info: Redefining \cdots on input line 606.
+\inf@bad=\count359
+LaTeX Info: Redefining \frac on input line 227.
+\uproot@=\count360
+\leftroot@=\count361
+LaTeX Info: Redefining \overline on input line 389.
+\classnum@=\count362
+\DOTSCASE@=\count363
+LaTeX Info: Redefining \ldots on input line 486.
+LaTeX Info: Redefining \dots on input line 489.
+LaTeX Info: Redefining \cdots on input line 610.
 \Mathstrutbox@=\box55
 \strutbox@=\box56
 \big@size=\dimen194
-LaTeX Font Info:    Redeclaring font encoding OML on input line 729.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
-\macc@depth=\count366
-\c@MaxMatrixCols=\count367
+LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
+\macc@depth=\count364
+\c@MaxMatrixCols=\count365
 \dotsspace@=\muskip15
-\c@parentequation=\count368
-\dspbrk@lvl=\count369
+\c@parentequation=\count366
+\dspbrk@lvl=\count367
 \tag@help=\toks48
-\row@=\count370
-\column@=\count371
-\maxfields@=\count372
+\row@=\count368
+\column@=\count369
+\maxfields@=\count370
 \andhelp@=\toks49
 \eqnshift@=\dimen195
 \alignsep@=\dimen196
@@ -1269,93 +1418,92 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
 \multlinegap=\skip93
 \multlinetaggap=\skip94
 \mathdisplay@stack=\toks51
-LaTeX Info: Redefining \[ on input line 2844.
-LaTeX Info: Redefining \] on input line 2845.
+LaTeX Info: Redefining \[ on input line 2858.
+LaTeX Info: Redefining \] on input line 2859.
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/substr\substr.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/substr\substr.sty"
 Package: substr 2009/10/20 v1.2 Handle substrings
-\c@su@anzahl=\count373
+\c@su@anzahl=\count371
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/datatool\datatool-fp.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/datatool\datatool-
+fp.sty"
 Package: datatool-fp 2019/09/27 v2.32 (NLCT)
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp.sty"
+ ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp.sty"
 Package: fp 1995/04/02
-
 `Fixed Point Package', Version 0.8, April 2, 1995 (C) Michael Mehlich
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\defpattern.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\defpattern.sty"
 Package: defpattern 1994/10/12
-\actioncount=\count374
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-basic.sty"
+\actioncount=\count372
+) ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-basic.sty"
 Package: fp-basic 1996/05/13
-\FP@xs=\count375
-\FP@xia=\count376
-\FP@xib=\count377
-\FP@xfa=\count378
-\FP@xfb=\count379
-\FP@rega=\count380
-\FP@regb=\count381
-\FP@regs=\count382
-\FP@times=\count383
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-addons.sty"
+\FP@xs=\count373
+\FP@xia=\count374
+\FP@xib=\count375
+\FP@xfa=\count376
+\FP@xfb=\count377
+\FP@rega=\count378
+\FP@regb=\count379
+\FP@regs=\count380
+\FP@times=\count381
+) ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-addons.sty
+"
 Package: fp-addons 1995/03/15
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-snap.sty"
+) ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-snap.sty"
 Package: fp-snap 1995/04/05
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-exp.sty"
+) ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-exp.sty"
 Package: fp-exp 1995/04/03
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-trigo.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-trigo.sty"
 Package: fp-trigo 1995/04/14
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-pas.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-pas.sty"
 Package: fp-pas 1994/08/29
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-random.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-random.sty"
 Package: fp-random 1995/02/23
-\FPseed=\count384
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-eqn.sty"
+\FPseed=\count382
+) ("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-eqn.sty"
 Package: fp-eqn 1995/04/03
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-upn.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-upn.sty"
 Package: fp-upn 1996/10/21
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/fp\fp-eval.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/fp\fp-eval.sty"
 Package: fp-eval 1995/04/03
 )))
 \@dtl@toks=\toks52
-\@dtl@tmpcount=\count385
+\@dtl@tmpcount=\count383
 \dtl@tmplength=\skip95
-\dtl@sortresult=\count386
-\@dtl@numgrpsepcount=\count387
-\@dtl@datatype=\count388
-\dtl@codeA=\count389
-\dtl@codeB=\count390
-\@dtl@foreach@level=\count391
+\dtl@sortresult=\count384
+\@dtl@numgrpsepcount=\count385
+\@dtl@datatype=\count386
+\dtl@codeA=\count387
+\dtl@codeB=\count388
+\@dtl@foreach@level=\count389
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries/base\glossaries-compatible-3
-07.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries/base\gl
+ossaries-compatible-307.sty"
 Package: glossaries-compatible-307 2019/09/28 v4.43 (NLCT)
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/tracklang\tracklang.sty"
-Package: tracklang 2019/10/06 v1.3.8 (NLCT) Track Languages
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tracklang\tracklan
+g.sty"
+Package: tracklang 2019/11/30 v1.4 (NLCT) Track Languages
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/tracklang\tracklang.tex"))
-("C:\Program Files\MiKTeX 2.9\tex/latex/translator\translator.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/tracklang\trackl
+ang.tex"))
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/translator\transla
+tor.sty"
 Package: translator 2019-05-31 v1.12a Easy translation of strings in LaTeX
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries-german\glossaries-german.ldf
-"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries-german\
+glossaries-german.ldf"
 File: glossaries-german.ldf 2014/11/23 v1.0
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries-english\glossaries-english.l
-df"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries-english
+\glossaries-english.ldf"
 File: glossaries-english.ldf 2014/11/23 v1.0
 )
-\gls@level=\count392
+\gls@level=\count390
 \@gls@tmpb=\toks53
 \gls@tmplen=\skip96
 \glskeylisttok=\toks54
@@ -1363,22 +1511,29 @@ File: glossaries-english.ldf 2014/11/23 v1.0
 \glsshorttok=\toks56
 \glslongtok=\toks57
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries/styles\glossary-hypernav.sty
-"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries/styles\
+glossary-hypernav.sty"
 Package: glossary-hypernav 2019/09/28 v4.43 (NLCT)
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries/styles\glossary-list.sty"
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries/styles\
+glossary-list.sty"
 Package: glossary-list 2019/09/28 v4.43 (NLCT)
 \glslistdottedwidth=\skip97
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries/styles\glossary-long.sty"
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries/styles\
+glossary-long.sty"
 Package: glossary-long 2019/09/28 v4.43 (NLCT)
 \glsdescwidth=\skip98
 \glspagelistwidth=\skip99
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries/styles\glossary-super.sty"
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries/styles\
+glossary-super.sty"
 Package: glossary-super 2019/09/28 v4.43 (NLCT)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/supertabular\supertabular.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/supertabular\super
+tabular.sty"
 Package: supertabular 2004/02/20 v4.1e the supertabular environment
-\c@tracingst=\count393
+\c@tracingst=\count391
 \ST@wd=\dimen257
 \ST@rightskip=\skip100
 \ST@leftskip=\skip101
@@ -1395,23 +1550,29 @@ Package: supertabular 2004/02/20 v4.1e the supertabular environment
 \ST@dimen=\dimen267
 \ST@pbox=\box57
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/glossaries/styles\glossary-tree.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/glossaries/styles\
+glossary-tree.sty"
 Package: glossary-tree 2019/09/28 v4.43 (NLCT)
 \glstreeindent=\skip103
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstlang1.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstlang1.
+sty"
 File: lstlang1.sty 2019/09/10 1.8c listings language file
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstlang2.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstlang2.
+sty"
 File: lstlang2.sty 2019/09/10 1.8c listings language file
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstmisc.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstmisc.s
+ty"
 File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\amsfonts.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\amsfonts.
+sty"
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
@@ -1421,34 +1582,36 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 
 Package glossaries Info: Writing glossary file dokumentation.glo on input line 
 16.
-
-(ads/glossary.tex)
+ (ads/glossary.tex)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package biblatex Info: Trying to load language 'ngerman'...
 Package biblatex Info: ... file 'ngerman.lbx' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex/lbx\ngerman.lbx"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex/lbx\ngerm
+an.lbx"
 File: ngerman.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
 Package biblatex Info: Trying to load language 'german'...
 Package biblatex Info: ... file 'german.lbx' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex/lbx\german.lbx"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex/lbx\germa
+n.lbx"
 File: german.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load language 'german'...
 Package biblatex Info: ... file 'german.lbx' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex/lbx\german.lbx"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex/lbx\germa
+n.lbx"
 File: german.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
 ))
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/biblatex/lbx\english.lbx"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/biblatex/lbx\engli
+sh.lbx"
 File: english.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
-)
-(dokumentation.aux)
+) (dokumentation.aux)
 \openout1 = `dokumentation.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
@@ -1465,8 +1628,10 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 19.
- ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\t1lmr.fd"
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 19
+.
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmr.fd"
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 Package nag Info: pgf.sty is broken: disabling dollar check on input line 19.
@@ -1521,58 +1686,72 @@ Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
+LaTeX Info: Redefining \showhyphens on input line 19.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
-("C:\Program Files\MiKTeX 2.9\tex/latex/microtype\mt-cmr.cfg"
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/microtype\mt-cmr.c
+fg"
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-("C:\Program Files\MiKTeX 2.9\tex/context/base/mkii\supp-pdf.mkii"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-p
+df.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count394
+\scratchcounter=\count392
 \scratchdimen=\dimen268
 \scratchbox=\box58
-\nofMPsegments=\count395
-\nofMParguments=\count396
+\nofMPsegments=\count393
+\nofMParguments=\count394
 \everyMPshowfont=\toks58
-\MPscratchCnt=\count397
+\MPscratchCnt=\count395
 \MPscratchDim=\dimen269
-\MPnumerator=\count398
-\makeMPintoPDFobject=\count399
+\MPnumerator=\count396
+\makeMPintoPDFobject=\count397
 \everyMPtoPDFconversion=\toks59
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\epstopdf-base.sty"
-Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/epstopdf-pkg\epsto
+pdf-base.sty"
+Package: epstopdf-base 2019/11/24 v2.7 Base part for package epstopdf
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\grfext.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\grfext.st
+y"
 Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
 )
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-38.
+42.
 Package grfext Info: Graphics extension search list:
 (grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 456.
+(grfext)             \AppendGraphicsExtensions on input line 460.
 )
 \AtBeginShipoutBox=\box59
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\pdflscape.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\pdflscape
+.sty"
 Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\lscape.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\lscape.st
+y"
 Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
-))
-ABD: EveryShipout initializing macros
-\c@lstlisting=\count400
+)) ABD: EveryShipout initializing macros
+\c@lstlisting=\count398
 Package hyperref Info: Link coloring ON on input line 19.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty"
-Package: nameref 2019/09/12 v2.45 Cross-referencing by name of section
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\nameref.s
+ty"
+Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\gettitlestring.sty"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\refcount.
+sty"
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+)
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\gettitl
+estring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count401
+\c@section@level=\count399
 )
 LaTeX Info: Redefining \ref on input line 19.
 LaTeX Info: Redefining \pageref on input line 19.
@@ -1584,8 +1763,7 @@ Package biblatex Info: Data encoding 'utf8' specified.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'dokumentation.bbl' found.
-
-(dokumentation.bbl)
+ (dokumentation.bbl)
 Package biblatex Info: Reference section=0 on input line 19.
 Package biblatex Info: Reference segment=0 on input line 19.
 Package nag Info: Command \caption@xlabel not defined, skipping amendment on in
@@ -1605,9 +1783,10 @@ Package pdftex.def Info: images/dhbw.jpg  used on input line 4.
 
 {C:/Users/olive/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./images/dh
 bw.jpg>])
-LaTeX Font Info:    Try loading font information for T1+lmss on input line 58.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 5
+8.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/lm\t1lmss.fd"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmss.fd"
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 Package microtype Info: Loading generic protrusion settings for font family
@@ -1616,27 +1795,30 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 Package tocbasic Info: character protrusion at toc deactivated on input line 58
 .
- (dokumentation.toc
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 12.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/lm\ot1lmr.fd"
+(dokumentation.toc
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+2.
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 12.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+2.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/lm\omllmm.fd"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omllmm.fd"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 12.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+12.
 
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/lm\omslmsy.fd"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omslmsy.fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 12.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+12.
 
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/lm\omxlmex.fd"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omxlmex.fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -1645,20 +1827,24 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 12.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 12.
-LaTeX Font Info:    Try loading font information for U+msa on input line 12.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 12.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/microtype\mt-msa.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/microtype\mt-msa.c
+fg"
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 12.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 12.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
+
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/microtype\mt-msb.cfg"
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/microtype\mt-msb.c
+fg"
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ))
 \tf@toc=\write7
@@ -1666,8 +1852,7 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
  [1
 
-]
-(ads/acronyms.tex
+] (ads/acronyms.tex
 chapter without number
 
 Class scrreprt Warning: \float@addtolists detected!
@@ -1716,8 +1901,9 @@ LaTeX Warning: Citation 'KB14' on page 1 undefined on input line 5.
 
 LaTeX Warning: Citation 'SK18' on page 1 undefined on input line 7.
 
-LaTeX Font Info:    Try loading font information for OMS+lmr on input line 9.
-("C:\Program Files\MiKTeX 2.9\tex/latex/lm\omslmr.fd"
+LaTeX Font Info:    Trying to load font information for OMS+lmr on input line 9
+.
+("C:\Users\olive\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omslmr.fd"
 File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <12> not available
@@ -1735,7 +1921,7 @@ been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.32 I
-      n der Tabelle \ref{tbl_prop_logic} ist die Wahrheitstabelle für die R...
+      n der Tabelle \ref{tbl_prop_logic} ist die Wahrheitstabelle für die r...
 [1
 
 
@@ -1818,7 +2004,7 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 LaTeX Warning: Citation 'KB14' on page 7 undefined on input line 157.
 
-<images/Tableaux_And_Prop_Logic.png, id=159, 432.11438pt x 310.15875pt>
+<images/Tableaux_And_Prop_Logic.png, id=163, 432.11438pt x 310.15875pt>
 File: images/Tableaux_And_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_And_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_And_Prop_Logic.png  used on input line
@@ -1830,7 +2016,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 Package nag Warning: `center' environment in figure.
 (nag)                Maybe you want \centering instead on input line 164.
 
-<images/Tableaux_Or_Prop_Logic.png, id=163, 432.11438pt x 310.15875pt>
+<images/Tableaux_Or_Prop_Logic.png, id=167, 432.11438pt x 310.15875pt>
 File: images/Tableaux_Or_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_Or_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_Or_Prop_Logic.png  used on input line 
@@ -1845,7 +2031,7 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
 [7 <./images/Tableaux_And_Prop_Logic.png>]
-<images/Tableaux_Rules_Prop_Logic.png, id=171, 1028.34187pt x 392.21532pt>
+<images/Tableaux_Rules_Prop_Logic.png, id=175, 1028.34187pt x 392.21532pt>
 File: images/Tableaux_Rules_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_Rules_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_Rules_Prop_Logic.png  used on input li
@@ -1874,7 +2060,7 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
 [8 <./images/Tableaux_Or_Prop_Logic.png>]
-<images/Tableaux_Rules_Pred_Logic.png, id=180, 339.51843pt x 346.29375pt>
+<images/Tableaux_Rules_Pred_Logic.png, id=184, 339.51843pt x 346.29375pt>
 File: images/Tableaux_Rules_Pred_Logic.png Graphic file (type png)
 <use images/Tableaux_Rules_Pred_Logic.png>
 Package pdftex.def Info: images/Tableaux_Rules_Pred_Logic.png  used on input li
@@ -1896,8 +2082,14 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 LaTeX Warning: Citation 'B62' on page 10 undefined on input line 207.
 
+<images/Tableaux_Impl_IPC.png, id=192, 467.49657pt x 310.15875pt>
+File: images/Tableaux_Impl_IPC.png Graphic file (type png)
+<use images/Tableaux_Impl_IPC.png>
+Package pdftex.def Info: images/Tableaux_Impl_IPC.png  used on input line 221.
+(pdftex.def)             Requested size: 327.24536pt x 217.10963pt.
 
-LaTeX Warning: Citation 'DGHP99' on page 10 undefined on input line 222.
+Package nag Warning: `center' environment in figure.
+(nag)                Maybe you want \centering instead on input line 224.
 
 
 Overfull \vbox (7.89444pt too high) has occurred while \output is active []
@@ -1905,11 +2097,20 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 [10 <./images/Tableaux_Rules_Pred_Logic.png>]
 
-LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 224.
+LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 230.
 
 
-LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 226.
+LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 232.
 
+
+LaTeX Warning: Citation 'DGHP99' on page 11 undefined on input line 234.
+
+) (content/02kapitel.tex
+Overfull \vbox (7.89444pt too high) has occurred while \output is active []
+
+
+[11 <./images/Tableaux_Impl_IPC.png>]
+chapter 2.
 )
 
 LaTeX Warning: Empty bibliography on input line 100.
@@ -1920,13 +2121,11 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 This document will not have a glossary.
 
 
-Package nag Warning: 7 complaints in total.
+Package nag Warning: 8 complaints in total.
 
+[12
 
-Overfull \vbox (7.89444pt too high) has occurred while \output is active []
-
-
-[11]
+]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 110.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 110.
  (dokumentation.aux)
@@ -1935,6 +2134,9 @@ Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 110.
 
 
 LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 
 Package biblatex Warning: Please (re)run Biber on the file:
@@ -1946,29 +2148,33 @@ Package logreq Info: Writing requests to 'dokumentation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39402 strings out of 492895
- 740759 string characters out of 3133478
- 1472622 words of memory out of 3000000
- 42389 multiletter control sequences out of 15000+200000
- 80370 words of font info for 121 fonts, out of 3000000 for 9000
+ 39905 strings out of 492484
+ 761860 string characters out of 3121601
+ 1480963 words of memory out of 3000000
+ 43260 multiletter control sequences out of 15000+200000
+ 80734 words of font info for 125 fonts, out of 3000000 for 9000
  1143 hyphenation exceptions out of 8191
- 72i,10n,88p,10093b,2280s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Fil
-es/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program Files/MiKTeX 2.9/fonts/e
-nc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy
-.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Program 
-Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Program Files/MiKTeX 2.9/
-fonts/type1/public/lm/lmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/lm/lmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiK
-TeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/lm/lmri12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmro12
-.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Progra
-m Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on dokumentation.pdf (16 pages, 337278 bytes).
+ 73i,10n,90p,10093b,2280s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathi
+t.enc}{C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-e
+c.enc}{C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-r
+m.enc}{C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-m
+athsy.enc}<C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
+lm/lmbx12.pfb><C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/lm/lmmi10.pfb><C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
+/public/lm/lmmi12.pfb><C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/public/lm/lmmi8.pfb><C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/lm/lmr10.pfb><C:/Users/olive/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/public/lm/lmr12.pfb><C:/Users/olive/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/public/lm/lmr8.pfb><C:/Users/olive/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/lm/lmri12.pfb><C:/Users/olive/AppData/Local/Programs/MiK
+TeX 2.9/fonts/type1/public/lm/lmro12.pfb><C:/Users/olive/AppData/Local/Programs
+/MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/olive/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Users/olive/AppData/Loca
+l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on dokumentation.pdf (17 pages, 344744 bytes).
 PDF statistics:
- 280 PDF objects out of 1000 (max. 8388607)
- 57 named destinations out of 1000 (max. 500000)
- 26310 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 294 PDF objects out of 1000 (max. 8388607)
+ 60 named destinations out of 1000 (max. 500000)
+ 26323 words of extra memory for PDF output out of 29859 (max. 10000000)
 

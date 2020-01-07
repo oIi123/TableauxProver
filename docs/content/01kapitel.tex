@@ -137,7 +137,7 @@ Dieses logische Paradigma ist insbesondere zur mathematischen Schlussfolgerung, 
 \subsection{\label{impl_in_intu}Implikation im Intuitionismus}
 Eine Implikation $\alpha\rightarrow\beta$, kann im Intuitionismus als ``\textit{Wenn $\alpha$ beweisbar ist, kann daraus ein Beweis für $\beta$ abgeleitet werden.}'', betrachtet werden. Im Vergleich dazu, lautet die klassische Interpretation ``\textit{Wenn $\alpha$ zutrifft, dann trifft $\beta$ zu.}'' \cite{B62}.
 
-Für die Tableaux-Bildung hat dies eine ganz andere Betrachtungsweise zur Folge wie im Abschnitt \ref{tableaux_impl_descr} erarbeitet wird.
+Für die Tableau-Bildung hat dies eine ganz andere Betrachtungsweise zur Folge wie im Abschnitt \ref{tableaux_impl_descr} erarbeitet wird.
 
 \subsection{\label{intu_non_proof_sentence}Nicht beweisbarer Satz $\perp$}
 Die einzige Anpassung der Syntax, die von klassischer Aussagenlogik zur nichtklassischen Aussagenlogik bzw. von klassischer Prädikatenlogik zu nichtklassischer Prädikatenlogik vorgenommen werden muss, ist die Einführung eines nicht beweisbaren Satzes $\perp$. Dies ist für die Behandlung von Negationen in Tableaux notwendig. Der Satz $\neg\alpha$ ist Äquivalent zu $\alpha\rightarrow\perp$. Wenn ein Beweis für $\alpha$ gefunden werden kann, ist daraus auch ein Beweis für $\perp$ abgeleitet werden. Da es per Definition keinen Beweis für $\perp$ geben kann, ist dies Äquivalent zur Nichtbeweisbarkeit von $\alpha$ \cite{DGHP99}.
@@ -145,31 +145,31 @@ Die einzige Anpassung der Syntax, die von klassischer Aussagenlogik zur nichtkla
 Zudem ist der Satz $\perp\rightarrow\alpha$ für jedes $\alpha$ immer beweisbar. Denn wenn ein Beweis für $\perp$ gefunden werden kann, kann daraus ein Beweis für jede andere Aussage abgeleitet werden \cite{DGHP99}.
 
 \section{Tableaux}
-Ein Tableaux ist eine beweistheoretische Entscheidungsmethode, mit der in verschiedenen Logiken eine Aussage auf Gültigkeit, also auf Tautologie, mit berechenbaren Schritten geprüft werden kann \cite{DGHP99}. In den folgenden Abschnitten werden Tableaux für die oben vorgestellten Logiken vorgestellt.
+Ein Tableau ist eine beweistheoretische Entscheidungsmethode, mit der in verschiedenen Logiken eine Aussage auf Gültigkeit, also auf Tautologie, mit berechenbaren Schritten geprüft werden kann \cite{DGHP99}. In den folgenden Abschnitten werden Tableaux für die oben vorgestellten Logiken vorgestellt.
 
-Ein Tableaux, in der in dieser Arbeit verwendeten Variante nach \cite{BK82}, besteht aus zwei Seiten. In klassischer Logik sind diese die Wahr- und die Falsch-Seite. In nichtklassischer wären diese Annahmen und Folgerungen. Auf den beiden Seiten befinden sich jeweils Aussagen, aus denen mit definierten Regeln weitere Aussagen auf den beiden Seiten erzeugt werden. Wurden die Regeln auf eine Aussage angewandt, ist diese abgearbeitet und wird im weiteren Verlauf der Abarbeitung nicht mehr betrachtet (Nicht immer siehe z.B. \ref{tableaux_classic_pred}).
+Ein Tableau, in der in dieser Arbeit verwendeten Variante nach \cite{BK82}, besteht aus zwei Seiten. In klassischer Logik sind diese die Wahr- und die Falsch-Seite. In nichtklassischer wären diese Annahmen und Folgerungen. Auf den beiden Seiten befinden sich jeweils Aussagen, aus denen mit definierten Regeln weitere Aussagen auf den beiden Seiten erzeugt werden. Wurden die Regeln auf eine Aussage angewandt, ist diese abgearbeitet und wird im weiteren Verlauf der Abarbeitung nicht mehr betrachtet (Nicht immer siehe z.B. \ref{tableaux_classic_pred}).
 
-Allgemein wird ein Tableaux immer durch induktive Anwendung von Ableitungsregeln gebildet. Die Regeln und zu betrachtende Nebenbedingungen unterscheiden sich dabei allerdings in den einzelnen Logiken.
+Allgemein wird ein Tableau immer durch induktive Anwendung von Ableitungsregeln gebildet. Die Regeln und zu betrachtende Nebenbedingungen unterscheiden sich dabei allerdings in den einzelnen Logiken.
 
 \subsection{Klassische Aussagenlogik}
-Die Regeln, nach denen ein Tableaux in klassischer Aussagenlogik gebildet wird, können wie folgt hergeleitet werden. Wird eine Aussage $\gamma$ betrachtet, wird der Junktor, sowie die Aussage(n) aus denen sich $\gamma$ zusammensetzt angeschaut. Je nach Seite (wahr/falsch) wird nun betrachtet, welche Werte die einzelnen Aussagen annehmen müssen, um den Wert der Seite (wahr/falsch) zu erzeugen. Die Regeln leiten sich also direkt aus den Wahrheitstabellen (\ref{tbl_prop_logic}) ab.
+Die Regeln, nach denen ein Tableau in klassischer Aussagenlogik gebildet wird, können wie folgt hergeleitet werden. Wird eine Aussage $\gamma$ betrachtet, wird der Junktor, sowie die Aussage(n) aus denen sich $\gamma$ zusammensetzt angeschaut. Je nach Seite (wahr/falsch) wird nun betrachtet, welche Werte die einzelnen Aussagen annehmen müssen, um den Wert der Seite (wahr/falsch) zu erzeugen. Die Regeln leiten sich also direkt aus den Wahrheitstabellen (\ref{tbl_prop_logic}) ab.
 
 Betrachten wir beispielsweise die Aussage $\alpha\wedge\beta$ auf der Wahr-Seite. Nach Wahrheitstabelle \ref{tbl_prop_logic}, muss sowohl $\alpha$ als auch $\beta$ den Wahrheitswert wahr annehmen, damit die Aussage wahr ist. Es wird also sowohl $\alpha$, als auch $\beta$ auf die Wahr-Seite geschrieben. Um die Abarbeitung der Aussage zu notieren, wird diese unterstrichen \cite{KB14}. Siehe Abbildung \ref{tableaux_prop_and}.
 
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_And_Prop_Logic.png}
-\caption{Tableaux der Aussage $\alpha\wedge\beta$ in klassischer Logik. Links: Tableaux vor Anwendung der Ableitungsregel. Rechts: Tableaux nach Anwendung der Ableitungsregel.}
+\caption{Tableaux der Aussage $\alpha\wedge\beta$ in klassischer Logik. Links: Tableau vor Anwendung der Ableitungsregel. Rechts: Tableau nach Anwendung der Ableitungsregel.}
 \label{tableaux_prop_and}
 \end{center}
 \end{figure}
 
-Damit kann schon der Großteil der Ableitungsregeln hergeleitet werden. Eine Ausnahme stellt die Situation dar, bei der beispielsweise $\alpha\vee\beta$ auf der Wahr-Seite steht. Es gibt mehrere Möglichkeiten mit denen diese Aussage wahr wird. Es kann entweder $\alpha$ oder $\beta$ wahr sein. In einer solchen Situation wird das Tableaux in zwei voneinander unabhängige Pfade aufgeteilt. In beiden müssen alle noch nicht abgearbeiteten Aussagen unabhängig voneinander abgearbeitet werden. Siehe Abbildung \ref{tableaux_prop_or}. Die übrigen Ableitungsregeln sind in Abbildung \ref{tableaux_class_prop_all_rules} dargestellt.
+Damit kann schon der Großteil der Ableitungsregeln hergeleitet werden. Eine Ausnahme stellt die Situation dar, bei der beispielsweise $\alpha\vee\beta$ auf der Wahr-Seite steht. Es gibt mehrere Möglichkeiten mit denen diese Aussage wahr wird. Es kann entweder $\alpha$ oder $\beta$ wahr sein. In einer solchen Situation wird das Tableau in zwei voneinander unabhängige Pfade aufgeteilt. In beiden müssen alle noch nicht abgearbeiteten Aussagen unabhängig voneinander abgearbeitet werden. Siehe Abbildung \ref{tableaux_prop_or}. Die übrigen Ableitungsregeln sind in Abbildung \ref{tableaux_class_prop_all_rules} dargestellt.
 
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_Or_Prop_Logic.png}
-\caption{Tableaux der Aussage $\alpha\vee\beta$ in klassischer Logik. Links: Tableaux vor Anwendung der Ableitungsregel. Rechts: Tableaux nach Anwendung der Ableitungsregel.}
+\caption{Tableaux der Aussage $\alpha\vee\beta$ in klassischer Logik. Links: Tableau vor Anwendung der Ableitungsregel. Rechts: Tableau nach Anwendung der Ableitungsregel.}
 \label{tableaux_prop_or}
 \end{center}
 \end{figure}
@@ -182,7 +182,7 @@ Damit kann schon der Großteil der Ableitungsregeln hergeleitet werden. Eine Aus
 \end{center}
 \end{figure}
 
-Die Ableitungsregeln werden wiederholt, bis keine weiteren nicht abgearbeiteten Aussagen (nicht unterstrichen) übrig sind, oder eine Aussage sowohl auf der Wahr- als auch auf der Falsch-Seite steht. In einem solchen Fall, gilt der Pfad als geschlossen und wird mit einem doppelten Unterstrich unter der Trennlinie zwischen den beiden Seiten dargestellt. Sind alle Pfade eines Tableaux geschlossen, wurde damit bewiesen, dass es keine Möglichkeit gibt, mit der die ursprüngliche Aussage den gegebenen Wahrheitswert annimmt. Will man also eine Aussage auf Tautologie untersuchen, beginnt man mit der Aussage auf der Falsch-Seite, schließt das Tableaux wurde durch Kontradiktion bewiesen, dass die Aussage eine Tautologie ist. Bleibt ein Pfad offen, so wurde ein Gegenbeispiel durch die Atome auf der Wahr- und Falsch-Seite konstruiert \cite{KB14}.
+Die Ableitungsregeln werden wiederholt, bis keine weiteren nicht abgearbeiteten Aussagen (nicht unterstrichen) übrig sind, oder eine Aussage sowohl auf der Wahr- als auch auf der Falsch-Seite steht. In einem solchen Fall, gilt der Pfad als geschlossen und wird mit einem doppelten Unterstrich unter der Trennlinie zwischen den beiden Seiten dargestellt. Sind alle Pfade eines Tableau geschlossen, wurde damit bewiesen, dass es keine Möglichkeit gibt, mit der die ursprüngliche Aussage den gegebenen Wahrheitswert annimmt. Will man also eine Aussage auf Tautologie untersuchen, beginnt man mit der Aussage auf der Falsch-Seite, schließt das Tableau wurde durch Kontradiktion bewiesen, dass die Aussage eine Tautologie ist. Bleibt ein Pfad offen, so wurde ein Gegenbeispiel durch die Atome auf der Wahr- und Falsch-Seite konstruiert \cite{KB14}.
 
 \subsection{\label{tableaux_classic_pred}Klassische Prädikatenlogik 1. Ordnung}
 Da die klassische Prädikatenlogik 1. Ordnung eine Erweiterung der Aussagenlogik ist, können die in Abbildung \ref{tableaux_classic_pred} vorgestellten Regeln dafür ebenfalls angewandt werden. Die Quantoren benötigen allerdings eine gesonderte Betrachtung. Zur einfacheren Behandlung dieser Regeln führen wir folgende Notation ein ``$\alpha$[t/x]''. Diese besagt, jedes Vorkommnis der Variable x in $\alpha$ wird durch t ersetzt \cite{DGHP99}.
@@ -214,7 +214,15 @@ Komplizierter und vor allem anders als in der klassischen Logik, ist die Ableitu
 
 \textbf{Beachte:} Im ersten Subproblem ist $\gamma$ \textbf{nicht} in der Folgerungsmenge enthalten ist.
 
-Es wird also erforderlich, die Aussagenmengen auf den beiden Seiten nach einer Ableitungsregel zu reduzieren. Semantisch wird dies im Tableaux durch einen horizontalen Strich dargestellt unter dem beide Mengen neu definiert werden.
+Es wird also erforderlich, die Aussagenmengen auf den beiden Seiten nach einer Ableitungsregel zu reduzieren. Semantisch wird dies im Tableau durch einen horizontalen Strich dargestellt unter dem beide Mengen neu definiert werden. Die Ableitung der Implikation wird in Abbildung \ref{tableaux_impl_ipc} dargestellt, P und C stehen hierbei für Premisses (dt.: Prämissen) und Conclusions (dt.: Folgerungen).
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.7]{images/Tableaux_Impl_IPC.png}
+\caption{Tableau Ableitungsregel der Implikation in nichtklassischer Aussagenlogik}
+\label{tableaux_impl_ipc}
+\end{center}
+\end{figure}
 
 Bei Betrachtung der Negation, wird wie bereits in Abschnitt \ref{intu_non_proof_sentence} erwähnt wurde, die Negation $\neg\alpha$ durch $\alpha\rightarrow\perp$ substituiert. Bei einem automatischen Beweisverfahren, wird die Negation auf eine etwas andere Weise behandelt, wie in Abschnitt \textbf{EINFÜGEN!!!!} erarbeitet wird. Die sonstigen Ableitungsregeln sind allerdings Äquivalent zur klassischen Logik.
 
