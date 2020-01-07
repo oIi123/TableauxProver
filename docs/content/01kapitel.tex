@@ -227,11 +227,20 @@ Es wird also erforderlich, die Aussagenmengen auf den beiden Seiten nach einer A
 Bei Betrachtung der Negation, wird wie bereits in Abschnitt \ref{intu_non_proof_sentence} erwähnt wurde, die Negation $\neg\alpha$ durch $\alpha\rightarrow\perp$ substituiert. Bei einem automatischen Beweisverfahren, wird die Negation auf eine etwas andere Weise behandelt, wie in Abschnitt \textbf{EINFÜGEN!!!!} erarbeitet wird. Die sonstigen Ableitungsregeln sind allerdings Äquivalent zur klassischen Logik.
 
 \subsection{Nichtklassische Prädikatenlogik}
-Die nichtklassische Prädikatenlogik, welche Äquivalent zur klassischen Logik eine Erweiterung der nichtklassischen Aussagenlogik ist, bedarf einer Behandlung der Quantoren.   Für den Allquantor in der Folgerungsmenge bzw. den Existenzquantor in der Prämissenmenge, gelten die Äquivalenten Regeln zur klassischen Prädikatenlogik. Aus $\forall$x $\alpha$ wird für jede Konstante t $\alpha$[x/t] zur Prämissenmenge hinzugefügt \cite{DGHP99}.
+Die nichtklassische Prädikatenlogik, welche Äquivalent zur klassischen Logik eine Erweiterung der nichtklassischen Aussagenlogik ist, bedarf einer Behandlung der Quantoren. Für den Allquantor in der Prämissenmenge bzw. den Existenzquantor in der Folgerungsmenge, gelten die Äquivalenten Regeln zur klassischen Prädikatenlogik. Aus $\forall$x $\alpha$ wird für jede Konstante t $\alpha$[x/t] zur Prämissenmenge hinzugefügt \cite{DGHP99}.
 
-Steht jedoch $\forall$x $\alpha$ in der Prämissenmenge, wird die Prämissenmenge \{$\alpha$[x/a]\} abgeleitet, wobei a eine noch nicht existierende Konstante ist. Das heißt, ähnlich der Implikationsregel wird die Prämissenmenge auf \{$\alpha$[x/a]\} reduziert \cite{DGHP99}.
+Steht jedoch $\forall$x $\alpha$ in der Folgerungsmenge, wird die Folgerungsmenge \{$\alpha$[x/a]\} abgeleitet, wobei a eine noch nicht existierende Konstante ist. Das heißt, ähnlich der Implikationsregel wird die Folgerungsmenge auf \{$\alpha$[x/a]\} reduziert \cite{DGHP99}.
 
-Steht $\exists$x $\alpha$ in der Folgerungsmenge $\delta$, wird die Folgerungsmenge ($\delta$\textbackslash \{$\exists$x $\alpha$\})$\cup$\{$\alpha$[x/a]\} abgeleitet, wobei a eine noch nicht existierende Konstante ist. Die Prämissenmenge wird für diese Regel also nicht berührt \cite{DGHP99}.
+Steht $\exists$x $\alpha$ in der Prämissenmenge $\delta$, wird die Prämissenmenge ($\delta$\textbackslash \{$\exists$x $\alpha$\})$\cup$\{$\alpha$[x/a]\} abgeleitet, wobei a eine noch nicht existierende Konstante ist. Die Folgerungsmenge wird für diese Regel also nicht berührt \cite{DGHP99}.
 
+Die Ableitungsregeln sind in Abbildung \ref{tableaux_quantors_ifopl} dargestellt.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.7]{images/Tableaux_Quantors_IFOPL.png}
+\caption{Tableaux Ableitungsregeln der Quantoren in nichtklassischer Prädikatenlogik}
+\label{tableaux_quantors_ifopl}
+\end{center}
+\end{figure}
 
 
