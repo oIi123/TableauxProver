@@ -1,4 +1,46 @@
 %!TEX root = ../dokumentation.tex
 
-\chapter{Beispiel Code-schnipsel einbinden}
+\chapter{Automatische Beweisverfahren}
+Automatische Beweisverfahren im allgemeinen dienen der automatisierten Überprüfung von logischen Schlussfolgerungen. Diese verfahren werden insbesondere in der Mathematik eingesetzt um neue Beweise auf Korrektheit zu prüfen. Um einen Beweis zu prüfen wird dieser Formal definiert und anschließen von einem Computer überprüft. Das folgende Kapitel stellt einige Beweisverfahren vor und zeigt Anwendungsgebiete dieser auf.
 
+\section{Resolutionsverfahren}
+Mit dem Resolutionsverfahren wird ähnlich dem Tableauxverfahren, aus der Verneinung einer logischen Formel ein Widerspruch abgeleitet. Es wird aus der Ausgangsformelmenge und der Annahmemenge eine sogenannte Resolvente abgeleitet, diese ist ebenfalls eine logische Formel. Die Resolvente hat die Eigenschaft einer notwendigen Bedingung für die Ausgangsformel. Das heißt die Ausgangsformel kann nur dann erfüllbar sein, wenn die Resolvente erfüllbar ist. Kann man also auf eine nicht erfüllbare (z.B. eine leere Formel) ableiten, hat man einen Widerspruch in der Ausgangsformel bewiesen. \cite{RN16}
+
+Zur Ableitung einer Resolvente gibt es einige Regeln, welche hier nicht alle aufgeführt werden. Sei z.B. $\neg$A$\vee$K in der Ausgangsformelmenge und A die Annahme, so kann K als Resolvente abgeleitet werden. Im nächsten Schritt würde dann K als Element der Ausgangsformelmenge betrachtet werden und hieraus weitere Resolventen abgeleitet. \cite{RN16}
+
+Dieses Verfahren hat starke Ähnlichkeiten zum Tableauxverfahren, verzichtet aber z.B. auf die Aufzweigung der Beweissuche. Dies senkt die Laufzeitkomplexität und ist somit praktikabler für ein automatisches Beweisverfahren. Im Gegensatz zum Tableaux, kann einem Beweis allerdings weniger Intuitiv durch eine graphische Darstellung gefolgt werden.
+
+Das grundlegende Verfahren ist momentan das Leistungsfähigste bekannte. Dies beweist der Theorembeweiser ``Vampire'', welcher der Gewinner der CADE ATP System Competition im Jahr 2019 war. Dies ist ein jährlich abgehaltener Wettbewerb, bei dem Theorembeweiser auf ihre Leistungsfähigkeit im Bezug auf gelöste Probleme und Laufzeit verglichen werden. \cite{casc_atp_comp} Vampire basiert dabei auf einer Weiterentwicklung des Resolutionsverfahrens.
+
+\section{Modell Eliminierung}
+Die Modell Eliminierung ist ein von D.W. Loveland entwickeltes automatisches Beweisverfahren. Das Verfahren wird im folgenden kurz erklärt.
+
+Sei $\overline{L}$ das Gegenteil von L, d.h. $\neg$L wenn L eine atomare Aussage und M wenn L=$\neg$M. Eine Kette ist eine Liste von A-literals und B-literals. B-literals sind dabei Elemente der Ausgangsformelmenge und A-literals davon abgeleitet. Ein A-literal wird durch rechteckige Klammern definiert. Des weiteren ist eine elementare Kette, eine Kette von B-literals. Und eine akzeptable Kette ist eine Kette die links mit einem B-literal beginnt. Die Modell Eliminierung wird nun durch 3 Operationen auf Ketten definiert, ein gültiger Beweis ist, wenn durch diese eine leere Kette erzeugt wird. \cite{model_elimination}
+
+Die 3 Operationen sind:
+\begin{itemize}
+\item \textbf{Erweiterung}: Sei $\Gamma$ eine Menge von elementaren Ketten.
+
+Sei LU eine akzeptable Kette wobei L das B-literal links in der Kette ist.
+
+Sei V$\overline{L}$W$\in \Gamma$.
+
+Die Kette VW[L]U wird durch Erweiterung der Kette LU mit $\Gamma$ erzeugt.
+
+\item \textbf{Reduktion}: Sei LU[$\overline{L}$]V eine akzeptable Kette wobei L das B-literal ist.
+
+Die Kette U[$\overline{L}$]V wird durch Reduktion der Kette erzeugt.
+
+\item \textbf{Entfernung}: Sei [L]U eine Kette, beginnend mit einem A-literal [L].
+
+Die Kette U wird durch Entfernung auf der Kette erzeugt.
+\end{itemize}
+
+Ein Beweis mittels Modell Eliminierung wird nun erzeugt indem diese Operationen auf einer initialen elementaren Kette angewendet werden.
+
+Der Vorteil dieses Verfahrens, ist die sehr einfache Implementierbarkeit gegenüber anderer Beweisverfahren.
+
+\section{Anwendung von automatischen Beweisverfahren}
+Die hier vorgestellten und weitere Verfahren finden Anwendung in vielen Open Source und kommerziellen Projekten zur Überprüfung der Korrektheit von Mathematischen Schlussfolgerungen. Dies ist insbesondere wichtig in der Entwicklung von Mikroprozessoren. Firmen wie AMD und Intel verwenden automatische Beweisverfahren zur Verifizierung der Korrektheit von Division und anderen Operationen die ein Mikroprozessor ausführen kann.
+
+Eine andere Anwendung ist die Überprüfung von mathematischen Beweisen. In der Praxis werden diese allerdings eher selten Formal definiert und von einem automatischen Beweiser überprüft, da dies mit einem enormen Aufwand verbunden ist. Heutige mathematische Publikationen strecken sich oft über Hunderte Seiten und eine für einen automatischen Beweiser verständliche Version ist oft von doppelter Länge. Es gibt allerdings Anstrengungen die (subjektiv) 100 wichtigsten mathematischen Theoreme zu formalisieren und von einem Computer überprüfen zu lassen. \cite{formalize_100_theorems} Zu den Theoremen gehören unter anderem der Satz des Pythagoras und Gödels Unvollständigkeitssatz. Die Überprüfung der Theoreme wird meist mit dem Programm HOL Light durchgeführt. Wie der Name HOL (Higher Order Logic) bereits sagt, basiert dieser allerdings auf klassischer Logik höherer Ordnung, weshalb er nicht direkt mit den oben vorgestellten Verfahren verglichen werden kann.

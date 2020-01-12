@@ -41,4 +41,10 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {1.4.4}Nichtklassische Prädikatenlogik}{12}{subsection.1.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {2}Beispiel Code-schnipsel einbinden}{14}{chapter.2}%
+\contentsline {chapter}{\numberline {2}Automatische Beweisverfahren}{14}{chapter.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.1}Resolutionsverfahren}{14}{section.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.2}Modell Eliminierung}{15}{section.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.3}Anwendung von automatischen Beweisverfahren}{16}{section.2.3}%

@@ -2152,6 +2152,11 @@
     <bcf:citekey order="21">DGHP99</bcf:citekey>
     <bcf:citekey order="22">DGHP99</bcf:citekey>
     <bcf:citekey order="23">DGHP99</bcf:citekey>
+    <bcf:citekey order="24">RN16</bcf:citekey>
+    <bcf:citekey order="25">RN16</bcf:citekey>
+    <bcf:citekey order="26">casc_atp_comp</bcf:citekey>
+    <bcf:citekey order="27">model_elimination</bcf:citekey>
+    <bcf:citekey order="28">formalize_100_theorems</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="anyt">

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.6)  7 JAN 2020 11:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.6)  12 JAN 2020 20:38
 entering extended mode
 **./dokumentation.tex
 (dokumentation.tex
@@ -2025,7 +2025,7 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 LaTeX Warning: Citation 'KB14' on page 8 undefined on input line 168.
 
-<images/Tableaux_And_Prop_Logic.png, id=172, 432.11438pt x 310.15875pt>
+<images/Tableaux_And_Prop_Logic.png, id=178, 432.11438pt x 310.15875pt>
 File: images/Tableaux_And_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_And_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_And_Prop_Logic.png  used on input line
@@ -2037,7 +2037,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 Package nag Warning: `center' environment in figure.
 (nag)                Maybe you want \centering instead on input line 175.
 
-<images/Tableaux_Or_Prop_Logic.png, id=176, 432.11438pt x 310.15875pt>
+<images/Tableaux_Or_Prop_Logic.png, id=182, 432.11438pt x 310.15875pt>
 File: images/Tableaux_Or_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_Or_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_Or_Prop_Logic.png  used on input line 
@@ -2047,7 +2047,7 @@ Package pdftex.def Info: images/Tableaux_Or_Prop_Logic.png  used on input line
 Package nag Warning: `center' environment in figure.
 (nag)                Maybe you want \centering instead on input line 185.
 
-<images/Tableaux_Rules_Prop_Logic.png, id=177, 1028.34187pt x 392.21532pt>
+<images/Tableaux_Rules_Prop_Logic.png, id=183, 1028.34187pt x 392.21532pt>
 File: images/Tableaux_Rules_Prop_Logic.png Graphic file (type png)
 <use images/Tableaux_Rules_Prop_Logic.png>
 Package pdftex.def Info: images/Tableaux_Rules_Prop_Logic.png  used on input li
@@ -2081,7 +2081,7 @@ LaTeX Warning: Citation 'DGHP99' on page 10 undefined on input line 199.
 
 LaTeX Warning: Citation 'KB14' on page 10 undefined on input line 201.
 
-<images/Tableaux_Rules_Pred_Logic.png, id=193, 339.51843pt x 346.29375pt>
+<images/Tableaux_Rules_Pred_Logic.png, id=199, 339.51843pt x 346.29375pt>
 File: images/Tableaux_Rules_Pred_Logic.png Graphic file (type png)
 <use images/Tableaux_Rules_Pred_Logic.png>
 Package pdftex.def Info: images/Tableaux_Rules_Pred_Logic.png  used on input li
@@ -2102,7 +2102,7 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 
 [10]
-<images/Tableaux_Impl_IPC.png, id=200, 467.49657pt x 310.15875pt>
+<images/Tableaux_Impl_IPC.png, id=206, 467.49657pt x 310.15875pt>
 File: images/Tableaux_Impl_IPC.png Graphic file (type png)
 <use images/Tableaux_Impl_IPC.png>
 Package pdftex.def Info: images/Tableaux_Impl_IPC.png  used on input line 232.
@@ -2126,7 +2126,7 @@ LaTeX Warning: Citation 'DGHP99' on page 12 undefined on input line 243.
 
 LaTeX Warning: Citation 'DGHP99' on page 12 undefined on input line 245.
 
-<images/Tableaux_Quantors_IFOPL.png, id=208, 339.51843pt x 346.29375pt>
+<images/Tableaux_Quantors_IFOPL.png, id=214, 339.51843pt x 346.29375pt>
 File: images/Tableaux_Quantors_IFOPL.png Graphic file (type png)
 <use images/Tableaux_Quantors_IFOPL.png>
 Package pdftex.def Info: images/Tableaux_Quantors_IFOPL.png  used on input line
@@ -2146,6 +2146,31 @@ Overfull \vbox (7.89444pt too high) has occurred while \output is active []
 
 [13 <./images/Tableaux_Quantors_IFOPL.png>]
 chapter 2.
+
+LaTeX Warning: Citation 'RN16' on page 14 undefined on input line 7.
+
+
+LaTeX Warning: Citation 'RN16' on page 14 undefined on input line 9.
+
+
+LaTeX Warning: Citation 'casc_atp_comp' on page 14 undefined on input line 13.
+
+[14
+
+]
+
+LaTeX Warning: Citation 'model_elimination' on page 15 undefined on input line 
+18.
+
+
+Overfull \vbox (7.89444pt too high) has occurred while \output is active []
+
+
+[15]
+
+LaTeX Warning: Citation 'formalize_100_theorems' on page 16 undefined on input 
+line 46.
+
 )
 
 LaTeX Warning: Empty bibliography on input line 100.
@@ -2158,9 +2183,11 @@ This document will not have a glossary.
 
 Package nag Warning: 9 complaints in total.
 
-[14
 
-]
+Overfull \vbox (7.89444pt too high) has occurred while \output is active []
+
+
+[16]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 110.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 110.
  (dokumentation.aux)
@@ -2180,10 +2207,10 @@ Package logreq Info: Writing requests to 'dokumentation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39916 strings out of 492484
- 762141 string characters out of 3121601
- 1481087 words of memory out of 3000000
- 43266 multiletter control sequences out of 15000+200000
+ 39924 strings out of 492484
+ 762206 string characters out of 3121601
+ 1481207 words of memory out of 3000000
+ 43269 multiletter control sequences out of 15000+200000
  80734 words of font info for 125 fonts, out of 3000000 for 9000
  1143 hyphenation exceptions out of 8191
  73i,10n,90p,10093b,2280s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2204,9 +2231,9 @@ TeX 2.9/fonts/type1/public/lm/lmro12.pfb><C:/Users/olive/AppData/Local/Programs
 /MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/olive/AppData/Local/Pr
 ograms/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Users/olive/AppData/Loca
 l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on dokumentation.pdf (19 pages, 359311 bytes).
+Output written on dokumentation.pdf (21 pages, 372535 bytes).
 PDF statistics:
- 311 PDF objects out of 1000 (max. 8388607)
- 64 named destinations out of 1000 (max. 500000)
- 26328 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 335 PDF objects out of 1000 (max. 8388607)
+ 69 named destinations out of 1000 (max. 500000)
+ 26352 words of extra memory for PDF output out of 29859 (max. 10000000)
 
