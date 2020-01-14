@@ -70,6 +70,7 @@
 \usepackage[printonlyused]{acronym} % falls gewünscht kann die Option footnote eingefügt werden, dann wird die Erklärung nicht inline sondern in einer Fußnote dargestellt
 \usepackage{listings}
 \usepackage{amssymb}
+\usepackage{colortbl}
 
 % Notizen. Einsatz mit \todo{Notiz} oder \todo[inline]{Notiz}. 
 \usepackage[obeyFinal,backgroundcolor=yellow,linecolor=black]{todonotes}
@@ -103,6 +104,9 @@
 	pdfdisplaydoctitle=true, 		% Dokumenttitel statt Dateiname anzeigen.
 	pdflang={\sprache}, 			% Sprache des Dokuments.
 ]{hyperref}
+
+% Links to Image not to Caption on figures
+\usepackage{caption}
 
 % (Farb-)einstellungen für die Links im PDF
 \hypersetup{%
