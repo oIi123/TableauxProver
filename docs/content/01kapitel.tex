@@ -15,7 +15,7 @@ Welche Aussagen in der klassischen Aussagenlogik formuliert werden können, wird
 \end{itemize}
 Die Bedeutung der einzelnen Junktoren (Negation, Konjunktion, Disjunktion, Implikation, Äquivalenz) wird meist über sogenannte Wahrheitstabellen veranschaulicht \cite{KB14}.
 
-\begin{table}
+\begin{table}[h]
 \begin{center}
 \begin{tabular}{c|c}
 $\alpha$ & $\neg\alpha$ \\
@@ -30,7 +30,7 @@ t & f
 Tabelle \ref{tbl_neg} zeigt die Wahrheitstabelle der Negation. In der linken Spalte werden die Wahrheitswerte der Aussage $\alpha$ dargestellt. Die rechte Spalte stellt entsprechend die Werte dar, nachdem $\alpha$ negiert, also der Junktor Negation angewandt wurde. Der einstellige Junktor ändert den Wahrheitswert der Aussage also immer in das ``Gegenteil'', wahr wird zu falsch und falsch zu wahr.
 
 In der Tabelle \ref{tbl_prop_logic} ist die Wahrheitstabelle für die restlichen vorgestellten Junktoren dargestellt \cite{KB14}.
-\begin{table}
+\begin{table}[h]
 \begin{center}
 \begin{tabular}{c|c|c|c|c|c}
 $\alpha$ & $\beta$ & $\alpha\wedge\beta$ & $\alpha\vee\beta$ & $\alpha\rightarrow\beta$ & $\alpha\leftrightarrow\beta$ \\
@@ -47,7 +47,7 @@ t & t & t & t & t & t\\
 \subsection{\label{clamps_and_prio}Klammersetzung und Stelligkeit}
 Ein wichtiger Aspekt der Aussagenlogik ist die Priorität der Junktoren. Ohne diese zu definieren würde es zu Ambiguitäten bei der Berechnung des Wahrheitswertes einer Aussage kommen. Ein Beispiel wäre die Aussage $\alpha\vee\beta\wedge\gamma$. Eine Möglichkeit diese Ambiguität zu verhindern, ist die Verwendung von Klammern. Der Wahrheitswert der Aussage, die innerhalb der Klammer steht, wird zuerst berechnet. Ohne Klammersetzung gäbe es für diese Aussage zwei unterschiedliche Möglichkeiten diese zu betrachten. Entweder als $(\alpha\vee\beta)\wedge\gamma$ oder als $\alpha\vee(\beta\wedge\gamma)$.
 
-\begin{table}
+\begin{table}[h]
 \begin{center}
 \begin{tabular}{c|c|c|c|c}
 $\alpha$ & $\beta$ & $\gamma$ & $(\alpha\vee\beta)\wedge\gamma$ & $\alpha\vee(\beta\wedge\gamma)$ \\
@@ -167,7 +167,7 @@ Die Regeln, nach denen ein Tableau in klassischer Aussagenlogik gebildet wird, k
 
 Betrachten wir beispielsweise die Aussage $\alpha\wedge\beta$ auf der Wahr-Seite. Nach Wahrheitstabelle \ref{tbl_prop_logic}, muss sowohl $\alpha$ als auch $\beta$ den Wahrheitswert wahr annehmen, damit die Aussage wahr ist. Es wird also sowohl $\alpha$, als auch $\beta$ auf die Wahr-Seite geschrieben. Um die Abarbeitung der Aussage zu notieren, wird diese unterstrichen \cite{KB14}. Siehe Abbildung \ref{tableaux_prop_and}.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_And_Prop_Logic.png}
 \caption{Tableaux der Aussage $\alpha\wedge\beta$ in klassischer Logik. Links: Tableau vor Anwendung der Ableitungsregel. Rechts: Tableau nach Anwendung der Ableitungsregel.}
@@ -177,7 +177,7 @@ Betrachten wir beispielsweise die Aussage $\alpha\wedge\beta$ auf der Wahr-Seite
 
 Damit kann schon der Großteil der Ableitungsregeln hergeleitet werden. Eine Ausnahme stellt die Situation dar, bei der beispielsweise $\alpha\vee\beta$ auf der Wahr-Seite steht. Es gibt mehrere Möglichkeiten mit denen diese Aussage wahr wird. Es kann entweder $\alpha$ oder $\beta$ wahr sein. In einer solchen Situation wird das Tableau in zwei voneinander unabhängige Pfade aufgeteilt. In beiden müssen alle noch nicht abgearbeiteten Aussagen unabhängig voneinander abgearbeitet werden. Siehe Abbildung \ref{tableaux_prop_or}. Die übrigen Ableitungsregeln sind in Abbildung \ref{tableaux_class_prop_all_rules} dargestellt.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_Or_Prop_Logic.png}
 \caption{Tableaux der Aussage $\alpha\vee\beta$ in klassischer Logik. Links: Tableau vor Anwendung der Ableitungsregel. Rechts: Tableau nach Anwendung der Ableitungsregel.}
@@ -185,7 +185,7 @@ Damit kann schon der Großteil der Ableitungsregeln hergeleitet werden. Eine Aus
 \end{center}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.5]{images/Tableaux_Rules_Prop_Logic.png}
 \caption{Tableaux Ableitungsregeln in klassischer Aussagenlogik}
@@ -202,7 +202,7 @@ Da die klassische Prädikatenlogik 1. Ordnung eine Erweiterung der Aussagenlogik
 
 Steht die Aussage $\forall$x $\alpha$ auf der Falsch-Seite, bedeutet dies, es gibt ein Objekt t, für das die Aussage $\alpha$[t/x] falsch wird. Deshalb wird bei der Abarbeitung von $\forall$x $\alpha$ auf der Falsch-Seite, eine neue Konstante k eingeführt und $\alpha$[k/x] auf die Falsch-Seite geschrieben. Die Abarbeitungsregeln für den Allquantor und Existenzquantor werden in Abbildung \ref{tableaux_class_pred_all_rules} dargestellt.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_Rules_Pred_Logic.png}
 \caption{Tableaux Ableitungsregeln in klassischer Aussagenlogik}
@@ -227,7 +227,7 @@ Komplizierter und vor allem anders als in der klassischen Logik, ist die Ableitu
 
 Es wird also erforderlich, die Aussagenmengen auf den beiden Seiten nach einer Ableitungsregel zu reduzieren. Semantisch wird dies im Tableau durch einen horizontalen Strich dargestellt unter dem beide Mengen neu definiert werden. Die Ableitung der Implikation wird in Abbildung \ref{tableaux_impl_ipc} dargestellt, P und C stehen hierbei für Premisses (dt.: Prämissen) und Conclusions (dt.: Folgerungen).
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_Impl_IPC.png}
 \caption{Tableau Ableitungsregel der Implikation in nichtklassischer Aussagenlogik}
@@ -246,7 +246,7 @@ Steht $\exists$x $\alpha$ in der Prämissenmenge $\delta$, wird die Prämissenme
 
 Die Ableitungsregeln sind in Abbildung \ref{tableaux_quantors_ifopl} dargestellt.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_Quantors_IFOPL.png}
 \caption{Tableaux Ableitungsregeln der Quantoren in nichtklassischer Prädikatenlogik}
