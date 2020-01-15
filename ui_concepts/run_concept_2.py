@@ -5,8 +5,8 @@ import PySide2
 from PySide2.QtGui import QPainter, QPaintEvent
 from PySide2.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QTextEdit
 from PySide2.QtCore import QFile
-from ui_mainwindow import Ui_MainWindow
-from ui_input_window import Ui_MainWindow as Ui_InputWindow
+from ui_concepts.ui_mainwindow import Ui_MainWindow
+from ui_concepts.ui_input_window import Ui_MainWindow as Ui_InputWindow
 
 
 def get_child_widget(parent: QWidget, name: str) -> Union[Optional[QWidget], None]:
@@ -29,9 +29,11 @@ class Main(QMainWindow):
         self.scroll_area_content = get_child_widget(self, "scrollAreaWidgetContents")
         self.scroll_area_content.installEventFilter(self)
 
+        normal_font = PySide2.QtGui.QFont('MS Shell Dlg 2', 14)
         btn = QPushButton(parent=self.scroll_area_content)
         btn.setText("B&&!C")
-        btn.setGeometry(575, 280, 45, 25)
+        btn.setGeometry(575, 280, 70, 30)
+        btn.setFont(normal_font)
         btn.show()
 
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent):

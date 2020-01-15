@@ -5,7 +5,7 @@ import PySide2
 from PySide2.QtGui import QPainter, QPaintEvent
 from PySide2.QtWidgets import QApplication, QMainWindow, QWidget
 from PySide2.QtCore import QFile
-from ui_mainwindow import Ui_MainWindow
+from ui_concepts.ui_mainwindow import Ui_MainWindow
 
 
 def get_child_widget(parent: QWidget, name: str) -> Union[Optional[QWidget], None]:
