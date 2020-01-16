@@ -127,7 +127,7 @@ Prinzipiell gibt es an die \ac{GUI} folgende Anforderungen:
 
 \item \textbf{Benutzerfreundliche Interaktion}: Beim Interaktiven Modus soll der Benutzer die einzelnen Ableitungsschritte selbst eingeben und Feedback über Korrektheit bekommen. Dies soll Benutzerfreundlich möglich sein.
 
-\item \textbf{Einfaches umschalten zwischen Modi}: Der Tableaux-Beweiser soll in zwei verschiedenen Modi laufen: Automatisch oder Interaktiv. Die Umschaltung zwischen den Modi sollte einfach sein.
+\item \textbf{Einfaches umschalten zwischen Modi und Logik}: Der Tableaux-Beweiser soll in zwei verschiedenen Modi laufen: Automatisch oder Interaktiv. Zudem kann zwischen 4 Logiken (klassische/nichtklassische Aussagenlogik/Prädikatenlogik) umgeschalten werden. Die Umschaltung zwischen den Modi und Logiken sollte einfach sein.
 
 \item \textbf{Hilfebeschreibungen}: Über verschiedene Eigenheiten (z.B. welches Zeichen für die Negation verwendet wird) soll in der \ac{GUI} aufgeklärt werden. Auch die Allgemeine Bedienung muss Intuitiv möglich bzw. in einer Hilfe beschrieben sein.
 
@@ -137,4 +137,69 @@ Prinzipiell gibt es an die \ac{GUI} folgende Anforderungen:
 Aufgrund dieser Anforderungen werden nachfolgend verschiedene Konzepte erarbeitet und verglichen.
 
 \subsection{Konzept 1}
+Für das erste Konzept werden 2 Fenster für die Hauptinteraktion benötigt. Das erste Fenster (Hauptfenster), stellt das gesamte Tableau dar. Im Hauptfenster kann zudem zwischen den Modi Automatik und Manuell gewechselt werden. Im Modus Automatik, ist nach dem Start der automatischen Ableitung keine weitere Interaktion nötig/möglich außer dem Start einer neuen Ableitung. Der erste Entwurf des Konzepts im Automatikbetrieb, ist in \autoref{fig:gui_concept_1_automatic} zu sehen.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_1_automatic.png}
+\caption{Konzept 1 im Modus Automatik}
+\label{fig:gui_concept_1_automatic}
+\end{center}
+\end{figure}
+
+Im Modus Manuell, muss jeder Ableitungsschritt vom Benutzer selbst ausgeführt werden. Hierfür wird jede noch nicht verarbeitete, nicht Atomare Formel als Button dargestellt. Dies ist in \autoref{fig:gui_concept_1_manual} zu sehen.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_1_manual.png}
+\caption{Konzept 1 im Modus Manuell}
+\label{fig:gui_concept_1_manual}
+\end{center}
+\end{figure}
+
+Wird ein solcher Formel-Button betätigt, öffnet sich das zweite Fenster (Ableitungseingabefenster). Im Ableitungseingabefenster kann ausgewählt werden ob die Ableitung der Formel eine verzweigte oder nicht verzweigte ist. Die Eingabe einer nicht verzweigten Ableitung, nach Betätigung des Buttons \enquote{B|!C} (B$\vee\neg$C, siehe Syntaxdefinition \textbf{EINGEBEN!!!!!}) zeigt \autoref{fig:gui_concept_1_manual_enter_single}.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_1_manual_enter_single.png}
+\caption{Konzept 1: Eingabe einer Ableitung im Modus Manuell}
+\label{fig:gui_concept_1_manual_enter_single}
+\end{center}
+\end{figure}
+
+Die Eingabe einer verzweigenden Ableitung, nach Betätigen des Buttons \enquote{B\&!C} (B$\wedge\neg$C siehe Syntaxdefinition \textbf{EINGEBEN!!!!}) zeigt \autoref{fig:gui_concept_1_manual_enter_branch}.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_1_manual_enter_branch.png}
+\caption{Konzept 1: Eingabe einer verzweigenden Ableitung im Modus Manuell}
+\label{fig:gui_concept_1_manual_enter_branch}
+\end{center}
+\end{figure}
+
 \subsection{Konzept 2}
+Das zweite Konzept ähnelt dem ersten stark. Der Unterschied hierbei ist, es muss keine Formel zur Ableitung ausgewählt werden sondern nur das Ergebnis eingegeben werden. Im Modus Automatik ist die Funktionsweise die selbe wie bei Konzept 1, siehe \autoref{fig:gui_concept_1_automatic}.
+
+Im Modus Manuell hingegen, kann an das Tableau an den noch nicht geschlossenen Zweigen erweitert werden. Hierbei gibt es zwei Möglichkeiten, bei einer nicht verzweigenden Ableitung wird das Ergebnis in die Textfelder eingegeben und der +-Button betätigt. Dies ist in \autoref{fig:gui_concept_2_manual_enter_single} zu sehen.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_2_manual_enter_single.png}
+\caption{Konzept 2: Eingabe einer Ableitung im Modus Manuell}
+\label{fig:gui_concept_2_manual_enter_single}
+\end{center}
+\end{figure}
+
+Wird hingegen eine verzweigende Ableitung behandelt, kann ein neuer Zweig über den nach Rechts angedeuteten Pfad mit dem +-Button geöffnet werden. Die Eingabe der Ableitung erfolgt dann ebenfalls in den Textfeldern und wird über die +-Buttons bestätigt. Dies wird in \autoref{fig:gui_concept_2_manual_enter_branch} dargestellt.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_2_manual_enter_branch.png}
+\caption{Konzept 2: Eingabe einer verzweigenden Ableitung im Modus Manuell}
+\label{fig:gui_concept_2_manual_enter_branch}
+\end{center}
+\end{figure}
+
+Die Behandlung einer nur Teilweise eingegebenen verzweigenden Ableitung erhöht dabei die Komplexität des Konzepts erheblich. Problematisch ist aber vor allem die Unübersichtlichkeit, wird in einem großen Tableau eine weit oben stehende Formel abgeleitet. Zudem muss eine verzweigende Ableitung in jedem der nachfolgenden Zweige erneut eingegeben werden was die Benutzerfreundlichkeit einschränkt und die Implementierung erschwert.
+
+\section{Konzept 3}
+
