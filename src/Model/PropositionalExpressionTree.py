@@ -12,12 +12,15 @@ class PropositionalExpressionTree:
 class Expr:
     @staticmethod
     def create(expr):
-        if (atom := Atom.create(expr)) is not None:
-            return atom
-        if (n := Not.create(expr)) is not None:
-            return n
-        if (op := Operation.create(expr)) is not None:
-            return op
+        val = Atom.create(expr)
+        if val is not None:
+            return val
+        val = Not.create(expr)
+        if val is not None:
+            return val
+        val = Operation.create(expr)
+        if val is not None:
+            return val
         return Expr.create(expr[1].children)
 
 

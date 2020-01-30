@@ -23,14 +23,18 @@ class FoplExpressionTree:
 class Expr:
     @staticmethod
     def create(expr, tree: FoplExpressionTree):
-        if (predicate := Predicate.create(expr, tree=tree)) is not None:
-            return predicate
-        if (n := Not.create(expr, tree=tree)) is not None:
-            return n
-        if (op := Operation.create(expr, tree=tree)) is not None:
-            return op
-        if (quantor := Quantor.create(expr, tree=tree)) is not None:
-            return quantor
+        val = Predicate.create(expr, tree=tree)
+        if val is not None:
+            return val
+        val = Not.create(expr, tree=tree)
+        if val is not None:
+            return val
+        val = Operation.create(expr, tree=tree)
+        if val is not None:
+            return val
+        val = Quantor.create(expr, tree=tree)
+        if val is not None:
+            return val
         return Expr.create(expr[1].children, tree=tree)
 
 
