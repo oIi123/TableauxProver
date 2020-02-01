@@ -2,6 +2,8 @@ from src.Model.FoplExpressionTree import *
 
 
 class VariableConstantMapper:
+    visit_idx = 0
+
     def __init__(self, mapping: dict):
         self.mapping = mapping
 

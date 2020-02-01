@@ -21,6 +21,9 @@ class FoplExpressionTree:
 
 
 class Expr:
+    is_atom = False
+    op_priority = 0
+
     @staticmethod
     def create(expr, tree: FoplExpressionTree):
         val = Predicate.create(expr, tree=tree)
@@ -51,8 +54,8 @@ class Term:
                     if name in tree.var_stack:
                         t.append(Var.create(term_context.children[0]))
                     else:
-                        raise RecognitionException(f"The variable {name} is not in scope of an Quantor."
-                                                   "Begin with an Uppercase to turn into a Constant or add a Quantor.")
+                        raise RecognitionException(f"The variable {name} is not in the scope of a quantor.\n"
+                                                   "Begin with an uppercase letter to turn into a constant or add a quantor.")
                 elif type(term_context.children[0]) == FOPLParser.ConstContext:
                     t.append(Const.create(term_context.children[0], tree=tree))
                 elif type(term_context.children[0]) == FOPLParser.FuncContext:
@@ -86,7 +89,7 @@ class Var(Term):
         )
 
     def __str__(self):
-        return f"Var({self.name})"
+        return self.name
 
 
 @visitor
@@ -107,7 +110,7 @@ class Const(Term):
         )
 
     def __str__(self):
-        return f"Const({self.name})"
+        return self.name
 
 
 @visitor
@@ -132,11 +135,13 @@ class Func(Term):
         )
 
     def __str__(self):
-        return f"Func({self.name},[{','.join([str(i) for i in self.terms])}])"
+        return f"{self.name}({','.join([str(i) for i in self.terms])})"
 
 
 @visitor
 class Predicate(Expr):
+    is_atom = True
+
     @staticmethod
     def create(expr, tree: FoplExpressionTree):
         if len(expr) == 1 and type(expr[0]) == FOPLParser.PredicateContext:
@@ -165,7 +170,7 @@ class Predicate(Expr):
         )
 
     def __str__(self):
-        return f"Pred({self.name},[{','.join([str(i) for i in self.terms])}])"
+        return f"{self.name}({','.join([str(i) for i in self.terms])})"
 
     def priority(self, true_side: bool) -> int:
         return 0
@@ -173,6 +178,8 @@ class Predicate(Expr):
 
 @visitor
 class Not(Expr):
+    op_priority = 2
+
     @staticmethod
     def create(expr, tree: FoplExpressionTree):
         if len(expr) == 2:
@@ -192,13 +199,19 @@ class Not(Expr):
         return type(other) == type(self) and other.expr == self.expr
 
     def __str__(self):
-        return f"Not({str(self.expr)})"
+        if self.expr.op_priority > self.op_priority:
+            return f"!({str(self.expr)})"
+        else:
+            return f"!{str(self.expr)}"
 
     def priority(self, true_side: bool) -> int:
         return 0
 
 
 class Quantor(Expr):
+    op_priority = 1
+    printable_operator: str = None
+
     @staticmethod
     def create(expr, tree: FoplExpressionTree):
         if len(expr) == 2:
@@ -255,11 +268,15 @@ class Quantor(Expr):
         )
 
     def __str__(self):
-        return f"{type(self).__name__}({str(self.variable)},{str(self.expr)})"
-
+        s = f"{self.printable_operator}{str(self.variable)} "
+        if self.expr.op_priority > self.op_priority:
+            return s + f"({str(self.expr)})"
+        return s + str(self.expr)
 
 @visitor
 class ExistentialQuantor(Quantor):
+    printable_operator: str = "(E)"
+
     def __hash__(self):
         return str(self).__hash__()
 
@@ -269,6 +286,8 @@ class ExistentialQuantor(Quantor):
 
 @visitor
 class AllQuantor(Quantor):
+    printable_operator: str = "(A)"
+
     def __hash__(self):
         return str(self).__hash__()
 
@@ -277,6 +296,8 @@ class AllQuantor(Quantor):
 
 
 class Operation(Expr):
+    printable_operator: str = None
+
     @staticmethod
     def create(expr, tree: FoplExpressionTree):
         if len(expr) == 3:
@@ -311,28 +332,42 @@ class Operation(Expr):
         )
 
     def __str__(self):
-        return f"{type(self).__name__}({str(self.lhs)},{str(self.rhs)})"
+        children = [f"({str(child)})" if child.op_priority > self.op_priority
+                    else f"{str(child)}" for child in [self.lhs, self.rhs]]
+        return self.printable_operator.join(children)
 
 
 @visitor
 class And(Operation):
+    op_priority = 3
+    printable_operator: str = "&"
+
     def priority(self, true_side: bool) -> int:
         return 0 if true_side else 1
 
 
 @visitor
 class Or(Operation):
+    op_priority = 4
+    printable_operator: str = "|"
+
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0
 
 
 @visitor
 class Impl(Operation):
+    op_priority = 5
+    printable_operator: str = "->"
+
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0
 
 
 @visitor
 class Eq(Operation):
+    op_priority = 6
+    printable_operator: str = "<->"
+
     def priority(self, true_side: bool) -> int:
         return 1

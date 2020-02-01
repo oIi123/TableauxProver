@@ -6,15 +6,9 @@ from antlr4.error.ErrorListener import *
 
 
 class PropParser:
-    def __init__(self, expr: str):
-        """
-        Initialises a Parser for Propositional Logic with a Propositional Expression
-        :param expr: Expression in Propositional Logic
-        """
-        self.expr = expr
-
-    def parse(self) -> PropositionalExpressionTree:
-        lexer = PropositionalLexer(InputStream(self.expr))
+    @staticmethod
+    def parse(expr: str) -> PropositionalExpressionTree:
+        lexer = PropositionalLexer(InputStream(expr))
         stream = CommonTokenStream(lexer)
         parser = PropositionalParser(stream)
 

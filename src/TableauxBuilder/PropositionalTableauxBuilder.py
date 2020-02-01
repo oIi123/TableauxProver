@@ -39,17 +39,5 @@ class PropositionalTableauxBuilder(BaseTableauxBuilder):
                     return False
             return True
 
-    def is_closed(self):
-        if len(self.children) == 0:
-            for true_atom in self.sequent[true_atoms]:
-                if true_atom in self.sequent[false_atoms]:
-                    return True
-            return False
-        else:
-            for child in self.children:
-                if not child.is_closed():
-                    return False
-            return True
-
     def visited_Atom(self, atom: Atom):
         self.sequent[false_atoms if self.visiting_false else true_atoms].append(atom)

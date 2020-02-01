@@ -221,8 +221,62 @@ Nach Berechnung der breiten der Verzweigungen ist das Zeichnen des Tableau trivi
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[scale=0.7]{images/drawing_logic_calc_widths.png}
+\includegraphics[scale=1]{images/drawing_logic_calc_widths.png}
 \caption{Visualisierung der Breitenberechnung von Verzweigungen im Tableau}
 \label{fig:drawing_logic_calc_widths}
+\end{center}
+\end{figure}
+
+\subsection{Umwandlung zur Zeichenkette}
+Ein weiterer wichtiger Aspekt bei der Darstellung ist die Konvertierung der internen Datenstruktur zu einem String der die Aussage korrekt repräsentiert. Insbesondere ist dabei wichtig, dass Klammern korrekt gesetzt bzw. korrekt ausgelassen werden wenn diese nicht benötigt werden.
+
+Vorweg ist dazu zu sagen, dass die Aussagen zu einem Syntaxbaum geparsed werden. Ein Beispiel eines solchen Syntaxbaumes ist in \autoref{fig:example_syntax_tree} zu sehen. Die interne Repräsentation der Aussagen wird in \textbf{ANGEBEN!!!!!!!} näher behandelt. Dieser Abschnitt soll sich darauf konzentrieren wie dieser zu einer korrekten Zeichenkette umgewandelt werden kann.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=1]{images/example_syntax_tree.png}
+\caption{Beispiel eines Syntaxbaumes der Aussage A$\vee$B$\rightarrow\neg$C}
+\label{fig:example_syntax_tree}
+\end{center}
+\end{figure}
+
+Um keine Klammern unnötig zu setzen bzw. diese fälschlich wegzulassen, wird jedem Junktor und der atomaren Aussage eine Priorität zugeordnet. Die genaue Prioritätenfolge entspricht den in \autoref{clamps_and_prio} festgelegten Prioritäten wobei die atomare Aussage bzw. dem Prädikat die Priorität 0 zugeordnet wird.
+
+Nun ist es wichtig die Frage zu beantworten, wann eine Klammer gesetzt werden muss und wie dies im Verhältnis zu den Prioritäten steht. Hierfür werden die im Bezug auf korrekte Reihenfolge eindeutigen Syntaxbäume in Präfixschreibweise verwendet. In Präfixschreibweise wäre die für den Syntaxbaum in \autoref{fig:example_syntax_tree} verwendete Aussage $\vee$(A,$\rightarrow$(B,$\neg$C)). Für die Aussage $\wedge$($\vee$(A,B),C) also (A$\vee$B$\wedge$C) werden keine Klammern benötigt. Hingegen wird für die Aussage  $\vee$($\wedge$(A,B),C) also ((A$\wedge$B)$\vee$C) eine Klammer benötigt. Sieht man sich in diesem Zusammenhang die Prioritäten der Operatoren an, ist die Priorität für $\wedge$ höher als die von $\vee$. Dieser Umstand wird zu Konvertierung von Syntaxbaum zu Zeichenkette ausgenutzt. Ein Teil des zur Umwandlung implementierten Codes ist in \autoref{lst:conv_syn_to_str} zu sehen.
+
+\begin{lstlisting}[caption={Umwandlung von Syntaxbaum zu Zeichenkette},label=lst:conv_syn_to_str]
+class Operation(Expr):
+	...
+	def __str__(self):
+		left = ""
+		right = ""
+		if self.left_child.op_priority > self.op_priority:
+			left = f"({str(self.left_child)})"
+		else:
+			left = f"{str(self.left_child)}"
+      	
+      	if self.right_child.op_priority > self.op_priority:
+			right = f"({str(self.right_child)})"
+		else:
+			right = f"{str(self.right_child)}"
+		
+		return left + self.printable_operator + right
+
+class And(Operation):
+	op_priority: int = 2
+	printable_operator: str = "&"
+	...
+\end{lstlisting}
+
+Da der atomaren bzw. einem Prädikat die Priorität 0 zugeordnet wird, wird um dieses die eine Klammer gesetzt.
+
+\subsection{Fehlermeldungen}
+Wird Beispielsweise eine Aussage mit Fehlerhafter Syntax eingegeben, muss hierfür eine Benutzerfreundliche Fehlermeldung angezeigt werden. Hierfür wird bei der Eingabe der Initialen Aussage bzw. der Eingabe einer Ableitung im externen Fenster ein roter Balken am unteren Fensterrand dargestellt. In diesem wird eine Fehlerbeschreibung sowie die Zeile in der der Fehler aufgetreten ist dargestellt. Dies ist in \autoref{fig:display_error_message} dargestellt.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.8]{images/display_error_message.png}
+\caption{Darstellung von Fehlermeldungen bei fehlerhafter Syntax}
+\label{fig:display_error_message}
 \end{center}
 \end{figure}

@@ -4,15 +4,19 @@ from src.Parser.PropParser import PropParser
 from src.TableauxBuilder.FoplTableauxBuilder import FoplTableauxBuilder
 from src.TableauxBuilder.IpcTableauxBuilder import IpcTableauxBuilder
 from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTableauxBuilder
+from PySide2.QtWidgets import QApplication
+
+from ui_concepts.run_concept_2 import Main
+
+import sys
 
 if __name__ == '__main__':
-    parser = PropParser("((A->B)->A)->A")
-    # parser = FoplParser("")
-    tree = parser.parse()
+    app = QApplication(sys.argv)
 
-    #tableaux = PropositionalTableauxBuilder(expr=tree.expr)
-    #tableaux = FoplTableauxBuilder(tree=tree)
-    tableaux = IpcTableauxBuilder(expr=tree.expr)
-    tableaux.auto_resolve(True)
-    print(tableaux.is_closed())
-    print(tree.expr)
+    window = Main()
+    window.show()
+
+    # input_window = Input()
+    # input_window.show()
+
+    sys.exit(app.exec_())

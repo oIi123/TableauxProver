@@ -7,15 +7,9 @@ from src.Model.FoplExpressionTree import FoplExpressionTree
 
 
 class FoplParser:
-    def __init__(self, expr: str):
-        """
-        Initialises a Parser for FOPL with a FOPL Expression
-        :param expr: Expression in FOPL
-        """
-        self.expr = expr
-
-    def parse(self) -> FoplExpressionTree:
-        lexer = FOPLLexer(InputStream(self.expr))
+    @staticmethod
+    def parse(expr: str) -> FoplExpressionTree:
+        lexer = FOPLLexer(InputStream(expr))
         stream = CommonTokenStream(lexer)
         parser = FOPLParser(stream)
 

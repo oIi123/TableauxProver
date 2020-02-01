@@ -6,8 +6,8 @@ from src.TableauxBuilder.VariableConsantMapper import VariableConstantMapper
 class FoplTableauxBuilder(BaseTableauxBuilder):
     constant_idx = 0
 
-    def __init__(self, tree: FoplExpressionTree = None, sequent: dict = None):
-        super().__init__(tree=tree, sequent=sequent)
+    def __init__(self, tree: FoplExpressionTree = None, sequent: dict = None, **kwargs):
+        super().__init__(tree=tree, sequent=sequent, **kwargs)
 
         self.variable_constant_mapper = VariableConstantMapper(self.sequent[variable_constant_mapping])
 
@@ -188,3 +188,16 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
 
     def visited_Predicate(self, predicate: Predicate):
         self.sequent[false_atoms if self.visiting_false else true_atoms].append(predicate)
+
+    def get_partially_processed_exprs(self):
+        if self.parent is None:
+            return (
+                self.sequent[processed_true_quantor_expressions],
+                self.sequent[processed_false_quantor_expressions])
+        true_exprs = [x for x in self.sequent[processed_true_quantor_expressions]
+                      if x not in self.parent.sequent[processed_true_quantor_expressions]]
+
+        false_exprs = [x for x in self.sequent[processed_false_quantor_expressions]
+                       if x not in self.parent.sequent[processed_false_quantor_expressions]]
+
+        return (true_exprs, false_exprs)

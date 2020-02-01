@@ -10,6 +10,9 @@ class PropositionalExpressionTree:
 
 
 class Expr:
+    is_atom = False
+    op_priority = 0
+
     @staticmethod
     def create(expr):
         val = Atom.create(expr)
@@ -26,6 +29,8 @@ class Expr:
 
 @visitor
 class Atom(Expr):
+    is_atom = True
+
     @staticmethod
     def create(expr):
         if len(expr) == 1:
@@ -55,6 +60,8 @@ class Atom(Expr):
 
 @visitor
 class Not(Expr):
+    op_priority = 1
+
     @staticmethod
     def create(expr):
         if len(expr) == 2:
@@ -78,13 +85,18 @@ class Not(Expr):
         )
 
     def __str__(self):
-        return f"Not({str(self.expr)})"
+        if self.expr.op_priority > self.op_priority:
+            return f"!({str(self.expr)})"
+        else:
+            return f"!{str(self.expr)}"
 
     def priority(self, true_side: bool) -> int:
         return 0
 
 
 class Operation(Expr):
+    printable_operator: str = None
+
     @staticmethod
     def create(expr):
         if len(expr) == 3:
@@ -119,28 +131,42 @@ class Operation(Expr):
         )
 
     def __str__(self):
-        return f"{type(self).__name__}({str(self.lhs)},{str(self.rhs)})"
+        children = [f"({str(child)})" if child.op_priority > self.op_priority
+                    else f"{str(child)}" for child in [self.lhs, self.rhs]]
+        return self.printable_operator.join(children)
 
 
 @visitor
 class And(Operation):
+    op_priority = 2
+    printable_operator: str = "&"
+
     def priority(self, true_side: bool) -> int:
         return 0 if true_side else 1
 
 
 @visitor
 class Or(Operation):
+    op_priority = 3
+    printable_operator: str = "|"
+
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0
 
 
 @visitor
 class Impl(Operation):
+    op_priority = 4
+    printable_operator: str = "->"
+
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0
 
 
 @visitor
 class Eq(Operation):
+    op_priority = 5
+    printable_operator: str = "<->"
+
     def priority(self, true_side: bool) -> int:
         return 1
