@@ -6,17 +6,14 @@ from src.TableauxBuilder.IpcTableauxBuilder import IpcTableauxBuilder
 from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTableauxBuilder
 from PySide2.QtWidgets import QApplication
 
-from ui_concepts.run_concept_2 import Main
+from src.view.MainWindow import MainWindow
 
 import sys
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    window = Main()
+    window = MainWindow()
     window.show()
-
-    # input_window = Input()
-    # input_window.show()
 
     sys.exit(app.exec_())

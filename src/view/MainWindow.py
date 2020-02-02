@@ -336,7 +336,8 @@ class MainWindow(QMainWindow):
         self.ui.start_calc_btn.hide()
         self.ui.inital_left_exprs_text_edit.setStyleSheet('')
         self.ui.inital_right_exprs_text_edit.setStyleSheet('')
-        self.error_widget.hide()
+        if self.error_widget is not None:
+            self.error_widget.hide()
 
         # if automatic, try to auto resolve the tableau
         if self.mode == ResolveMode.Automatic:
