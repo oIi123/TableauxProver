@@ -9,6 +9,11 @@ a = Analysis(['src\\main.py'],
              datas=[
                 ('src/view/images/help.svg','src/view/images'),
                 ('src/view/images/stornieren.svg','src/view/images'),
+                ('src/view/images/change_logic.png','src/view/images'),
+                ('src/view/images/change_mode.png','src/view/images'),
+
+                ('src/view/Help_de.html','src/view/'),
+                ('src/view/Help_en.html','src/view/'),
              ],
              hiddenimports=[],
              hookspath=[],

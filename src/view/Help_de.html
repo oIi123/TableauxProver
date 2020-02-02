@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hilfe</title>
+
+    <style>
+        #toc_container {
+            background: #f9f9f9 none repeat scroll 0 0;
+            border: 1px solid #aaa;
+            display: table;
+            font-size: 95%;
+            margin-bottom: 1em;
+            padding: 20px;
+            width: auto;
+        }
+
+        .toc_title {
+            font-weight: 700;
+            text-align: center;
+        }
+
+        #toc_container li, #toc_container ul, #toc_container ul li{
+            list-style: outside none none !important;
+        }
+
+        img {
+            width: 75%;
+        }
+    </style>
+  </head>
+  <body>
+        Change Language to <a href="Help_en.html">English</a>.
+
+        <div id="toc_container">
+            <p class="toc_title">Inhaltsverzeichnis</p>
+            <ul class="toc_list">
+                <li><a href="#settings">1 Einstellungen</a></li>
+                <li><a href="#propositional_logic">2 Aussagenlogik</a>
+                    <ul>
+                        <li><a href="#propositional_logic_syntax">2.1 Syntaxdefinition</a></li>
+                        <li><a href="#propositional_logic_syntax">2.2 Operator Prioritäten</a></li>
+                    </ul>
+                </li>
+                <li><a href="#fopl">2 Prädikatenlogik 1. Ordnung</a>
+                    <ul>
+                        <li><a href="#fopl_syntax">2.1 Syntaxdefinition</a></li>
+                        <li><a href="#fopl_syntax">2.2 Operator Prioritäten</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h1 id="settings">Einstellungen</h1>
+        <p>
+            Es gibt 2 Einstellungsmöglichkeiten. Die erste definiert, welche Logik verwendet wird und die zweite, ob das Tableau automatisch gelöst werden soll.
+            Die verfügbaren Logiken sind "Aussagenlogik (PL)", "Prädikatenlogik 1. Ordnung (FOPL)", "Nichtklassische Aussagenlogik (IPL)" und "Nichtklassische Prädikatenlogik 1. Ordnung (IFOPL)"
+            Um die Logik zu ändern, kann ein anderer Radio-Button am oberen Fensterrand ausgewählt werden.
+        </p>
+        <div>
+            <img src="images/change_logic.png"/>
+        </div>
+        <p>
+            Um abzuändern, ob das Tableau automatisch gelöst werden soll oder nicht, kann ein anderer Radio-Button unter den Logik Einstellungen ausgewählt werden.
+            Wenn "Manual" ausgewählt ist, können die Ableitungsschritte zum lösen des Tableau manuell eingegeben werden. Das Programm prüft dann, ob die eingegebenen Ableitungsschritte valide sind.
+            Ist "Automatic" ausgewählt, wird (insofern möglich) das Tableau automatisch gelöst.
+        </p>
+
+        <div>
+            <img src="images/change_mode.png"/>
+        </div>
+
+
+
+        <h1 id="propositional_logic">Aussagenlogik</h1>
+        <p>
+            Ist die Logik "Aussagenlogik (PL)" ausgewählt, gelten die Syntax und Operator Prioritäten die in diesem Abschnitt definiert werden.
+        </p>
+        <h2 id="propositional_logic_syntax">Syntaxdefinition</h2>
+        <p>
+            Die Aussagenlogik hat 5 Operatoren (Negation, Konjunktion, Disjunktion, Implikation und Äquivalenz).
+            Diese können als Tastaturfreundliche Buchstaben eingegeben werden:
+
+            <ul class="toc_list">
+                <li><b>Negation (¬):</b> ! or -</li>
+                <li><b>Konjunktion (∧):</b> & or *</li>
+                <li><b>Disjunktion (∨):</b> | or +</li>
+                <li><b>Implikation (→):</b> -&gt</li>
+                <li><b>Äquivalenz (↔):</b> &lt-&gt</li>
+            </ul>
+        </p>
+        <h2 id="propositional_logic_syntax">Operator Prioritäten</h2>
+        <p>
+            Um unleserlichkeit durch zu viel Klammersetzung zu verhindern, werden den Operatoren Prioritäten zugeordnet. Ein Operator mit höherer Priorität wird zuerst ausgewertet.
+            D.h. mit &, welches eine höhere Priorität als | hat, ist (A&B)|C gleichbedeutend zu A&B|C.
+            Die Operator Prioritäten lauten wie folgt:
+
+            <ul class="toc_list">
+                <li><b>1. Negation</b></li>
+                <li><b>2. Konjunktion</b></li>
+                <li><b>3. Disjunktion</b></li>
+                <li><b>4. Implikation</b></li>
+                <li><b>5. Äquivalenz</b></li>
+            </ul>
+        </p>
+
+
+        <h1 id="fopl">Prädikatenlogik 1. Ordnung</h1>
+        <p>
+            Ist die Logik "Prädikatenlogik 1. Ordnung (FOPL)" ausgewählt, gelten die Syntax und Operator Prioritäten die in diesem Abschnitt definiert werden.
+            Beachte das es möglich ist Funktionen einzugeben. Z.B. in P(f(X,Y)) hat das Prädikat P die Funktion f als Argument. Es ist allerdings nicht möglich eine Funktionsevaluation zu definieren.
+            Funktionen werden als gleich betrachtet, wenn alle Argumente gleich sind.
+        </p>
+        <h2 id="fopl_syntax">Syntaxdefinition</h2>
+        <p>
+            Die Aussagenlogik hat 5 Operatoren (Negation, Konjunktion, Disjunktion, Implikation, Äquivalenz, Universelle Quantifikation und Existentielle Quantifikation).
+            Diese können als Tastaturfreundliche Buchstaben eingegeben werden:
+
+            <ul class="toc_list">
+                <li><b>Universeller Quantifikator (∀):</b> (A) or /\</li>
+                <li><b>Existentieller Quantifikator (∃):</b> (E) or \/</li>
+                <li><b>Negation (¬):</b> ! or -</li>
+                <li><b>Konjunktion (∧):</b> & or *</li>
+                <li><b>Disjunktion (∨):</b> | or +</li>
+                <li><b>Implikation (→):</b> -&gt</li>
+                <li><b>Äquivalenz (↔):</b> &lt-&gt</li>
+            </ul>
+
+            <b>Konstanten, Prädikate</b> müssen mit Kleinbuchstaben beginnen.
+            <b>Variablen, Funktionen</b> müssen mit Großbuchstaben beginnen.
+        </p>
+        <h2 id="fopl_syntax">Operator Prioritäten</h2>
+        <p>
+            Um unleserlichkeit durch zu viel Klammersetzung zu verhindern, werden den Operatoren Prioritäten zugeordnet. Ein Operator mit höherer Priorität wird zuerst ausgewertet.
+            D.h. mit &, welches eine höhere Priorität als | hat, ist (A&B)|C gleichbedeutend zu A&B|C.
+            Die Operator Prioritäten lauten wie folgt:
+            <ul class="toc_list">
+                <li><b>1. Universelle Quantifikation</b></li>
+                <li><b>2. Existentielle Quantifikation</b></li>
+                <li><b>3. Negation</b></li>
+                <li><b>4. Konjunktion</b></li>
+                <li><b>5. Disjunktion</b></li>
+                <li><b>6. Implikation</b></li>
+                <li><b>7. Äquivalenz</b></li>
+            </ul>
+        </p>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Help</title>
+
+    <style>
+        #toc_container {
+            background: #f9f9f9 none repeat scroll 0 0;
+            border: 1px solid #aaa;
+            display: table;
+            font-size: 95%;
+            margin-bottom: 1em;
+            padding: 20px;
+            width: auto;
+        }
+
+        .toc_title {
+            font-weight: 700;
+            text-align: center;
+        }
+
+        #toc_container li, #toc_container ul, #toc_container ul li{
+            list-style: outside none none !important;
+        }
+
+        img {
+            width: 75%;
+        }
+    </style>
+  </head>
+  <body>
+        Change Language to <a href="Help_de.html">German</a>.
+
+        <div id="toc_container">
+            <p class="toc_title">Table of Contents</p>
+            <ul class="toc_list">
+                <li><a href="#settings">1 Settings</a></li>
+                <li><a href="#propositional_logic">2 Propositional Logic</a>
+                    <ul>
+                        <li><a href="#propositional_logic_syntax">2.1 Syntaxdefinition</a></li>
+                        <li><a href="#propositional_logic_syntax">2.2 Operator Precedences</a></li>
+                    </ul>
+                </li>
+                <li><a href="#fopl">2 First Order Predicate Logic</a>
+                    <ul>
+                        <li><a href="#fopl_syntax">2.1 Syntaxdefinition</a></li>
+                        <li><a href="#fopl_syntax">2.2 Operator Precedences</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h1 id="settings">Settings</h1>
+        <p>
+            There are two kind of settings. The first one defines the logic used and the second one wether ore not the Tableau should be automatically solved.
+            The available logic types are "Propositional Logic (PL)", "First Order Predicate Logic (FOPL)", "Intuitionistic Propositional Logic (IPL)" and "Intuitionistic First Order Predicate Logic (IFOPL)"<div class="">
+            To change the logic, change the selected radio button on top of the window.
+        </p>
+        <div>
+            <img src="images/change_logic.png"/>
+        </div>
+        <p>
+            To change, wether or not the Tableau should be solved automatically, change the selected radio button below the logic settings.
+            If "Manual" is selected, you can enter the steps of solving the Tableau manually. The programm checks, wether or not the entered steps are valid.
+            If "Automatic" is selected, the Tableau is fully solved automatically if possible.
+        </p>
+
+        <div>
+            <img src="images/change_mode.png"/>
+        </div>
+
+
+
+        <h1 id="propositional_logic">Propositional Logic</h1>
+        <p>
+            If the logic type "Propositional Logic (PL)" is selected, the syntax and operator precedences defined in this section are applied.
+        </p>
+        <h2 id="propositional_logic_syntax">Syntaxdefinition</h2>
+        <p>
+            The Propositional Logic has 5 Operators (Negation, Conjunction, Disjunction, Conditional and Biconditional).
+            These can be entered as Keyboard-Friendly characters:
+
+            <ul class="toc_list">
+                <li><b>Negation (¬):</b> ! or -</li>
+                <li><b>Conjunction (∧):</b> & or *</li>
+                <li><b>Disjunction (∨):</b> | or +</li>
+                <li><b>Conditional (→):</b> -&gt</li>
+                <li><b>Biconditional (↔):</b> &lt-&gt</li>
+            </ul>
+        </p>
+        <h2 id="propositional_logic_syntax">Operator Precedences</h2>
+        <p>
+            To avoid unreadability due to too many clamps, the Operators got Precedences. An Operator with higher Precedence is evaluated first.
+            I.e. with & having higher precedence then |, (A&B)|C is the same as A&B|C.
+            The Operator Precedences are as follows:
+            <ul class="toc_list">
+                <li><b>1. Negation</b></li>
+                <li><b>2. Conjunction</b></li>
+                <li><b>3. Disjunction</b></li>
+                <li><b>4. Conditional</b></li>
+                <li><b>5. Biconditional</b></li>
+            </ul>
+        </p>
+
+
+        <h1 id="fopl">First Order Predicate Logic</h1>
+        <p>
+            If the logic type "First Order Predicate Logic (FOPL)" is selected, the syntax and operator precedences defined in this section are applied.
+            Please note that it is possible to enter functions, for example in P(f(X,Y)) the Predicate P got the function f as an argument. But there is no possibility to enter a custom evaluation of functions.
+            Functions are considered equal, if and only if, all its input arguments are equal.
+        </p>
+        <h2 id="fopl_syntax">Syntaxdefinition</h2>
+        <p>
+            First Order Predicate Logic has 7 Operators (Negation, Conjunction, Disjunction, Conditional, Biconditional, Univeral Quantification and Existential Quantification).
+            These can be entered as Keyboard-Friendly characters:
+
+            <ul class="toc_list">
+                <li><b>Universal Quantifier (∀):</b> (A) or /\</li>
+                <li><b>Existential Quantifier (∃):</b> (E) or \/</li>
+                <li><b>Negation (¬):</b> ! or -</li>
+                <li><b>Conjunction (∧):</b> & or *</li>
+                <li><b>Disjunction (∨):</b> | or +</li>
+                <li><b>Conditional (→):</b> -&gt</li>
+                <li><b>Biconditional (↔):</b> &lt-&gt</li>
+            </ul>
+
+            <b>Constants, Predicates</b> have to start with an uppercase letter.
+            <b>Variables, Functions</b> have to start with an lowercase letter.
+        </p>
+        <h2 id="fopl_syntax">Operator Precedences</h2>
+        <p>
+            To avoid unreadability due to too many clamps, the Operators got Precedences. An Operator with higher Precedence is evaluated first.
+            I.e. with & having higher precedence then |, (A&B)|C is the same as A&B|C.
+            The Operator Precedences are as follows:
+            <ul class="toc_list">
+                <li><b>1. Universal Quantification</b></li>
+                <li><b>2. Existential Quantification</b></li>
+                <li><b>3. Negation</b></li>
+                <li><b>4. Conjunction</b></li>
+                <li><b>5. Disjunction</b></li>
+                <li><b>6. Conditional</b></li>
+                <li><b>7. Biconditional</b></li>
+            </ul>
+        </p>
+  </body>
+</html>

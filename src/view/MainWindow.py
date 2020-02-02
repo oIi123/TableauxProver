@@ -13,6 +13,7 @@ from src.Parser.PropParser import PropParser
 from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTableauxBuilder
 from src.TableauxBuilder.BaseTableauxBuilder import BaseTableauxBuilder
 from src.builder_factory import *
+from src.view import HelpWindow
 
 
 def get_child_widget(parent: QWidget, name: str) -> Union[Optional[QWidget], None]:
@@ -109,6 +110,7 @@ class MainWindow(QMainWindow):
         self.ui.manual_radio_btn.toggled.connect(self.mode_changed)
 
         self.ui.start_calc_btn.clicked.connect(self.calculate_pressed)
+        self.ui.help_button.clicked.connect(HelpWindow.show_help)
         self.ui.reset_btn.clicked.connect(self.reset)
 
         # subscribe to draw events
