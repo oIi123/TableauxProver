@@ -4,7 +4,7 @@
 
 # Folder Structure
 - [Source Code src/](src/)
-- [Seminar Paper doc/](doc/)
+- [Seminar Paper docs/](docs/)
 - [Unittests tests/](tests/)
 - [Antlr Generated Files gen/](gen/)
 - [.ui Concept Files ui_concepts/](ui_concepts/)
