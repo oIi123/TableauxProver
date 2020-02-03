@@ -1,5 +1,5 @@
 # Requirements
-- Python Version > 3.7.2
+- Python Version >= 3.7.2
 - Packages, see [requirements.txt](requirements.txt)
 
 # Folder Structure
