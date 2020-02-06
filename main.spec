@@ -1,10 +1,17 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-block_cipher = None
+import os
 
+
+block_cipher = None
+cwd = os.getcwd()
 
 a = Analysis(['src\\main.py'],
-             pathex=['D:\\Studium\\7_Studienarbeit\\Impl\\venv\\Scripts', 'D:\\Studium\\7_Studienarbeit\\Impl\\venv\\Lib\\site-packages\\PySide2', 'D:\\Studium\\7_Studienarbeit\\Impl'],
+             pathex=[
+                  cwd + '\\venv\\Scripts',
+                  cwd + '\\venv\\Lib\\site-packages\\PySide2',
+                  cwd
+               ],
              binaries=[],
              datas=[
                 ('src/view/images/help.svg','src/view/images'),
