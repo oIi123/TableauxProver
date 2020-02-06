@@ -11,7 +11,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "A"
         expr = Atom("A")
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -19,7 +19,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "abc"
         expr = Atom("abc")
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -27,7 +27,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "9af3b"
         expr = Atom("9af3b")
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -35,7 +35,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a&b"
         expr = And(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -43,7 +43,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a &b"
         expr = And(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -51,7 +51,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a & b"
         expr = And(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -59,7 +59,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a2df1&bash3"
         expr = And(Atom("a2df1"), Atom("bash3"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -67,7 +67,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a|b"
         expr = Or(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -75,7 +75,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a |b"
         expr = Or(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -83,7 +83,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a | b"
         expr = Or(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -91,7 +91,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a2df1|bash3"
         expr = Or(Atom("a2df1"), Atom("bash3"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -99,7 +99,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a->b"
         expr = Impl(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -107,7 +107,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a ->b"
         expr = Impl(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -115,7 +115,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a -> b"
         expr = Impl(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -123,7 +123,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a2df1->bash3"
         expr = Impl(Atom("a2df1"), Atom("bash3"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -131,7 +131,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a<->b"
         expr = Eq(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -139,7 +139,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a <->b"
         expr = Eq(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -147,7 +147,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a <-> b"
         expr = Eq(Atom("a"), Atom("b"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -155,7 +155,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "a2df1<->bash3"
         expr = Eq(Atom("a2df1"), Atom("bash3"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -163,7 +163,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "!a"
         expr = Not(Atom("a"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -171,7 +171,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "! a"
         expr = Not(Atom("a"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -179,7 +179,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "!a2df1"
         expr = Not(Atom("a2df1"))
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -187,7 +187,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "(a)"
         expr = Atom("a")
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -195,7 +195,7 @@ class TestCorrectPropParser(unittest.TestCase):
         wff = "( ads )"
         expr = Atom("ads")
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -214,7 +214,7 @@ class TestCorrectPropParser(unittest.TestCase):
             )
         )
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -231,7 +231,7 @@ class TestCorrectPropParser(unittest.TestCase):
             )
         )
 
-        tree = PropParser(wff).parse()
+        tree = PropParser.parse(wff)
 
         self.assertEqual(expr, tree.expr)
 
@@ -239,23 +239,23 @@ class TestCorrectPropParser(unittest.TestCase):
 class TestIncorrectPropParser(unittest.TestCase):
     def test_invalid_chars_1(self):
         nwff = "a?+ffs"
-        self.assertRaises(RecognitionException, PropParser(nwff).parse)
+        self.assertRaises(RecognitionException, PropParser.parse, nwff)
 
     def test_invalid_chars_2(self):
         nwff = "a{ffs"
-        self.assertRaises(RecognitionException, PropParser(nwff).parse)
+        self.assertRaises(RecognitionException, PropParser.parse, nwff)
 
     def test_invalid_chars_3(self):
         nwff = "a|?b"
-        self.assertRaises(RecognitionException, PropParser(nwff).parse)
+        self.assertRaises(RecognitionException, PropParser.parse, nwff)
 
     def test_invalid_construct_1(self):
         nwff = "(a&b"
-        self.assertRaises(RecognitionException, PropParser(nwff).parse)
+        self.assertRaises(RecognitionException, PropParser.parse, nwff)
 
     def test_invalid_construct_2(self):
         nwff = "(a&b)&->c"
-        self.assertRaises(RecognitionException, PropParser(nwff).parse)
+        self.assertRaises(RecognitionException, PropParser.parse, nwff)
 
 
 if __name__ == '__main__':

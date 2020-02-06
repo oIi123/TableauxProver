@@ -5,8 +5,9 @@ from src.Model.Visitor import visitor
 
 
 class PropositionalExpressionTree:
-    def __init__(self, expr: PropositionalParser.ExprContext):
+    def __init__(self, expr: PropositionalParser.ExprContext, visit_idx: int):
         self.expr = Expr.create(expr.children)
+        self.expr.visit_idx = visit_idx
 
 
 class Expr:

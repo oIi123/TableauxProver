@@ -12,7 +12,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "P()"
         expr = Predicate("P", [])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -20,7 +20,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(X)"
         expr = Predicate("Person", [Const("X")])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["X"])
@@ -29,7 +29,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(X,Y,Z)"
         expr = Predicate("Person", [Const("X"), Const("Y"), Const("Z")])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["X", "Y", "Z"])
@@ -38,7 +38,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person( X, Y, Z)"
         expr = Predicate("Person", [Const("X"), Const("Y"), Const("Z")])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["X", "Y", "Z"])
@@ -47,7 +47,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(f())"
         expr = Predicate("Person", [Func("f", [])])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -55,7 +55,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(f(X,Y,Z))"
         expr = Predicate("Person", [Func("f", [Const("X"), Const("Y"), Const("Z")])])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["X", "Y", "Z"])
@@ -64,7 +64,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A,f(X,g(Y,Z)),B)"
         expr = Predicate("Person", [Const("A"), Func("f", [Const("X"), Func("g", [Const("Y"), Const("Z")])]), Const("B")])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "X", "Y", "Z", "B"])
@@ -73,7 +73,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(A)a Person(a,B)"
         expr = AllQuantor(Var("a"), Predicate("Person", [Var("a"), Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["B"])
@@ -82,7 +82,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(A)a,b Person(a,b)"
         expr = AllQuantor(Var("a"), AllQuantor(Var("b"), Predicate("Person", [Var("a"), Var("b")])))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, [])
@@ -91,7 +91,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(E)a Person(a,B)"
         expr = ExistentialQuantor(Var("a"), Predicate("Person", [Var("a"), Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["B"])
@@ -100,7 +100,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(E)a,b Person(a,b)"
         expr = ExistentialQuantor(Var("a"), ExistentialQuantor(Var("b"), Predicate("Person", [Var("a"), Var("b")])))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, [])
@@ -109,7 +109,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "!Person(A)"
         expr = Not(Predicate("Person", [Const("A")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A"])
@@ -118,7 +118,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "! Person(A)"
         expr = Not(Predicate("Person", [Const("A")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A"])
@@ -127,7 +127,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "!!Person(A)"
         expr = Not(Not(Predicate("Person", [Const("A")])))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A"])
@@ -136,7 +136,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A)&Person(B)"
         expr = And(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -145,7 +145,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A) &Person(B)"
         expr = And(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -154,7 +154,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A) & Person(B)"
         expr = And(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -163,7 +163,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A)|Person(B)"
         expr = Or(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -172,7 +172,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A) |Person(B)"
         expr = Or(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -181,7 +181,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A) | Person(B)"
         expr = Or(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -190,7 +190,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A)->Person(B)"
         expr = Impl(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -199,7 +199,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A) ->Person(B)"
         expr = Impl(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -208,7 +208,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A) -> Person(B)"
         expr = Impl(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -217,7 +217,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A)<->Person(B)"
         expr = Eq(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -226,7 +226,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A) <->Person(B)"
         expr = Eq(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -235,7 +235,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "Person(A) <-> Person(B)"
         expr = Eq(Predicate("Person", [Const("A")]), Predicate("Person", [Const("B")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B"])
@@ -244,7 +244,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(A)a Person(a)"
         expr = AllQuantor(Var("a"), Predicate("Person", [Var("a")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -252,7 +252,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(A)a,b Person(a)"
         expr = AllQuantor(Var("a"), AllQuantor(Var("b"), Predicate("Person", [Var("a")])))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -260,7 +260,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(A)a , b Person(a)"
         expr = AllQuantor(Var("a"), AllQuantor(Var("b"), Predicate("Person", [Var("a")])))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -268,7 +268,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(E)a Person(a)"
         expr = ExistentialQuantor(Var("a"), Predicate("Person", [Var("a")]))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -276,7 +276,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(E)a,b Person(a)"
         expr = ExistentialQuantor(Var("a"), ExistentialQuantor(Var("b"), Predicate("Person", [Var("a")])))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -284,7 +284,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(E)a , b Person(a)"
         expr = ExistentialQuantor(Var("a"), ExistentialQuantor(Var("b"), Predicate("Person", [Var("a")])))
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -292,7 +292,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "(Person(A))"
         expr = Predicate("Person", [Const("A")])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A"])
@@ -301,7 +301,7 @@ class TestCorrectFoplParser(unittest.TestCase):
         wff = "( Person(A) )"
         expr = Predicate("Person", [Const("A")])
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A"])
@@ -319,7 +319,7 @@ class TestCorrectFoplParser(unittest.TestCase):
             )
         )
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -351,7 +351,7 @@ class TestCorrectFoplParser(unittest.TestCase):
             )
         )
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
 
@@ -373,7 +373,7 @@ class TestCorrectFoplParser(unittest.TestCase):
             )
         )
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B", "C", "D"])
@@ -391,7 +391,7 @@ class TestCorrectFoplParser(unittest.TestCase):
             Predicate("P", [Const("D")])
         )
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["A", "B", "C", "D"])
@@ -417,7 +417,7 @@ class TestCorrectFoplParser(unittest.TestCase):
             )
         )
 
-        tree = FoplParser(wff).parse()
+        tree = FoplParser.parse(wff)
 
         self.assertEqual(tree.expr, expr)
         self.assertEqual(tree.constants, ["B", "C", "D"])
@@ -426,47 +426,47 @@ class TestCorrectFoplParser(unittest.TestCase):
 class TestIncorrectFoplParser(unittest.TestCase):
     def test_atom_1(self):
         nwff = "P("
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_atom_2(self):
         nwff = "P)"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_atom_3(self):
         nwff = "P(X,)"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_atom_4(self):
         nwff = "P(X,f()"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_atom_5(self):
         nwff = "P(X,f(X,))"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_atom_6(self):
         nwff = "P(X_123)"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_invalid_variable_1(self):
         nwff = "P(x)"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_invalid_variable_2(self):
         nwff = "(A)x P(x,y)"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_invalid_variable_3(self):
         nwff = "P(X,y)"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_invalid_scope_override_1(self):
         nwff = "(A)x (P(x) -> (E)x P(x))"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
     def test_invalid_scope_override_2(self):
         nwff = "(E)x (P(x) -> (A)x P(x))"
-        self.assertRaises(RecognitionException, FoplParser(nwff).parse)
+        self.assertRaises(RecognitionException, FoplParser.parse, nwff)
 
 
 if __name__ == '__main__':

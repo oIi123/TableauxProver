@@ -26,11 +26,12 @@ def concat_list_of_lists(list_of_lists):
     return concat
 
 
-def create_tableau_builder(logic_type: int, left_exprs: list, right_exprs: list):
+def create_tableau_builder(logic_type: int, left_exprs: list, right_exprs: list, visit_idx:int=0):
     if logic_type == LogicType.Propositional:
         tableau_builder = PropositionalTableauxBuilder(
             true_exprs=[tree.expr for tree in left_exprs],
-            false_exprs=[tree.expr for tree in right_exprs]
+            false_exprs=[tree.expr for tree in right_exprs],
+            visit_idx=visit_idx,
         )
         return tableau_builder
     if logic_type == LogicType.FOPL:
@@ -38,6 +39,7 @@ def create_tableau_builder(logic_type: int, left_exprs: list, right_exprs: list)
         tableau_builder = FoplTableauxBuilder(
             true_exprs=[tree.expr for tree in left_exprs],
             false_exprs=[tree.expr for tree in right_exprs],
-            constants=constants
+            constants=constants,
+            visit_idx=visit_idx
         )
         return tableau_builder

@@ -2,8 +2,10 @@ def visitor(visitor_class: object):
     def visited(self, obj: object):
         # save idx where the expr was visited
         visit_idx = obj.__getattribute__("visit_idx")
-        setattr(self, "visit_idx", visit_idx)
-        setattr(obj, "visit_idx", visit_idx + 1)
+        if getattr(self, "visit_idx") == -1:
+            # initial expressions already got a visit_idx
+            setattr(self, "visit_idx", visit_idx)
+            setattr(obj, "visit_idx", visit_idx + 1)
 
         # call visitor
         obj.__getattribute__("visited_" + visitor_class.__name__)(self)
