@@ -22,12 +22,13 @@ processed_certain_false_allquantor_exprs = "processed_certain_false_allquantor_e
 class BaseTableauxBuilder:
     visiting_false = True
     visiting_certain_falsehood_exprs = False
-    visit_idx = 0
 
     left_side_sign = "T"
     right_side_sign = "F"
 
     def __init__(self, sequent: dict = None, **kwargs):
+        self.visit_idx = kwargs.get('visit_idx', 0)
+
         if sequent is not None:
             self.sequent = sequent
         else:
@@ -44,7 +45,7 @@ class BaseTableauxBuilder:
                 processed_false_quantor_expressions: dict(),
                 processed_certain_false_exquantor_exprs: dict(),
                 processed_certain_false_allquantor_exprs: dict(),
-                established_constants: kwargs.get('constants'),
+                established_constants: kwargs.get('constants', []),
                 variable_constant_mapping: dict(),
             }
         self.done = False
@@ -88,9 +89,8 @@ class BaseTableauxBuilder:
             if self.parent is not None:
                 self.parent.add_processed(side, processed_side, expr)
 
-
     def create_copy(self, remove_false=None, remove_true=None):
-        cpy = type(self)(sequent=copy.deepcopy(self.sequent), parent=self)
+        cpy = type(self)(sequent=copy.deepcopy(self.sequent), parent=self, visit_idx=self.visit_idx+1)
         cpy.sequent[true_processed] = list()
         cpy.sequent[false_processed] = list()
 
@@ -104,6 +104,13 @@ class BaseTableauxBuilder:
     def clear_false(self):
         self.sequent[false_exprs] = []
         self.sequent[false_atoms] = []
+
+    def add_to(self, side: str, expr: Expr):
+        self.sequent[side].append(expr)
+
+        if side not in [true_atoms, false_atoms]:
+            expr.visit_idx = self.visit_idx
+            self.visit_idx += 1
 
     @abstractmethod
     def is_done(self) -> bool:
@@ -120,9 +127,7 @@ class BaseTableauxBuilder:
                     return True
         else:
             for child in self.children:
-                if not child.is_closed(
-                        self.sequent[true_atoms],
-                        self.sequent[false_atoms]):
+                if not child.is_closed():
                     return False
             return True
         return False
@@ -146,44 +151,44 @@ class BaseTableauxBuilder:
             self.sequent[true_exprs].remove(expr)
 
     def visited_Not(self, n: Not):
-        self.sequent[true_exprs if self.visiting_false else false_exprs].append(n.expr)
+        self.add_to(true_exprs if self.visiting_false else false_exprs, n.expr)
 
     def visited_And(self, a: And):
         if self.visiting_false:
             # Create new fork -> Children of same TableauxBuilder type as self
             lhs = self.create_copy(remove_false=a)
             rhs = self.create_copy(remove_false=a)
-            lhs.sequent[false_exprs].append(a.lhs)
-            rhs.sequent[false_exprs].append(a.rhs)
+            lhs.add_to(false_exprs, a.lhs)
+            rhs.add_to(false_exprs, a.rhs)
             self.children.append(lhs)
             self.children.append(rhs)
         else:
-            self.sequent[true_exprs].append(a.lhs)
-            self.sequent[true_exprs].append(a.rhs)
+            self.add_to(true_exprs, a.lhs)
+            self.add_to(true_exprs, a.rhs)
 
     def visited_Or(self, o: Or):
         if self.visiting_false:
-            self.sequent[false_exprs].append(o.lhs)
-            self.sequent[false_exprs].append(o.rhs)
+            self.add_to(false_exprs, o.lhs)
+            self.add_to(false_exprs, o.rhs)
         else:
             # Create new fork -> Children of same TableauxBuilder type as self
             lhs = self.create_copy(remove_true=o)
             rhs = self.create_copy(remove_true=o)
-            lhs.sequent[true_exprs].append(o.lhs)
-            rhs.sequent[true_exprs].append(o.rhs)
+            lhs.add_to(true_exprs, o.lhs)
+            rhs.add_to(true_exprs, o.rhs)
             self.children.append(lhs)
             self.children.append(rhs)
 
     def visited_Impl(self, impl: Impl):
         if self.visiting_false:
-            self.sequent[true_exprs].append(impl.lhs)
-            self.sequent[false_exprs].append(impl.rhs)
+            self.add_to(true_exprs, impl.lhs)
+            self.add_to(false_exprs, impl.rhs)
         else:
             # Create new fork -> Children of same TableauxBuilder type as self
             lhs = self.create_copy(remove_true=impl)
             rhs = self.create_copy(remove_true=impl)
-            lhs.sequent[false_exprs].append(impl.lhs)
-            rhs.sequent[true_exprs].append(impl.rhs)
+            lhs.add_to(false_exprs, impl.lhs)
+            rhs.add_to(true_exprs, impl.rhs)
             self.children.append(lhs)
             self.children.append(rhs)
 
@@ -193,23 +198,24 @@ class BaseTableauxBuilder:
             lhs = self.create_copy(remove_false=eq)
             rhs = self.create_copy(remove_false=eq)
 
-            lhs.sequent[false_exprs].append(eq.lhs)
-            lhs.sequent[true_exprs].append(eq.rhs)
+            lhs.add_to(false_exprs, eq.lhs)
+            lhs.add_to(true_exprs, eq.rhs)
 
-            rhs.sequent[true_exprs].append(eq.lhs)
-            rhs.sequent[false_exprs].append(eq.rhs)
+            rhs.add_to(true_exprs, eq.lhs)
+            rhs.add_to(false_exprs, eq.rhs)
             self.children.append(lhs)
             self.children.append(rhs)
         else:
             # Create new fork -> Children of same TableauxBuilder type as self
             lhs = self.create_copy(remove_true=eq)
             rhs = self.create_copy(remove_true=eq)
-            lhs.sequent[true_exprs].remove(eq)
-            rhs.sequent[true_exprs].remove(eq)
-            lhs.sequent[true_exprs].append(eq.lhs)
-            lhs.sequent[true_exprs].append(eq.rhs)
-            rhs.sequent[false_exprs].append(eq.lhs)
-            rhs.sequent[false_exprs].append(eq.rhs)
+
+            lhs.add_to(true_exprs, eq.lhs)
+            lhs.add_to(true_exprs, eq.rhs)
+
+            rhs.add_to(false_exprs, eq.lhs)
+            rhs.add_to(false_exprs, eq.rhs)
+
             self.children.append(lhs)
             self.children.append(rhs)
 
@@ -251,8 +257,10 @@ class BaseTableauxBuilder:
         exprs = (list(), list())
         for fun in [
                     self.get_processed_exprs,
+                    self.get_atom_exprs,
                     self.get_unprocessed_exprs,
-                    self.get_partially_processed_exprs]:
+                    self.get_partially_processed_exprs,
+                    ]:
             tmp = fun()
             exprs[0].extend(tmp[0])
             exprs[1].extend(tmp[1])
@@ -272,6 +280,17 @@ class BaseTableauxBuilder:
         partially unprocessed in parent
         """
         return ([], [])
+    
+    def get_atom_exprs(self):
+        """
+        Returns all atoms not in the parent tableau
+        """
+        true_atoms_parent = len(self.parent.sequent[true_atoms]) if self.parent else 0
+        false_atoms_parent = len(self.parent.sequent[false_atoms]) if self.parent else 0
+
+        return  (
+            self.sequent[true_atoms][true_atoms_parent:],
+            self.sequent[false_atoms][false_atoms_parent:])
 
     def get_unprocessed_exprs(self):
         """
@@ -280,8 +299,6 @@ class BaseTableauxBuilder:
         true_parent = len(self.parent.sequent[true_exprs]) if self.parent else 0
         false_parent = len(self.parent.sequent[false_exprs]) if self.parent else 0
 
-        true_atoms_parent = len(self.parent.sequent[true_atoms]) if self.parent else 0
-        false_atoms_parent = len(self.parent.sequent[false_atoms]) if self.parent else 0
         return (
-            self.sequent[true_exprs][true_parent:] + self.sequent[true_atoms][true_atoms_parent:],
-            self.sequent[false_exprs][false_parent:] + self.sequent[false_atoms][false_atoms_parent:])
+            self.sequent[true_exprs][true_parent:],
+            self.sequent[false_exprs][false_parent:])

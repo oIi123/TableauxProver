@@ -188,18 +188,29 @@ class MainWindow(QMainWindow):
     def draw_path(
                     self, p: CustomPainter,
                     tableau: BaseTableauxBuilder,
-                    layer=0, x=375):
+                    layer=0, x=375,
+                    parent_processed: (list, list)=None):
         """
         Draws all expressions in the tableau
         """
+        closed = tableau.is_closed()
+
+        parent_processed = ([], []) if parent_processed is None else parent_processed
         processed_exprs = tableau.get_processed_exprs()
-        unprocessed_exprs = tableau.get_unprocessed_exprs()
+        l = [x for x in processed_exprs[0] if x not in parent_processed[0]]
+        r = [x for x in processed_exprs[1] if x not in parent_processed[1]]
+        processed_exprs = (l, r)
+
+        # a close tableau does not need to draw unprocessed exprs
+        unprocessed_exprs = ([], []) if closed else tableau.get_unprocessed_exprs()
+        atom_exprs = tableau.get_atom_exprs()
         partially_exprs = tableau.get_partially_processed_exprs()
 
         # calculate horizontal positions of expressions
         expr_pos = self.to_pos_list(processed_exprs, x, p.get_text_width, p.draw_underlined)
         expr_pos.extend(self.to_pos_list(partially_exprs, x, p.get_text_width, p.draw_dotted_underlined))
-        expr_pos.extend(self.to_pos_list(unprocessed_exprs, x, p.get_text_width, p.draw_normal, include_atoms=True))
+        expr_pos.extend(self.to_pos_list(unprocessed_exprs, x, p.get_text_width, p.draw_normal))
+        expr_pos.extend(self.to_pos_list(atom_exprs, x, p.get_text_width, p.draw_normal, include_atoms=True))
         # sort by processing order
         expr_pos.sort(key=lambda x: x[1].visit_idx)
 
@@ -226,7 +237,6 @@ class MainWindow(QMainWindow):
         if len(tableau.children) == 0:
             # draw end sign of the branch
             done = tableau.is_done()
-            closed = tableau.is_closed()
 
             if closed:
                 width = 10
@@ -239,6 +249,9 @@ class MainWindow(QMainWindow):
                               diameter, diameter)
             return
 
+        parent_processed = (parent_processed[0] + processed_exprs[0],
+                            parent_processed[1] + processed_exprs[1])
+
         # draw left branch
         y = self.get_y(layer)
         left = tableau.children[0]
@@ -247,7 +260,7 @@ class MainWindow(QMainWindow):
         new_x = x - width_r - self.d_margin
         p.drawLine(x, y, new_x, y)
         p.drawLine(new_x, y, new_x, self.get_y(layer+1))
-        self.draw_path(p, left, layer+1, new_x)
+        self.draw_path(p, left, layer+1, new_x, parent_processed)
 
         # draw right branch
         right = tableau.children[1]
@@ -256,7 +269,7 @@ class MainWindow(QMainWindow):
         new_x = x + width_l + self.d_margin
         p.drawLine(x, y, new_x, y)
         p.drawLine(new_x, y, new_x, self.get_y(layer+1))
-        self.draw_path(p, right, layer+1, new_x)
+        self.draw_path(p, right, layer+1, new_x, parent_processed)
 
     def logic_changed(self):
         """
@@ -329,7 +342,8 @@ class MainWindow(QMainWindow):
         self.tableaux_builder = create_tableau_builder(
             logic_type=self.logic_type,
             left_exprs=left_exprs,
-            right_exprs=right_exprs
+            right_exprs=right_exprs,
+            visit_idx=parser.parse_idx
         )
 
         # hide widgets to enter initial expressions

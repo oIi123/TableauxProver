@@ -40,4 +40,4 @@ class PropositionalTableauxBuilder(BaseTableauxBuilder):
             return True
 
     def visited_Atom(self, atom: Atom):
-        self.sequent[false_atoms if self.visiting_false else true_atoms].append(atom)
+        self.add_to(false_atoms if self.visiting_false else true_atoms, atom)

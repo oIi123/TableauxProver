@@ -6,6 +6,8 @@ from antlr4.error.ErrorListener import *
 
 
 class PropParser:
+    parse_idx = 0
+
     @staticmethod
     def parse(expr: str) -> PropositionalExpressionTree:
         lexer = PropositionalLexer(InputStream(expr))
@@ -22,7 +24,10 @@ class PropParser:
 
         if error_listener.handled_errors > 0:
             raise RecognitionException("The input was not correct")
-        return PropositionalExpressionTree(tree)
+            
+        expr_tree = PropositionalExpressionTree(tree, PropParser.parse_idx)
+        PropParser.parse_idx += 1
+        return expr_tree
 
 
 class PropParserErrorListener(ErrorListener):

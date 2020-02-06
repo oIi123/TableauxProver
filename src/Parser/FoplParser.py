@@ -7,6 +7,8 @@ from src.Model.FoplExpressionTree import FoplExpressionTree
 
 
 class FoplParser:
+    parse_idx = 0
+
     @staticmethod
     def parse(expr: str) -> FoplExpressionTree:
         lexer = FOPLLexer(InputStream(expr))
