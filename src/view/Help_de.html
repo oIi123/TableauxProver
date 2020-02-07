@@ -30,26 +30,49 @@
     </style>
   </head>
   <body>
-        Change Language to <a href="Help_en.html">English</a>.
-
+        <p>
+            Change Language to <a href="Help_en.html">English</a>.
+        </p>
         <div id="toc_container">
             <p class="toc_title">Inhaltsverzeichnis</p>
             <ul class="toc_list">
-                <li><a href="#settings">1 Einstellungen</a></li>
-                <li><a href="#propositional_logic">2 Aussagenlogik</a>
+                <li><a href="#basic_usage">1 Benutzung</a></li>
+                <li><a href="#settings">2 Einstellungen</a></li>
+                <li><a href="#propositional_logic">3 Aussagenlogik</a>
                     <ul>
-                        <li><a href="#propositional_logic_syntax">2.1 Syntaxdefinition</a></li>
-                        <li><a href="#propositional_logic_syntax">2.2 Operator Prioritäten</a></li>
+                        <li><a href="#propositional_logic_syntax">3.1 Syntaxdefinition</a></li>
+                        <li><a href="#propositional_logic_precedence">3.2 Operator Prioritäten</a></li>
                     </ul>
                 </li>
-                <li><a href="#fopl">2 Prädikatenlogik 1. Ordnung</a>
+                <li><a href="#fopl">4 Prädikatenlogik 1. Ordnung</a>
                     <ul>
-                        <li><a href="#fopl_syntax">2.1 Syntaxdefinition</a></li>
-                        <li><a href="#fopl_syntax">2.2 Operator Prioritäten</a></li>
+                        <li><a href="#fopl_syntax">4.1 Syntaxdefinition</a></li>
+                        <li><a href="#fopl_precedence">4.2 Operator Prioritäten</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ipl">5 Intuitionistische Aussagenlogik</a>
+                    <ul>
+                        <li><a href="#ipl_syntax">5.1 Syntaxdefinition</a></li>
+                        <li><a href="#ipl_precedence">5.2 Operator Prioritäten</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ifopl">6 Intuitionistische Prädikatenlogik 1. Ordnung</a>
+                    <ul>
+                        <li><a href="#ifopl_syntax">6.1 Syntaxdefinition</a></li>
+                        <li><a href="#ifopl_precedence">6.2 Operator Prioritäten</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
+
+        <h1 id="basic_usage">Benutzung</h1>
+        <p>
+            Die verwendung des Tableaubeweisers ist relativ einfach gehalten.
+            Formeln werden in den Text Areas in der Mitte der Zeichenfläche eingegeben.
+            Um mehrere Formeln einzugeben können diese in mehreren Zeilen eingegeben werden.
+            Zum starten der automatischen bzw. manuellen Berechnung, drücken Sie den "Calculate"-Button unter den Text Areas.
+            Die möglichen Einstellungen werden im Abschnitt <a href="#settings">Einstellungen</a> beschrieben.
+        </p>
 
         <h1 id="settings">Einstellungen</h1>
         <p>
@@ -95,7 +118,7 @@
                 <li><b>Äquivalenz (↔):</b> &lt-&gt</li>
             </ul>
         </p>
-        <h2 id="propositional_logic_syntax">Operator Prioritäten</h2>
+        <h2 id="propositional_logic_precedence">Operator Prioritäten</h2>
         <p>
             Um unleserlichkeit durch zu viel Klammersetzung zu verhindern, werden den Operatoren Prioritäten zugeordnet. Ein Operator mit höherer Priorität wird zuerst ausgewertet.
             D.h. mit &, welches eine höhere Priorität als | hat, ist (A&B)|C gleichbedeutend zu A&B|C.
@@ -119,7 +142,7 @@
         </p>
         <h2 id="fopl_syntax">Syntaxdefinition</h2>
         <p>
-            Die Aussagenlogik hat 5 Operatoren (Negation, Konjunktion, Disjunktion, Implikation, Äquivalenz, Universelle Quantifikation und Existentielle Quantifikation).
+            Die Prädikatenlogik 1. Ordnung hat 5 Operatoren (Negation, Konjunktion, Disjunktion, Implikation, Äquivalenz, Universelle Quantifikation und Existentielle Quantifikation).
             Diese können als Tastaturfreundliche Buchstaben eingegeben werden:
 
             <ul class="toc_list">
@@ -132,10 +155,18 @@
                 <li><b>Äquivalenz (↔):</b> &lt-&gt</li>
             </ul>
 
-            <b>Konstanten, Prädikate</b> müssen mit Kleinbuchstaben beginnen.
-            <b>Variablen, Funktionen</b> müssen mit Großbuchstaben beginnen.
+            <b>Konstanten, Prädikate</b> müssen mit Kleinbuchstaben beginnen.<br/>
+            <b>Variablen, Funktionen</b> müssen mit Großbuchstaben beginnen.<br/>
+            <br/>
+            Ein Quantifikator ist immer gefolgt von einer oder mehreren von Kommas getrennten, quantifizierten Variablen, gefolgt von einem Leerzeichen, gefolgt von der quantifizierten Aussage.
+            Beispiele sind:
+            <ul class="toc_list">
+                <li>(A)x P(x)</li>
+                <li>(E)x P(x)</li>
+                <li>(A)x,y (P(x)&P(y))</li>
+            </ul>
         </p>
-        <h2 id="fopl_syntax">Operator Prioritäten</h2>
+        <h2 id="fopl_precedence">Operator Prioritäten</h2>
         <p>
             Um unleserlichkeit durch zu viel Klammersetzung zu verhindern, werden den Operatoren Prioritäten zugeordnet. Ein Operator mit höherer Priorität wird zuerst ausgewertet.
             D.h. mit &, welches eine höhere Priorität als | hat, ist (A&B)|C gleichbedeutend zu A&B|C.
@@ -148,6 +179,84 @@
                 <li><b>5. Disjunktion</b></li>
                 <li><b>6. Implikation</b></li>
                 <li><b>7. Äquivalenz</b></li>
+            </ul>
+        </p>
+
+
+        <h1 id="ipl">Intuitionistische Aussagenlogik</h1>
+        <p>
+            Ist die Logik "Intuitionistische Aussagenlogik (IPL)" ausgewählt, gelten die Syntax und Operator Prioritäten die in diesem Abschnitt definiert werden.
+        </p>
+        <h2 id="ipl_syntax">Syntaxdefinition</h2>
+        <p>
+            Die Intuitionistische Aussagenlogik hat 4 Operatoren (Negation, Konjunktion, Disjunktion und Implikation).
+            Diese können als Tastaturfreundliche Buchstaben eingegeben werden:
+
+            <ul class="toc_list">
+                <li><b>Negation (¬):</b> ! or -</li>
+                <li><b>Konjunktion (∧):</b> & or *</li>
+                <li><b>Disjunktion (∨):</b> | or +</li>
+                <li><b>Implikation (→):</b> -&gt</li>
+            </ul>
+        </p>
+        <h2 id="ipl_precedence">Operator Prioritäten</h2>
+        <p>
+            Um unleserlichkeit durch zu viel Klammersetzung zu verhindern, werden den Operatoren Prioritäten zugeordnet. Ein Operator mit höherer Priorität wird zuerst ausgewertet.
+            D.h. mit &, welches eine höhere Priorität als | hat, ist (A&B)|C gleichbedeutend zu A&B|C.
+            Die Operator Prioritäten lauten wie folgt:
+
+            <ul class="toc_list">
+                <li><b>1. Negation</b></li>
+                <li><b>2. Konjunktion</b></li>
+                <li><b>3. Disjunktion</b></li>
+                <li><b>4. Implikation</b></li>
+            </ul>
+        </p>
+
+
+        <h1 id="ifopl">Intuitionistische Prädikatenlogik 1. Ordnung</h1>
+        <p>
+            Ist die Logik "Intuitionistische Prädikatenlogik 1. Ordnung (IFOPL)" ausgewählt, gelten die Syntax und Operator Prioritäten die in diesem Abschnitt definiert werden.
+            Beachte das es möglich ist Funktionen einzugeben. Z.B. in P(f(X,Y)) hat das Prädikat P die Funktion f als Argument. Es ist allerdings nicht möglich eine Funktionsevaluation zu definieren.
+            Funktionen werden als gleich betrachtet, wenn alle Argumente gleich sind.
+        </p>
+        <h2 id="ifopl_syntax">Syntaxdefinition</h2>
+        <p>
+            Die Intuitionistische Prädikatenlogik 1. Ordnung hat 6 Operatoren (Negation, Konjunktion, Disjunktion, Implikation, Universelle Quantifikation und Existentielle Quantifikation).
+            Diese können als Tastaturfreundliche Buchstaben eingegeben werden:
+
+            <ul class="toc_list">
+                <li><b>Universeller Quantifikator (∀):</b> (A) or /\</li>
+                <li><b>Existentieller Quantifikator (∃):</b> (E) or \/</li>
+                <li><b>Negation (¬):</b> ! or -</li>
+                <li><b>Konjunktion (∧):</b> & or *</li>
+                <li><b>Disjunktion (∨):</b> | or +</li>
+                <li><b>Implikation (→):</b> -&gt</li>
+            </ul>
+
+            <b>Konstanten, Prädikate</b> müssen mit Kleinbuchstaben beginnen.<br/>
+            <b>Variablen, Funktionen</b> müssen mit Großbuchstaben beginnen.<br/>
+            <br/>
+            Ein Quantifikator ist immer gefolgt von einer oder mehreren von Kommas getrennten, quantifizierten Variablen, gefolgt von einem Leerzeichen, gefolgt von der quantifizierten Aussage.
+            Beispiele sind:
+            <ul class="toc_list">
+                <li>(A)x P(x)</li>
+                <li>(E)x P(x)</li>
+                <li>(A)x,y (P(x)&P(y))</li>
+            </ul>
+        </p>
+        <h2 id="ifopl_precedence">Operator Prioritäten</h2>
+        <p>
+            Um unleserlichkeit durch zu viel Klammersetzung zu verhindern, werden den Operatoren Prioritäten zugeordnet. Ein Operator mit höherer Priorität wird zuerst ausgewertet.
+            D.h. mit &, welches eine höhere Priorität als | hat, ist (A&B)|C gleichbedeutend zu A&B|C.
+            Die Operator Prioritäten lauten wie folgt:
+            <ul class="toc_list">
+                <li><b>1. Universelle Quantifikation</b></li>
+                <li><b>2. Existentielle Quantifikation</b></li>
+                <li><b>3. Negation</b></li>
+                <li><b>4. Konjunktion</b></li>
+                <li><b>5. Disjunktion</b></li>
+                <li><b>6. Implikation</b></li>
             </ul>
         </p>
   </body>

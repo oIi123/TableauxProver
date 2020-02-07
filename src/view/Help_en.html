@@ -30,26 +30,49 @@
     </style>
   </head>
   <body>
-        Change Language to <a href="Help_de.html">German</a>.
-
+        <p>
+            Change Language to <a href="Help_de.html">German</a>.
+        </p>
         <div id="toc_container">
             <p class="toc_title">Table of Contents</p>
             <ul class="toc_list">
-                <li><a href="#settings">1 Settings</a></li>
-                <li><a href="#propositional_logic">2 Propositional Logic</a>
+                <li><a href="#basic_usage">1 Basic Usage</a></li>
+                <li><a href="#settings">2 Settings</a></li>
+                <li><a href="#propositional_logic">3 Propositional Logic</a>
                     <ul>
-                        <li><a href="#propositional_logic_syntax">2.1 Syntax Definition</a></li>
-                        <li><a href="#propositional_logic_syntax">2.2 Operator Precedences</a></li>
+                        <li><a href="#propositional_logic_syntax">3.1 Syntax Definition</a></li>
+                        <li><a href="#propositional_logic_precedence">3.2 Operator Precedences</a></li>
                     </ul>
                 </li>
-                <li><a href="#fopl">2 First-Order Predicate Logic</a>
+                <li><a href="#fopl">4 First-Order Predicate Logic</a>
                     <ul>
-                        <li><a href="#fopl_syntax">2.1 Syntax Definition</a></li>
-                        <li><a href="#fopl_syntax">2.2 Operator Precedences</a></li>
+                        <li><a href="#fopl_syntax">4.1 Syntax Definition</a></li>
+                        <li><a href="#fopl_precedence">4.2 Operator Precedences</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ipl">5 Intuitionistic Propositional Logic</a>
+                    <ul>
+                        <li><a href="#ipl_syntax">5.1 Syntax Definition</a></li>
+                        <li><a href="#ipl_precedence">5.2 Operator Precedences</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ifopl">6 Intuitionistic First-Order Predicate Logic</a>
+                    <ul>
+                        <li><a href="#ifopl_syntax">6.1 Syntax Definition</a></li>
+                        <li><a href="#ifopl_precedence">6.2 Operator Precedences</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
+
+        <h1 id="basic_usage">Basic Usage</h1>
+        <p>
+            The usage of the Tableau Prover is kept relatively simple.
+            Formulae are entered in the text areas in the center of the drawing canvas.
+            To enter multiple formulae, enter those in different lines.
+            To start the atomatic or manual calculation, press the "Calculate"-button below the text areas.
+            The Settings are described in the <a href="#settings">settings</a> section.
+        </p>
 
         <h1 id="settings">Settings</h1>
         <p>
@@ -93,7 +116,7 @@
                 <li><b>Biconditional (↔):</b> &lt-&gt</li>
             </ul>
         </p>
-        <h2 id="propositional_logic_syntax">Operator Precedences</h2>
+        <h2 id="propositional_logic_precedence">Operator Precedences</h2>
         <p>
             To avoid unreadability due to too many clamps, the Operators got Precedences. An Operator with higher Precedence is evaluated first.
             I.e. with & having higher precedence then |, (A&B)|C is the same as A&B|C.
@@ -129,10 +152,18 @@
                 <li><b>Biconditional (↔):</b> &lt-&gt</li>
             </ul>
 
-            <b>Constants, Predicates</b> have to start with an uppercase letter.
-            <b>Variables, Functions</b> have to start with a lowercase letter.
+            <b>Constants, Predicates</b> have to start with an uppercase letter.<br/>
+            <b>Variables, Functions</b> have to start with a lowercase letter.<br/>
+            <br/>
+            A quantifier is always followed by one ore more comma separated variable names, followed by a space, followed by the expression in the scope of the quantifier.
+            Examples are:
+            <ul class="toc_list">
+                <li>(A)x P(x)</li>
+                <li>(E)x P(x)</li>
+                <li>(A)x,y (P(x)&P(y))</li>
+            </ul>
         </p>
-        <h2 id="fopl_syntax">Operator Precedences</h2>
+        <h2 id="fopl_precedence">Operator Precedences</h2>
         <p>
             To avoid unreadability due to too many clamps, the Operators got Precedences. An Operator with higher Precedence is evaluated first.
             I.e. with & having higher precedence then |, (A&B)|C is the same as A&B|C.
@@ -145,6 +176,83 @@
                 <li><b>5. Disjunction</b></li>
                 <li><b>6. Conditional</b></li>
                 <li><b>7. Biconditional</b></li>
+            </ul>
+        </p>
+
+
+        <h1 id="ipl">Intuitionistic Propositional Logic</h1>
+        <p>
+            If the logic type "Intuitionistic Propositional Logic (IPL)" is selected, the syntax and operator precedences defined in this section are applied.
+        </p>
+        <h2 id="ipl_syntax">Syntax Definition</h2>
+        <p>
+            The Intuitionistic Propositional Logic has 4 Operators (Negation, Conjunction, Disjunction and Conditional).
+            These can be entered as Keyboard-Friendly characters:
+
+            <ul class="toc_list">
+                <li><b>Negation (¬):</b> ! or -</li>
+                <li><b>Conjunction (∧):</b> & or *</li>
+                <li><b>Disjunction (∨):</b> | or +</li>
+                <li><b>Conditional (→):</b> -&gt</li>
+            </ul>
+        </p>
+        <h2 id="ipl_precedence">Operator Precedences</h2>
+        <p>
+            To avoid unreadability due to too many clamps, the Operators got Precedences. An Operator with higher Precedence is evaluated first.
+            I.e. with & having higher precedence then |, (A&B)|C is the same as A&B|C.
+            The Operator Precedences are as follows:
+            <ul class="toc_list">
+                <li><b>1. Negation</b></li>
+                <li><b>2. Conjunction</b></li>
+                <li><b>3. Disjunction</b></li>
+                <li><b>4. Conditional</b></li>
+            </ul>
+        </p>
+
+
+        <h1 id="ifopl">Intuitionistic First-Order Predicate Logic</h1>
+        <p>
+            If the logic type "Intuitionistic First-Order Predicate Logic (IFOPL)" is selected, the syntax and operator precedences defined in this section are applied.
+            Please note that it is possible to enter functions, for example in P(f(X, Y)) the Predicate P got the function f as an argument. But there is no possibility to enter a custom evaluation of functions.
+            Functions are considered equal, if and only if, all its input arguments are equal.
+        </p>
+        <h2 id="ifopl_syntax">Syntax Definition</h2>
+        <p>
+            Intuitionistic First-Order Predicate Logic has 6 Operators (Negation, Conjunction, Disjunction, Conditional, Univeral Quantification, and Existential Quantification).
+            These can be entered as Keyboard-Friendly characters:
+
+            <ul class="toc_list">
+                <li><b>Universal Quantifier (∀):</b> (A) or /\</li>
+                <li><b>Existential Quantifier (∃):</b> (E) or \/</li>
+                <li><b>Negation (¬):</b> ! or -</li>
+                <li><b>Conjunction (∧):</b> & or *</li>
+                <li><b>Disjunction (∨):</b> | or +</li>
+                <li><b>Conditional (→):</b> -&gt</li>
+            </ul>
+
+            <b>Constants, Predicates</b> have to start with an uppercase letter.<br/>
+            <b>Variables, Functions</b> have to start with a lowercase letter.<br/>
+            <br/>
+            A quantifier is always followed by one ore more comma separated variable names, followed by a space, followed by the expression in the scope of the quantifier.
+            Examples are:
+            <ul class="toc_list">
+                <li>(A)x P(x)</li>
+                <li>(E)x P(x)</li>
+                <li>(A)x,y (P(x)&P(y))</li>
+            </ul>
+        </p>
+        <h2 id="ifopl_precedence">Operator Precedences</h2>
+        <p>
+            To avoid unreadability due to too many clamps, the Operators got Precedences. An Operator with higher Precedence is evaluated first.
+            I.e. with & having higher precedence then |, (A&B)|C is the same as A&B|C.
+            The Operator Precedences are as follows:
+            <ul class="toc_list">
+                <li><b>1. Universal Quantification</b></li>
+                <li><b>2. Existential Quantification</b></li>
+                <li><b>3. Negation</b></li>
+                <li><b>4. Conjunction</b></li>
+                <li><b>5. Disjunction</b></li>
+                <li><b>6. Conditional</b></li>
             </ul>
         </p>
   </body>

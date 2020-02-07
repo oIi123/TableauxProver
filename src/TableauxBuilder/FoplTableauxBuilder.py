@@ -110,7 +110,6 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
     def generate_existing_constant_expression(self, quantor: Quantor, processed_quantor_expressions: str = None, append_to: str = None):
         if processed_quantor_expressions is None:
             processed_quantor_expressions = processed_false_quantor_expressions if self.visiting_false else processed_true_quantor_expressions
-
         if append_to is None:
             append_to = false_exprs if self.visiting_false else true_exprs
 
@@ -140,7 +139,7 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
             self.sequent[variable_constant_mapping][quantor.variable.name] = const
             expr_copy = copy.deepcopy(quantor.expr)
             self.variable_constant_mapper.map_expr(expr_copy)
-            self.sequent[append_to].append(expr_copy)
+            self.add_to(append_to, expr_copy)
 
         # Add constants to list of already processed constants
         self.sequent[processed_quantor_expressions][quantor].extend(established_constants_copy)
@@ -166,7 +165,7 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
         self.sequent[variable_constant_mapping][quantor.variable.name] = name
         expr_copy = copy.deepcopy(quantor.expr)
         self.variable_constant_mapper.map_expr(expr_copy)
-        self.sequent[false_exprs if self.visiting_false else true_exprs].append(expr_copy)
+        self.add_to(false_exprs if self.visiting_false else true_exprs, expr_copy)
 
         # Restore stashed mapping
         if stashed_const is not None:
@@ -176,6 +175,7 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
 
     def visited_ExistentialQuantor(self, quantor: ExistentialQuantor):
         if self.visiting_false:
+            self.last_multiprocess_false = quantor
             self.generate_existing_constant_expression(quantor)
         else:
             self.generate_new_constant_expression(quantor)
@@ -184,10 +184,11 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
         if self.visiting_false:
             self.generate_new_constant_expression(quantor)
         else:
+            self.last_multiprocess_true = quantor
             self.generate_existing_constant_expression(quantor)
 
     def visited_Predicate(self, predicate: Predicate):
-        self.sequent[false_atoms if self.visiting_false else true_atoms].append(predicate)
+        self.add_to(false_atoms if self.visiting_false else true_atoms, predicate)
 
     def get_partially_processed_exprs(self):
         if self.parent is None:

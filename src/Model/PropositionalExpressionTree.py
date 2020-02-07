@@ -160,6 +160,9 @@ class Impl(Operation):
     op_priority = 4
     printable_operator: str = "->"
 
+    def __hash__(self):
+        return str(self).__hash__()
+
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0
 

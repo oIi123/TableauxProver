@@ -6,7 +6,12 @@ from src.Model.Visitor import visitor
 
 
 class FoplExpressionTree:
-    def __init__(self, expr_context: FOPLParser.ExprContext = None, expr=None, constants: [str] = None):
+    def __init__(
+                self,
+                expr_context: FOPLParser.ExprContext = None,
+                expr=None,
+                constants: [str] = None,
+                visit_idx: int = 0):
         self.var_stack = []
         self.constants = []
         if expr is not None:
@@ -14,6 +19,8 @@ class FoplExpressionTree:
             self.constants = [] if constants is None else constants
         else:
             self.expr = Expr.create(expr_context.children, tree=self)
+        
+        self.expr.visit_idx = visit_idx
 
     def add_const(self, name: str):
         if name not in self.constants:
@@ -266,6 +273,9 @@ class Quantor(Expr):
             other.variable == self.variable and
             other.expr == self.expr
         )
+    
+    def __hash__(self):
+        return str(self).__hash__()
 
     def __str__(self):
         s = f"{self.printable_operator}{str(self.variable)} "
@@ -277,19 +287,12 @@ class Quantor(Expr):
 class ExistentialQuantor(Quantor):
     printable_operator: str = "(E)"
 
-    def __hash__(self):
-        return str(self).__hash__()
-
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 2
-
 
 @visitor
 class AllQuantor(Quantor):
     printable_operator: str = "(A)"
-
-    def __hash__(self):
-        return str(self).__hash__()
 
     def priority(self, true_side: bool) -> int:
         return 2 if true_side else 1
@@ -359,6 +362,9 @@ class Or(Operation):
 class Impl(Operation):
     op_priority = 5
     printable_operator: str = "->"
+
+    def __hash__(self):
+        return str(self).__hash__()
 
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0

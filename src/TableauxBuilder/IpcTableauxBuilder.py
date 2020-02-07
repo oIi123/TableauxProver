@@ -5,6 +5,8 @@ from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTablea
 
 class IpcTableauxBuilder(PropositionalTableauxBuilder):
     def is_done(self):
+        if self.is_closed():
+            return True
         if super().is_done():
             return len(self.sequent[certain_falsehood_exprs]) == 0 and len(self.sequent[processed_true_impls]) == 0
         else:
@@ -34,14 +36,14 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
     def visited_Not(self, n: Not):
         if self.visiting_false or self.visiting_certain_falsehood_exprs:
             self.clear_false()
-            self.sequent[true_exprs].append(n.expr)
+            self.add_to(true_exprs, n.expr)
         else:
-            self.sequent[certain_falsehood_exprs].append(n.expr)
+            self.add_to(certain_falsehood_exprs, n.expr)
 
     def visited_And(self, a: And):
         if self.visiting_certain_falsehood_exprs:
-            lhs = type(self)(sequent=copy.deepcopy(self.sequent))
-            rhs = type(self)(sequent=copy.deepcopy(self.sequent))
+            lhs = self.create_copy()
+            rhs = self.create_copy()
 
             lhs.clear_false()
             rhs.clear_false()
@@ -49,8 +51,8 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
             lhs.sequent[certain_falsehood_exprs].remove(a)
             rhs.sequent[certain_falsehood_exprs].remove(a)
 
-            lhs.sequent[certain_falsehood_exprs].append(a.lhs)
-            rhs.sequent[certain_falsehood_exprs].append(a.rhs)
+            lhs.add_to(certain_falsehood_exprs, a.lhs)
+            rhs.add_to(certain_falsehood_exprs, a.rhs)
 
             self.children.append(lhs)
             self.children.append(rhs)
@@ -59,8 +61,8 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
 
     def visited_Or(self, o: Or):
         if self.visiting_certain_falsehood_exprs:
-            self.sequent[certain_falsehood_exprs].append(o.lhs)
-            self.sequent[certain_falsehood_exprs].append(o.rhs)
+            self.add_to(certain_falsehood_exprs, o.lhs)
+            self.add_to(certain_falsehood_exprs, o.rhs)
         else:
             super().visited_Or(o)
 
@@ -70,16 +72,27 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
             self.sequent[true_exprs].append(impl.lhs)
             self.sequent[false_exprs].append(impl.rhs)
         else:
-            lhs = type(self)(sequent=copy.deepcopy(self.sequent))
-            rhs = type(self)(sequent=copy.deepcopy(self.sequent))
-
-            lhs.sequent[true_exprs].remove(impl)
-            rhs.sequent[false_exprs].remove(impl)
+            lhs = self.create_copy(remove_true=impl)
+            rhs = self.create_copy(remove_true=impl)
 
             if impl not in lhs.sequent[processed_true_impls]:
                 lhs.sequent[processed_true_impls][impl] = 0
-            lhs.sequent[false_exprs].append(impl.lhs)
-            rhs.sequent[true_exprs].append(impl.rhs)
+            lhs.add_to(false_exprs, impl.lhs)
+            rhs.add_to(true_exprs, impl.rhs)
 
             self.children.append(lhs)
             self.children.append(rhs)
+
+    def visited_Eq(self, eq: Eq):
+        side = false_exprs if self.visiting_false else true_exprs
+        if self.visiting_certain_falsehood_exprs:
+            side = certain_falsehood_exprs
+        
+        subst = And(Impl(eq.lhs, eq.rhs), Impl(eq.rhs, eq.lhs))
+        self.add_to(side, subst)
+
+    def visited_Atom(self, atom: Atom):
+        if self.visiting_certain_falsehood_exprs:
+            self.add_to(certain_falsehood_atoms, atom)
+        else:
+            super().visited_Atom(atom)

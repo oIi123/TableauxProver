@@ -26,7 +26,8 @@ class FoplParser:
         if error_listener.handled_errors > 0:
             raise RecognitionException("The input was not correct.")
 
-        expr_tree = FoplExpressionTree(tree)
+        expr_tree = FoplExpressionTree(tree, visit_idx=FoplParser.parse_idx)
+        FoplParser.parse_idx += 1
         return expr_tree
 
 

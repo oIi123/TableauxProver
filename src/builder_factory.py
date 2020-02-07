@@ -3,19 +3,24 @@ from src.Parser.FoplParser import FoplParser
 
 from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTableauxBuilder
 from src.TableauxBuilder.FoplTableauxBuilder import FoplTableauxBuilder
-
+from src.TableauxBuilder.IpcTableauxBuilder import IpcTableauxBuilder
+from src.TableauxBuilder.IfoplTableauxBuilder import IfoplTableauxBuilder
 
 class LogicType:
-    Propositional = 1
+    PROPOSITIONAL = 1
     FOPL = 2
-    IPropositional = 3
+    IPROPOSITIONAL = 3
     IFOPL = 4
 
 
 def create_parser(logic_type: int):
-    if logic_type == LogicType.Propositional:
+    if logic_type == LogicType.PROPOSITIONAL:
         return PropParser
     if logic_type == LogicType.FOPL:
+        return FoplParser
+    if logic_type == LogicType.IPROPOSITIONAL:
+        return PropParser
+    if logic_type == LogicType.IFOPL:
         return FoplParser
 
 
@@ -27,7 +32,7 @@ def concat_list_of_lists(list_of_lists):
 
 
 def create_tableau_builder(logic_type: int, left_exprs: list, right_exprs: list, visit_idx:int=0):
-    if logic_type == LogicType.Propositional:
+    if logic_type == LogicType.PROPOSITIONAL:
         tableau_builder = PropositionalTableauxBuilder(
             true_exprs=[tree.expr for tree in left_exprs],
             false_exprs=[tree.expr for tree in right_exprs],
@@ -40,6 +45,22 @@ def create_tableau_builder(logic_type: int, left_exprs: list, right_exprs: list,
             true_exprs=[tree.expr for tree in left_exprs],
             false_exprs=[tree.expr for tree in right_exprs],
             constants=constants,
-            visit_idx=visit_idx
+            visit_idx=visit_idx,
+        )
+        return tableau_builder
+    if logic_type == LogicType.IPROPOSITIONAL:
+        tableau_builder = IpcTableauxBuilder(
+            true_exprs=[tree.expr for tree in left_exprs],
+            false_exprs=[tree.expr for tree in right_exprs],
+            visit_idx=visit_idx,
+        )
+        return tableau_builder
+    if logic_type == LogicType.IFOPL:
+        constants = concat_list_of_lists([k.constants for k in left_exprs + right_exprs])
+        tableau_builder = IfoplTableauxBuilder(
+            true_exprs=[tree.expr for tree in left_exprs],
+            false_exprs=[tree.expr for tree in right_exprs],
+            constants = constants,
+            visit_idx=visit_idx,
         )
         return tableau_builder

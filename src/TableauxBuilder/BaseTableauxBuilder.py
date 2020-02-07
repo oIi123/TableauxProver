@@ -15,6 +15,7 @@ processed_false_quantor_expressions = "processed_false_quantor_expressions"
 established_constants = "established_constants"
 variable_constant_mapping = "variable_constant_mapping"
 certain_falsehood_exprs = "certain_falsehood_exprs"
+certain_falsehood_atoms = "certain_falsehood_atoms"
 processed_certain_false_exquantor_exprs = "processed_certain_false_exquantor_exprs"
 processed_certain_false_allquantor_exprs = "processed_certain_false_allquantor_exprs"
 
@@ -25,6 +26,9 @@ class BaseTableauxBuilder:
 
     left_side_sign = "T"
     right_side_sign = "F"
+
+    last_multiprocess_false = None
+    last_multiprocess_true = None
 
     def __init__(self, sequent: dict = None, **kwargs):
         self.visit_idx = kwargs.get('visit_idx', 0)
@@ -40,6 +44,7 @@ class BaseTableauxBuilder:
                 false_processed: [],
                 true_processed: [],
                 certain_falsehood_exprs: [],
+                certain_falsehood_atoms: [],
                 processed_true_impls: dict(),
                 processed_true_quantor_expressions: dict(),
                 processed_false_quantor_expressions: dict(),
@@ -78,7 +83,14 @@ class BaseTableauxBuilder:
         expr.visit(self)
         side = false_exprs if false_side else true_exprs
         processed_side = false_processed if false_side else true_processed
-        if expr in self.sequent[side]:
+        partially_processed_side = processed_false_quantor_expressions if false_side else processed_true_quantor_expressions
+        last = self.last_multiprocess_false if false_side else self.last_multiprocess_true
+        if expr == last and expr in self.sequent[side]:
+            # if expr is a partially processed, only remove it from exprs and add to partially processed
+            self.sequent[side].remove(expr)
+            if self.parent is not None:
+                self.parent.add_multiprocess(side, partially_processed_side, expr)
+        elif expr in self.sequent[side]:
             self.add_processed(side, processed_side, expr)
 
     def add_processed(self, side, processed_side, expr):
@@ -88,6 +100,14 @@ class BaseTableauxBuilder:
 
             if self.parent is not None:
                 self.parent.add_processed(side, processed_side, expr)
+
+    def add_multiprocess(self, side, m_p_side, expr):
+        if expr in self.sequent[side]:
+            self.sequent[side].remove(expr)
+            self.sequent[m_p_side][expr] = []
+
+            if self.parent is not None:
+                self.parent.add_multiprocess(side, m_p_side, expr)
 
     def create_copy(self, remove_false=None, remove_true=None):
         cpy = type(self)(sequent=copy.deepcopy(self.sequent), parent=self, visit_idx=self.visit_idx+1)
@@ -123,7 +143,7 @@ class BaseTableauxBuilder:
     def is_closed(self):
         if len(self.children) == 0:
             for true_atom in self.sequent[true_atoms]:
-                if true_atom in self.sequent[false_atoms]:
+                if true_atom in self.sequent[false_atoms] or true_atom in self.sequent[certain_falsehood_atoms]:
                     return True
         else:
             for child in self.children:

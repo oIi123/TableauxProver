@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         self.mode = ResolveMode.Automatic
-        self.logic_type = LogicType.Propositional
+        self.logic_type = LogicType.PROPOSITIONAL
 
         # setup slots
         self.ui.pl_radio_btn.toggled.connect(self.logic_changed)
@@ -276,11 +276,11 @@ class MainWindow(QMainWindow):
         This function is called when a logic radio button is toggled
         """
         if self.ui.pl_radio_btn.isChecked():
-            self.logic_type = LogicType.Propositional
+            self.logic_type = LogicType.PROPOSITIONAL
         if self.ui.fopl_radio_btn.isChecked():
             self.logic_type = LogicType.FOPL
         if self.ui.ipl_radio_btn.isChecked():
-            self.logic_type = LogicType.IPropositional
+            self.logic_type = LogicType.IPROPOSITIONAL
         if self.ui.ifopl_radio_btn.isChecked():
             self.logic_type = LogicType.IFOPL
         self.scroll_area_content.repaint()
@@ -298,7 +298,7 @@ class MainWindow(QMainWindow):
         """
         Draws the initial tableau frame and lays out the text edits/button
         """
-        classic = self.logic_type in [LogicType.Propositional, LogicType.FOPL]
+        classic = self.logic_type in [LogicType.PROPOSITIONAL, LogicType.FOPL]
         left_side_sign = 'T' if classic else 'P'
         right_side_sign = 'F' if classic else 'C'
 

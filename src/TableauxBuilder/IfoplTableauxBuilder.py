@@ -42,7 +42,6 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
                 self.sequent[certain_falsehood_exprs].remove(expr)
         else:
             # If all certain falsehood expressions are processed, reprocess the quantor expressions or implications
-
             num_of_constants = len(self.sequent[established_constants])
             # Tuple: (expression, priority, false_side_or_certain_false)
             #   priority is either the number of unprocessed constants or
@@ -98,3 +97,9 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
                 self.sequent[processed_certain_false_allquantor_exprs][quantor] = 0
         else:
             self.generate_existing_constant_expression(quantor)
+
+    def visited_Predicate(self, predicate: Predicate):
+        if self.visiting_certain_falsehood_exprs:
+            self.add_to(certain_falsehood_atoms, predicate)
+        else:
+            super().visited_Predicate(predicate)
