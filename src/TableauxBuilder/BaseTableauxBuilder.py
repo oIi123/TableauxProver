@@ -15,6 +15,7 @@ processed_false_quantor_expressions = "processed_false_quantor_expressions"
 established_constants = "established_constants"
 variable_constant_mapping = "variable_constant_mapping"
 certain_falsehood_exprs = "certain_falsehood_exprs"
+certain_falsehood_processed = "certain_falsehood_processed"
 certain_falsehood_atoms = "certain_falsehood_atoms"
 processed_certain_false_exquantor_exprs = "processed_certain_false_exquantor_exprs"
 processed_certain_false_allquantor_exprs = "processed_certain_false_allquantor_exprs"
@@ -29,10 +30,11 @@ class BaseTableauxBuilder:
 
     last_multiprocess_false = None
     last_multiprocess_true = None
+    clears_false_exprs = False
 
     def __init__(self, sequent: dict = None, **kwargs):
         self.visit_idx = kwargs.get('visit_idx', 0)
-
+        self.constant_idx = kwargs.get('constant_idx', 0)
         if sequent is not None:
             self.sequent = sequent
         else:
@@ -45,6 +47,7 @@ class BaseTableauxBuilder:
                 true_processed: [],
                 certain_falsehood_exprs: [],
                 certain_falsehood_atoms: [],
+                certain_falsehood_processed: [],
                 processed_true_impls: dict(),
                 processed_true_quantor_expressions: dict(),
                 processed_false_quantor_expressions: dict(),
@@ -53,7 +56,6 @@ class BaseTableauxBuilder:
                 established_constants: kwargs.get('constants', []),
                 variable_constant_mapping: dict(),
             }
-        self.done = False
         self.children = []
         self.parent = kwargs.get('parent')
 
@@ -81,8 +83,8 @@ class BaseTableauxBuilder:
     def visit_expr(self, false_side, expr):
         self.visiting_false = false_side
         expr.visit(self)
-        side = false_exprs if false_side else true_exprs
-        processed_side = false_processed if false_side else true_processed
+        side = self.get_expr_side()
+        processed_side = self.get_processed_side()
         partially_processed_side = processed_false_quantor_expressions if false_side else processed_true_quantor_expressions
         last = self.last_multiprocess_false if false_side else self.last_multiprocess_true
         if expr == last and expr in self.sequent[side]:
@@ -109,21 +111,32 @@ class BaseTableauxBuilder:
             if self.parent is not None:
                 self.parent.add_multiprocess(side, m_p_side, expr)
 
-    def create_copy(self, remove_false=None, remove_true=None):
-        cpy = type(self)(sequent=copy.deepcopy(self.sequent), parent=self, visit_idx=self.visit_idx+1)
+    def create_copy(self, remove_false=None, remove_true=None, clears_false_exprs=False):
+        cpy = type(self)(sequent=copy.deepcopy(self.sequent),
+                         parent=self,
+                         visit_idx=self.visit_idx+1,
+                         constant_idx=self.constant_idx)
         cpy.sequent[true_processed] = list()
         cpy.sequent[false_processed] = list()
+        cpy.sequent[certain_falsehood_processed] = list()
 
-        if remove_false is not None:
+        if remove_false is not None and remove_false in cpy.sequent[false_exprs]:
             cpy.sequent[false_exprs].remove(remove_false)
-        if remove_true is not None:
+        if remove_true is not None and remove_true in cpy.sequent[true_exprs]:
             cpy.sequent[true_exprs].remove(remove_true)
 
-        return cpy
+        if clears_false_exprs:
+            cpy.parent = None
+            cpy.clears_false_exprs = True
+            cpy.sequent[false_exprs] = []
+            cpy.sequent[false_atoms] = []
+            cpy.sequent[processed_false_quantor_expressions] = dict()
+            for x in cpy.sequent[processed_certain_false_allquantor_exprs]:
+                cpy.sequent[processed_certain_false_allquantor_exprs][x] = []
+            for x in cpy.sequent[processed_certain_false_exquantor_exprs]:
+                cpy.sequent[processed_certain_false_exquantor_exprs][x] = []
 
-    def clear_false(self):
-        self.sequent[false_exprs] = []
-        self.sequent[false_atoms] = []
+        return cpy
 
     def add_to(self, side: str, expr: Expr):
         self.sequent[side].append(expr)
@@ -131,6 +144,22 @@ class BaseTableauxBuilder:
         if side not in [true_atoms, false_atoms]:
             expr.visit_idx = self.visit_idx
             self.visit_idx += 1
+
+    def get_expr_side(self):
+        if self.visiting_certain_falsehood_exprs:
+            return certain_falsehood_exprs
+        return false_exprs if self.visiting_false else true_exprs
+
+    def get_processed_side(self):
+        if self.visiting_certain_falsehood_exprs:
+            return certain_falsehood_processed
+        return false_processed if self.visiting_false else true_processed
+
+    def get_atom_side(self):
+        if self.visiting_certain_falsehood_exprs:
+            return certain_falsehood_atoms
+        else:
+            return false_atoms if self.visiting_false else true_atoms
 
     @abstractmethod
     def is_done(self) -> bool:
@@ -258,6 +287,15 @@ class BaseTableauxBuilder:
         if len(self.children) == 0:
             return (max_expr_width_left, max_expr_width_right)
 
+        if len(self.children) == 1:
+            width_l, width_r = self.children[0].get_drawn_width(
+                                                    get_width_from_str,
+                                                    margin)
+            w_l = max(width_l, max_expr_width_left)
+            w_r = max(width_r, max_expr_width_right)
+            
+            return (w_l + margin, w_r + margin)
+
         left_child_width = self.children[0].get_drawn_width(
                                                     get_width_from_str,
                                                     margin)
@@ -292,25 +330,28 @@ class BaseTableauxBuilder:
         """
         return (
             self.sequent[true_processed],
-            self.sequent[false_processed])
+            self.sequent[false_processed],
+            self.sequent[certain_falsehood_processed],)
 
     def get_partially_processed_exprs(self):
         """
         Returns all partially unprocessed expressions that are not
         partially unprocessed in parent
         """
-        return ([], [])
-    
+        return ([], [], [])
+
     def get_atom_exprs(self):
         """
         Returns all atoms not in the parent tableau
         """
         true_atoms_parent = len(self.parent.sequent[true_atoms]) if self.parent else 0
         false_atoms_parent = len(self.parent.sequent[false_atoms]) if self.parent else 0
+        cf_atoms_parent = len(self.parent.sequent[certain_falsehood_atoms]) if self.parent else 0
 
         return  (
             self.sequent[true_atoms][true_atoms_parent:],
-            self.sequent[false_atoms][false_atoms_parent:])
+            self.sequent[false_atoms][false_atoms_parent:],
+            self.sequent[certain_falsehood_atoms][cf_atoms_parent:],)
 
     def get_unprocessed_exprs(self):
         """
@@ -318,7 +359,9 @@ class BaseTableauxBuilder:
         """
         true_parent = len(self.parent.sequent[true_exprs]) if self.parent else 0
         false_parent = len(self.parent.sequent[false_exprs]) if self.parent else 0
+        cf_parent = len(self.parent.sequent[certain_falsehood_exprs]) if self.parent else 0
 
         return (
             self.sequent[true_exprs][true_parent:],
-            self.sequent[false_exprs][false_parent:])
+            self.sequent[false_exprs][false_parent:],
+            self.sequent[certain_falsehood_exprs][cf_parent:],)

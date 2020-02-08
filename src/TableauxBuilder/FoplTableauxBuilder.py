@@ -4,8 +4,6 @@ from src.TableauxBuilder.VariableConsantMapper import VariableConstantMapper
 
 
 class FoplTableauxBuilder(BaseTableauxBuilder):
-    constant_idx = 0
-
     def __init__(self, tree: FoplExpressionTree = None, sequent: dict = None, **kwargs):
         super().__init__(tree=tree, sequent=sequent, **kwargs)
 
@@ -193,12 +191,19 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
     def get_partially_processed_exprs(self):
         if self.parent is None:
             return (
-                self.sequent[processed_true_quantor_expressions],
-                self.sequent[processed_false_quantor_expressions])
+                list(self.sequent[processed_true_quantor_expressions]),
+                list(self.sequent[processed_false_quantor_expressions]),
+                list(self.sequent[processed_certain_false_allquantor_exprs]) + 
+                list(self.sequent[processed_certain_false_exquantor_exprs]))
         true_exprs = [x for x in self.sequent[processed_true_quantor_expressions]
                       if x not in self.parent.sequent[processed_true_quantor_expressions]]
 
         false_exprs = [x for x in self.sequent[processed_false_quantor_expressions]
                        if x not in self.parent.sequent[processed_false_quantor_expressions]]
 
-        return (true_exprs, false_exprs)
+        cf_exprs = [x for x in self.sequent[processed_certain_false_allquantor_exprs]
+                    if x not in self.parent.sequent[processed_certain_false_allquantor_exprs]]
+        cf_exprs += [x for x in self.sequent[processed_certain_false_exquantor_exprs]
+                    if x not in self.parent.sequent[processed_certain_false_exquantor_exprs]]
+
+        return (true_exprs, false_exprs, [])

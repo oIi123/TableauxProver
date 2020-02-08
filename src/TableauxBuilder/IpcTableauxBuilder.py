@@ -19,9 +19,7 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
         if len(options) > 0:
             self.visiting_certain_falsehood_exprs = True
             expr = options[0][1]
-            expr.visit(self)
-            if expr in self.sequent[certain_falsehood_exprs]:
-                self.sequent[certain_falsehood_exprs].remove(expr)
+            self.visit_expr(True, expr)
         elif len(self.sequent[processed_true_impls]) > 0:
             # calculate least processed true impl
             kv_list = [(k, v) for k, v in self.sequent[processed_true_impls].items()]
@@ -35,18 +33,18 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
 
     def visited_Not(self, n: Not):
         if self.visiting_false or self.visiting_certain_falsehood_exprs:
-            self.clear_false()
-            self.add_to(true_exprs, n.expr)
+            child = self.create_copy(clears_false_exprs=True)
+            if self.visiting_certain_falsehood_exprs:
+                child.sequent[certain_falsehood_exprs].remove(n)
+            child.add_to(true_exprs, n.expr)
+            self.children.append(child)
         else:
             self.add_to(certain_falsehood_exprs, n.expr)
 
     def visited_And(self, a: And):
         if self.visiting_certain_falsehood_exprs:
-            lhs = self.create_copy()
-            rhs = self.create_copy()
-
-            lhs.clear_false()
-            rhs.clear_false()
+            lhs = self.create_copy(clears_false_exprs=True)
+            rhs = self.create_copy(clears_false_exprs=True)
 
             lhs.sequent[certain_falsehood_exprs].remove(a)
             rhs.sequent[certain_falsehood_exprs].remove(a)
@@ -68,9 +66,12 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
 
     def visited_Impl(self, impl: Impl):
         if self.visiting_certain_falsehood_exprs or self.visiting_false:
-            self.clear_false()
-            self.sequent[true_exprs].append(impl.lhs)
-            self.sequent[false_exprs].append(impl.rhs)
+            child = self.create_copy(clears_false_exprs=True)
+            if self.visiting_certain_falsehood_exprs:
+                child.sequent[certain_falsehood_exprs].remove(impl)
+            child.add_to(true_exprs, impl.lhs)
+            child.add_to(false_exprs, impl.rhs)
+            self.children.append(child)
         else:
             lhs = self.create_copy(remove_true=impl)
             rhs = self.create_copy(remove_true=impl)
@@ -87,7 +88,7 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
         side = false_exprs if self.visiting_false else true_exprs
         if self.visiting_certain_falsehood_exprs:
             side = certain_falsehood_exprs
-        
+
         subst = And(Impl(eq.lhs, eq.rhs), Impl(eq.rhs, eq.lhs))
         self.add_to(side, subst)
 
@@ -96,3 +97,12 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
             self.add_to(certain_falsehood_atoms, atom)
         else:
             super().visited_Atom(atom)
+
+    def get_partially_processed_exprs(self):
+        if self.parent is None:
+            return (list(self.sequent[processed_true_impls]), [], [])
+        
+        exprs = [x for x in self.sequent[processed_true_impls]
+                if x not in self.parent.sequent[processed_true_impls]]
+        
+        return (exprs, [], [])

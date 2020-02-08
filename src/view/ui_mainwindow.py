@@ -24,30 +24,30 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.horizontalGroupBox = QGroupBox(self.centralwidget)
-        self.horizontalGroupBox.setObjectName(u"horizontalGroupBox")
-        self.horizontalLayout_2 = QHBoxLayout(self.horizontalGroupBox)
+        self.logic_type_gb = QGroupBox(self.centralwidget)
+        self.logic_type_gb.setObjectName(u"logic_type_gb")
+        self.horizontalLayout_2 = QHBoxLayout(self.logic_type_gb)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.pl_radio_btn = QRadioButton(self.horizontalGroupBox)
+        self.pl_radio_btn = QRadioButton(self.logic_type_gb)
         self.pl_radio_btn.setObjectName(u"pl_radio_btn")
         self.pl_radio_btn.setMinimumSize(QSize(0, 0))
         self.pl_radio_btn.setChecked(True)
 
         self.horizontalLayout_2.addWidget(self.pl_radio_btn)
 
-        self.fopl_radio_btn = QRadioButton(self.horizontalGroupBox)
+        self.fopl_radio_btn = QRadioButton(self.logic_type_gb)
         self.fopl_radio_btn.setObjectName(u"fopl_radio_btn")
         self.fopl_radio_btn.setMinimumSize(QSize(0, 0))
 
         self.horizontalLayout_2.addWidget(self.fopl_radio_btn)
 
-        self.ipl_radio_btn = QRadioButton(self.horizontalGroupBox)
+        self.ipl_radio_btn = QRadioButton(self.logic_type_gb)
         self.ipl_radio_btn.setObjectName(u"ipl_radio_btn")
         self.ipl_radio_btn.setMinimumSize(QSize(0, 0))
 
         self.horizontalLayout_2.addWidget(self.ipl_radio_btn)
 
-        self.ifopl_radio_btn = QRadioButton(self.horizontalGroupBox)
+        self.ifopl_radio_btn = QRadioButton(self.logic_type_gb)
         self.ifopl_radio_btn.setObjectName(u"ifopl_radio_btn")
 
         self.horizontalLayout_2.addWidget(self.ifopl_radio_btn)
@@ -57,28 +57,28 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
 
 
-        self.verticalLayout_2.addWidget(self.horizontalGroupBox)
+        self.verticalLayout_2.addWidget(self.logic_type_gb)
 
-        self.groupBox = QGroupBox(self.centralwidget)
-        self.groupBox.setObjectName(u"groupBox")
-        self.horizontalLayout = QHBoxLayout(self.groupBox)
+        self.calc_mode_gb = QGroupBox(self.centralwidget)
+        self.calc_mode_gb.setObjectName(u"calc_mode_gb")
+        self.horizontalLayout = QHBoxLayout(self.calc_mode_gb)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.automatic_radio_btn = QRadioButton(self.groupBox)
+        self.automatic_radio_btn = QRadioButton(self.calc_mode_gb)
         self.automatic_radio_btn.setObjectName(u"automatic_radio_btn")
         self.automatic_radio_btn.setMinimumSize(QSize(100, 0))
         self.automatic_radio_btn.setChecked(True)
 
         self.horizontalLayout.addWidget(self.automatic_radio_btn)
 
-        self.manual_radio_btn = QRadioButton(self.groupBox)
+        self.manual_radio_btn = QRadioButton(self.calc_mode_gb)
         self.manual_radio_btn.setObjectName(u"manual_radio_btn")
         self.manual_radio_btn.setMinimumSize(QSize(70, 0))
         self.manual_radio_btn.setChecked(False)
 
         self.horizontalLayout.addWidget(self.manual_radio_btn)
 
-        self.help_button = QPushButton(self.groupBox)
+        self.help_button = QPushButton(self.calc_mode_gb)
         self.help_button.setObjectName(u"help_button")
         self.help_button.setMinimumSize(QSize(25, 25))
         self.help_button.setMaximumSize(QSize(25, 25))
@@ -95,7 +95,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
 
-        self.verticalLayout_2.addWidget(self.groupBox)
+        self.verticalLayout_2.addWidget(self.calc_mode_gb)
 
         self.scrollArea = QScrollArea(self.centralwidget)
         self.scrollArea.setObjectName(u"scrollArea")

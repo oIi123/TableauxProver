@@ -173,15 +173,24 @@ class MainWindow(QMainWindow):
         lst = [(
                     x - self.margin - txt_width_fun(str(expr)),
                     expr,
-                    draw_fun
+                    draw_fun,
+                    str(expr),
                 )
                for expr in exprs[0] if not expr.is_atom or include_atoms]
         lst.extend([(
                         x + self.margin,
                         expr,
-                        draw_fun
+                        draw_fun,
+                        str(expr)
                     )
                     for expr in exprs[1] if not expr.is_atom or include_atoms])
+        lst.extend([(
+                        x + self.margin,
+                        expr,
+                        draw_fun,
+                        '[' + str(expr) + ']',
+                    )
+                    for expr in exprs[2] if not expr.is_atom or include_atoms])
 
         return lst
 
@@ -189,20 +198,24 @@ class MainWindow(QMainWindow):
                     self, p: CustomPainter,
                     tableau: BaseTableauxBuilder,
                     layer=0, x=375,
-                    parent_processed: (list, list)=None):
+                    parent_processed: (list, list, list)=None):
         """
         Draws all expressions in the tableau
         """
         closed = tableau.is_closed()
 
-        parent_processed = ([], []) if parent_processed is None else parent_processed
+        parent_processed = ([], [], []) if parent_processed is None else parent_processed
         processed_exprs = tableau.get_processed_exprs()
         l = [x for x in processed_exprs[0] if x not in parent_processed[0]]
         r = [x for x in processed_exprs[1] if x not in parent_processed[1]]
-        processed_exprs = (l, r)
+        cf = [x for x in processed_exprs[2] if x not in parent_processed[2]]
+        processed_exprs = (l, r, cf)
 
         # a close tableau does not need to draw unprocessed exprs
-        unprocessed_exprs = ([], []) if closed else tableau.get_unprocessed_exprs()
+        not_include_unprocessed = closed
+        if len(tableau.children) > 0:
+            not_include_unprocessed = all([not child.clears_false_exprs for child in tableau.children])
+        unprocessed_exprs = ([], [], []) if not_include_unprocessed else tableau.get_unprocessed_exprs()
         atom_exprs = tableau.get_atom_exprs()
         partially_exprs = tableau.get_partially_processed_exprs()
 
@@ -221,15 +234,15 @@ class MainWindow(QMainWindow):
         expr_pos.extend(unvisited_exprs)
 
         # draw expressions
-        for pos_x, expr, draw_fun in expr_pos:
+        for pos_x, expr, draw_fun, expr_str in expr_pos:
             y_1 = self.get_y(layer)
             y_2 = self.get_y(layer+1)
-            draw_fun(p, str(expr), pos_x, y_1)
+            draw_fun(p, expr_str, pos_x, y_1)
             p.drawLine(x, y_1, x, y_2)
             layer += 1
 
             # update max width/height
-            txt_width = p.get_text_width(str(expr))
+            txt_width = p.get_text_width(expr_str)
             self.max_width = max(self.max_width,
                                  pos_x + txt_width)
             self.max_height = max(self.max_height, y_2)
@@ -250,7 +263,20 @@ class MainWindow(QMainWindow):
             return
 
         parent_processed = (parent_processed[0] + processed_exprs[0],
-                            parent_processed[1] + processed_exprs[1])
+                            parent_processed[1] + processed_exprs[1],
+                            parent_processed[2] + processed_exprs[2],)
+
+        if len(tableau.children) == 1 and tableau.children[0].clears_false_exprs:
+            # only a single child that clears false expressions
+            child = tableau.children[0]
+            width_l, width_r = child.get_drawn_width(p.get_text_width,
+                                                    self.d_margin)
+            y = self.get_y(layer)
+            p.drawLine(x - width_l, y, x + width_r, y)
+            p.drawLine(x, y, x, self.get_y(layer+1))
+            self.draw_path(p, child, layer+1, x, parent_processed)
+
+            return
 
         # draw left branch
         y = self.get_y(layer)
@@ -258,7 +284,8 @@ class MainWindow(QMainWindow):
         width_l, width_r = left.get_drawn_width(p.get_text_width,
                                                 self.d_margin)
         new_x = x - width_r - self.d_margin
-        p.drawLine(x, y, new_x, y)
+        x_1 = new_x - width_l - self.d_margin if left.clears_false_exprs else new_x
+        p.drawLine(x, y, x_1, y)
         p.drawLine(new_x, y, new_x, self.get_y(layer+1))
         self.draw_path(p, left, layer+1, new_x, parent_processed)
 
@@ -267,7 +294,8 @@ class MainWindow(QMainWindow):
         width_l, width_r = right.get_drawn_width(p.get_text_width,
                                                  self.d_margin)
         new_x = x + width_l + self.d_margin
-        p.drawLine(x, y, new_x, y)
+        x_1 = new_x + width_r + self.d_margin if right.clears_false_exprs else new_x
+        p.drawLine(x, y, x_1, y)
         p.drawLine(new_x, y, new_x, self.get_y(layer+1))
         self.draw_path(p, right, layer+1, new_x, parent_processed)
 
@@ -352,6 +380,8 @@ class MainWindow(QMainWindow):
         self.ui.start_calc_btn.hide()
         self.ui.inital_left_exprs_text_edit.setStyleSheet('')
         self.ui.inital_right_exprs_text_edit.setStyleSheet('')
+        self.ui.logic_type_gb.setEnabled(False)
+        self.ui.calc_mode_gb.setEnabled(False)
         if self.error_widget is not None:
             self.error_widget.hide()
 
@@ -379,6 +409,8 @@ class MainWindow(QMainWindow):
         self.ui.inital_left_exprs_text_edit.show()
         self.ui.inital_right_exprs_text_edit.show()
         self.ui.start_calc_btn.show()
+        self.ui.logic_type_gb.setEnabled(True)
+        self.ui.calc_mode_gb.setEnabled(True)
 
         self.max_width = 700
         self.max_height = 400
