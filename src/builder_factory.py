@@ -31,36 +31,40 @@ def concat_list_of_lists(list_of_lists):
     return concat
 
 
-def create_tableau_builder(logic_type: int, left_exprs: list, right_exprs: list, visit_idx:int=0):
+def create_tableau_builder(logic_type: int, left_exprs: list,
+                          right_exprs: list, visit_idx:int=0,
+                          cf: list=None):
     if logic_type == LogicType.PROPOSITIONAL:
         tableau_builder = PropositionalTableauxBuilder(
-            true_exprs=[tree.expr for tree in left_exprs],
-            false_exprs=[tree.expr for tree in right_exprs],
+            true_exprs=left_exprs,
+            false_exprs=right_exprs,
             visit_idx=visit_idx,
         )
         return tableau_builder
     if logic_type == LogicType.FOPL:
         constants = concat_list_of_lists([k.constants for k in left_exprs + right_exprs])
         tableau_builder = FoplTableauxBuilder(
-            true_exprs=[tree.expr for tree in left_exprs],
-            false_exprs=[tree.expr for tree in right_exprs],
+            true_exprs=left_exprs,
+            false_exprs=right_exprs,
             constants=constants,
             visit_idx=visit_idx,
         )
         return tableau_builder
     if logic_type == LogicType.IPROPOSITIONAL:
         tableau_builder = IpcTableauxBuilder(
-            true_exprs=[tree.expr for tree in left_exprs],
-            false_exprs=[tree.expr for tree in right_exprs],
+            true_exprs=left_exprs,
+            false_exprs=right_exprs,
             visit_idx=visit_idx,
+            cf_exprs=cf if cf is not None else [],
         )
         return tableau_builder
     if logic_type == LogicType.IFOPL:
         constants = concat_list_of_lists([k.constants for k in left_exprs + right_exprs])
         tableau_builder = IfoplTableauxBuilder(
-            true_exprs=[tree.expr for tree in left_exprs],
-            false_exprs=[tree.expr for tree in right_exprs],
+            true_exprs=left_exprs,
+            false_exprs=right_exprs,
             constants = constants,
             visit_idx=visit_idx,
+            cf_exprs=cf if cf is not None else [],
         )
         return tableau_builder

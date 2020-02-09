@@ -3,6 +3,8 @@ from antlr4.tree.Tree import TerminalNodeImpl
 from gen.PropositionalParser import PropositionalParser
 from src.Model.Visitor import visitor
 
+import itertools
+
 
 class PropositionalExpressionTree:
     def __init__(self, expr: PropositionalParser.ExprContext, visit_idx: int):
@@ -13,6 +15,14 @@ class PropositionalExpressionTree:
 class Expr:
     is_atom = False
     op_priority = 0
+
+    def permute(self, permutations: list=None):
+        """Returns all permutations of the expression
+        
+        Args:
+            permutations (list, optional): List of permutations to append to. Defaults to None.
+        """
+        return [self]
 
     @staticmethod
     def create(expr):
@@ -137,8 +147,36 @@ class Operation(Expr):
         return self.printable_operator.join(children)
 
 
+class PermutableOperation(Operation):
+    def permute(self):
+        permutables = self.get_permutables()
+        permuted = list(itertools.permutations(permutables))
+
+        return [self.create_from_perm(list(x)) for x in permuted]
+        
+    def create_from_perm(self, perm):
+        if len(perm) == 2:
+            return type(self)(*perm)
+        return type(self)(perm[0], self.create_from_perm(perm[1:]))
+
+    def get_permutables(self):
+        permutables = []
+        if type(self.lhs) == type(self):
+            permutables.extend(self.lhs.get_permutables())
+        else:
+            permutables.append(self.lhs)
+        
+        if type(self.rhs) == type(self):
+            permutables.extend(self.rhs.get_permutables())
+        else:
+            permutables.append(self.rhs)
+        
+        return permutables
+
+
+
 @visitor
-class And(Operation):
+class And(PermutableOperation):
     op_priority = 2
     printable_operator: str = "&"
 
@@ -147,7 +185,7 @@ class And(Operation):
 
 
 @visitor
-class Or(Operation):
+class Or(PermutableOperation):
     op_priority = 3
     printable_operator: str = "|"
 

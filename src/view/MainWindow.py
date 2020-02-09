@@ -13,7 +13,10 @@ from src.Parser.PropParser import PropParser
 from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTableauxBuilder
 from src.TableauxBuilder.BaseTableauxBuilder import BaseTableauxBuilder
 from src.builder_factory import *
+from src.view.BaseWindow import BaseWindow
 from src.view import HelpWindow
+from src.view.InputWindow import InputWindow
+from src.view.CustomPainter import CustomPainter
 
 
 def get_child_widget(parent: QWidget, name: str) -> Union[Optional[QWidget], None]:
@@ -27,9 +30,9 @@ def get_child_widget(parent: QWidget, name: str) -> Union[Optional[QWidget], Non
     return None
 
 
-def curry(function, arg):
+def curry(function, *c_args, **c_kwargs):
     def curried(*args, **kwargs):
-        return function(arg, *args, **kwargs)
+        return function(*c_args, *args, **c_kwargs, **kwargs)
 
     return curried
 
@@ -39,66 +42,15 @@ class ResolveMode:
     Manual = 2
 
 
-class CustomPainter(QPainter):
-    def __init__(self):
-        super().__init__()
-        self.normal_font = PySide2.QtGui.QFont('MS Shell Dlg 2', 14)
-        self.underlined_font = PySide2.QtGui.QFont('MS Shell Dlg 2', 14)
-        self.underlined_font.setUnderline(True)
+class MainWindow(BaseWindow):
+    input_window = None
 
-    def begin(self, widget):
-        super().begin(widget)
-        self.setFont(self.normal_font)
-        self.setPen(PySide2.QtGui.QColor(0, 0, 0))
-
-    def get_text_width(self, text):
-        """
-        Returns painted width of the text
-        """
-        fm = QFontMetrics(self.font())
-        return fm.horizontalAdvance(text)
-
-    def draw_dotted_underlined(self, painter: QPainter, text: str, x: int, y: int):
-        """
-        QFont has no dotted underlined style
-        this function draws the text and a dotted line under the text
-        """
-        painter.drawText(x, y, text)
-
-        txt_width = self.get_text_width(text)
-        pen = painter.pen()
-        pen.setStyle(Qt.DashDotLine)
-        painter.setPen(pen)
-
-        # draw the dotted line with offset of 1 for better visibility
-        painter.drawLine(x, y + 1, x + txt_width, y + 1)
-
-        pen.setStyle(Qt.SolidLine)
-        painter.setPen(pen)
-
-    def draw_underlined(self, painter: QPainter, text: str, x: int, y: int):
-        """
-        Draw a text with underlined font
-        """
-        painter.setFont(self.underlined_font)
-        painter.drawText(x, y, text)
-        painter.setFont(self.normal_font)
-
-    def draw_normal(self, painter: QPainter, text: str, x: int, y: int):
-        """
-        Draws a text with normal font
-        """
-        painter.drawText(x, y, text)
-
-
-class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
         self.mode = ResolveMode.Automatic
-        self.logic_type = LogicType.PROPOSITIONAL
 
         # setup slots
         self.ui.pl_radio_btn.toggled.connect(self.logic_changed)
@@ -114,7 +66,7 @@ class MainWindow(QMainWindow):
         self.ui.reset_btn.clicked.connect(self.reset)
 
         # subscribe to draw events
-        self.scroll_area_content = get_child_widget(self, "scrollAreaWidgetContents")
+        self.scroll_area_content = self.ui.scrollAreaWidgetContents
         self.scroll_area_content.installEventFilter(self)
 
         self.row_height = 50
@@ -125,8 +77,9 @@ class MainWindow(QMainWindow):
         self.max_width = 700
         self.max_height = 400
 
-        self.error_widget = None
         self.tableaux_builder: BaseTableauxBuilder = None
+
+        self.expr_btns = dict()
 
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent):
         if watched is self.scroll_area_content and type(event) is QPaintEvent:
@@ -135,7 +88,7 @@ class MainWindow(QMainWindow):
 
             if self.tableaux_builder is None:
                 # no expression entered yet
-                self.draw_initial(p)
+                p.draw_tableau_header(self.logic_type)
                 p.end()
                 return False
 
@@ -164,6 +117,36 @@ class MainWindow(QMainWindow):
         """
         return 125 + self.row_height * layer
 
+    def manually_entered(self):
+        for k, btn in self.expr_btns.items():
+            btn.hide()
+            del btn
+        self.expr_btns = dict()
+
+        self.input_window = None
+
+        self.scroll_area_content.repaint()
+
+    def manual_btn_pressed_wrapper(self, expr, tableau):
+        def manual_btn_pressed():
+            if self.input_window is not None:
+                return
+            self.input_window = InputWindow(self.manually_entered, self.logic_type, expr, tableau)
+            self.input_window.show()
+        return manual_btn_pressed
+
+    def draw_btn(self, painter, tableau):
+        def draw_btn(text, x, y, expr):
+            if (x,y) not in self.expr_btns:
+                btn = QPushButton(self.scroll_area_content)
+                btn.show()
+                btn.setGeometry(x, y - 20, painter.get_text_width(text), 26)
+                btn.setText(text.replace('&', '&&'))
+                btn.clicked.connect(self.manual_btn_pressed_wrapper(expr, tableau))
+
+                self.expr_btns[(x,y)] = btn
+        return draw_btn
+
     def to_pos_list(self, exprs, x, txt_width_fun, draw_fun, include_atoms=False):
         """
         Converts a list of expressions to a list of tuples
@@ -173,21 +156,21 @@ class MainWindow(QMainWindow):
         lst = [(
                     x - self.margin - txt_width_fun(str(expr)),
                     expr,
-                    draw_fun,
+                    curry(draw_fun, expr=(expr, None, None)),
                     str(expr),
                 )
                for expr in exprs[0] if not expr.is_atom or include_atoms]
         lst.extend([(
                         x + self.margin,
                         expr,
-                        draw_fun,
+                        curry(draw_fun, expr=(None, expr, None)),
                         str(expr)
                     )
                     for expr in exprs[1] if not expr.is_atom or include_atoms])
         lst.extend([(
                         x + self.margin,
                         expr,
-                        draw_fun,
+                        curry(draw_fun, expr=(None, None, expr)),
                         '[' + str(expr) + ']',
                     )
                     for expr in exprs[2] if not expr.is_atom or include_atoms])
@@ -213,7 +196,7 @@ class MainWindow(QMainWindow):
 
         # a close tableau does not need to draw unprocessed exprs
         not_include_unprocessed = closed
-        if len(tableau.children) > 0:
+        if len(tableau.children) > 0 and self.mode == ResolveMode.Automatic:
             not_include_unprocessed = all([not child.clears_false_exprs for child in tableau.children])
         unprocessed_exprs = ([], [], []) if not_include_unprocessed else tableau.get_unprocessed_exprs()
         atom_exprs = tableau.get_atom_exprs()
@@ -221,9 +204,16 @@ class MainWindow(QMainWindow):
 
         # calculate horizontal positions of expressions
         expr_pos = self.to_pos_list(processed_exprs, x, p.get_text_width, p.draw_underlined)
-        expr_pos.extend(self.to_pos_list(partially_exprs, x, p.get_text_width, p.draw_dotted_underlined))
-        expr_pos.extend(self.to_pos_list(unprocessed_exprs, x, p.get_text_width, p.draw_normal))
         expr_pos.extend(self.to_pos_list(atom_exprs, x, p.get_text_width, p.draw_normal, include_atoms=True))
+        
+        dotted_underlined = p.draw_dotted_underlined
+        normal = p.draw_normal
+        if self.mode == ResolveMode.Manual:
+            dotted_underlined = self.draw_btn(p, tableau)
+            normal = self.draw_btn(p, tableau)
+        expr_pos.extend(self.to_pos_list(partially_exprs, x, p.get_text_width, dotted_underlined))
+        expr_pos.extend(self.to_pos_list(unprocessed_exprs, x, p.get_text_width, normal))
+
         # sort by processing order
         expr_pos.sort(key=lambda x: x[1].visit_idx)
 
@@ -237,7 +227,7 @@ class MainWindow(QMainWindow):
         for pos_x, expr, draw_fun, expr_str in expr_pos:
             y_1 = self.get_y(layer)
             y_2 = self.get_y(layer+1)
-            draw_fun(p, expr_str, pos_x, y_1)
+            draw_fun(expr_str, pos_x, y_1)
             p.drawLine(x, y_1, x, y_2)
             layer += 1
 
@@ -322,56 +312,23 @@ class MainWindow(QMainWindow):
         if self.ui.manual_radio_btn.isChecked():
             self.mode = ResolveMode.Manual
 
-    def draw_initial(self, painter: CustomPainter):
-        """
-        Draws the initial tableau frame and lays out the text edits/button
-        """
-        classic = self.logic_type in [LogicType.PROPOSITIONAL, LogicType.FOPL]
-        left_side_sign = 'T' if classic else 'P'
-        right_side_sign = 'F' if classic else 'C'
-
-        painter.drawLine(250, 75, 500, 75)
-        painter.drawLine(375, 25, 375, 300)
-        painter.drawText(310, 50, left_side_sign)
-        painter.drawText(443, 50, right_side_sign)
-
     def calculate_pressed(self):
         """
         This function is called after the calculate button is pressed
         """
-        parser = create_parser(self.logic_type)
-        left_exprs = list()
-        right_exprs = list()
-
         # get the entered expressions
-        left_entered_text = self.ui.inital_left_exprs_text_edit.toPlainText()
-        right_entered_text = self.ui.inital_right_exprs_text_edit.toPlainText()
-        left_lines = [l.strip() for l in left_entered_text.split('\n') if l.strip() != '']
-        right_lines = [r.strip() for r in right_entered_text.split('\n') if r.strip() != '']
+        left_exprs = self.parse_exprs(self.ui.inital_left_exprs_text_edit)
+        right_exprs = self.parse_exprs(self.ui.inital_right_exprs_text_edit)
 
-        # parse the expressions
-        parsed_line = None
-        for nr, line in enumerate(left_lines):
-            try:
-                parsed_line = parser.parse(line)
-            except RecognitionException as e:
-                self.show_error(self.ui.inital_left_exprs_text_edit, str(e), nr+1)
-                return
-            left_exprs.append(parsed_line)
-        for nr, line in enumerate(right_lines):
-            try:
-                parsed_line = parser.parse(line)
-            except RecognitionException as e:
-                self.show_error(self.ui.inital_right_exprs_text_edit, str(e), nr+1)
-                return
-            right_exprs.append(parsed_line)
+        if left_exprs is None or right_exprs is None:
+            return
 
         # create tableau builder with expressions
         self.tableaux_builder = create_tableau_builder(
             logic_type=self.logic_type,
             left_exprs=left_exprs,
             right_exprs=right_exprs,
-            visit_idx=parser.parse_idx
+            visit_idx=self.parser.parse_idx
         )
 
         # hide widgets to enter initial expressions
@@ -391,19 +348,6 @@ class MainWindow(QMainWindow):
 
         self.scroll_area_content.repaint()
 
-    def show_error(self, view: QWidget, txt: str, line: int):
-        view.setStyleSheet('border: 1px solid rgb(240, 60, 60);')
-
-        self.error_widget = QTextEdit(parent=self.scroll_area_content)
-        self.error_widget.setGeometry(25, 400, 732, 62)
-        self.error_widget.setStyleSheet('background-color: rgb(240, 60, 60); border-radius: 10px;')
-
-        txt = f'<b>Error in line {line}</b><p>{txt}</h1>'
-        self.error_widget.setHtml(txt)
-        self.error_widget.setReadOnly(True)
-
-        self.error_widget.show()
-
     def reset(self):
         self.tableaux_builder = None
         self.ui.inital_left_exprs_text_edit.show()
@@ -416,6 +360,12 @@ class MainWindow(QMainWindow):
         self.max_height = 400
         self.scroll_area_content.setMinimumSize(self.max_width + self.d_margin,
                                                     self.max_height + self.d_margin)
+
+        for k, btn in self.expr_btns.items():
+            btn.hide()
+            del btn
+        
+        self.expr_btns = dict()
 
         self.scroll_area_content.repaint()
 

@@ -45,7 +45,7 @@ class BaseTableauxBuilder:
                 true_atoms: [],
                 false_processed: [],
                 true_processed: [],
-                certain_falsehood_exprs: [],
+                certain_falsehood_exprs: kwargs.get('cf_exprs', []),
                 certain_falsehood_atoms: [],
                 certain_falsehood_processed: [],
                 processed_true_impls: dict(),
@@ -138,10 +138,10 @@ class BaseTableauxBuilder:
 
         return cpy
 
-    def add_to(self, side: str, expr: Expr):
+    def add_to(self, side: str, expr: Expr, always_index=False):
         self.sequent[side].append(expr)
 
-        if side not in [true_atoms, false_atoms]:
+        if side not in [true_atoms, false_atoms] or always_index:
             expr.visit_idx = self.visit_idx
             self.visit_idx += 1
 
@@ -267,6 +267,40 @@ class BaseTableauxBuilder:
 
             self.children.append(lhs)
             self.children.append(rhs)
+
+    def merge(self, other_tableau):
+        if self.is_closed():
+            return
+
+        if len(self.children) > 0:
+            for child in self.children:
+                child.merge(other_tableau)
+            return
+        
+        if len(other_tableau.children) > 0:
+            for child in other_tableau.children:
+                cpy = self.create_copy()
+                cpy._merge_sequents(child.sequent)
+                self.children.append(cpy)
+        else:
+            self._merge_sequents(other_tableau.sequent)
+    
+    def _merge_sequents(self, other_sequent: dict):
+        add_list = []
+        for exprs, atoms in [
+            (false_exprs, false_atoms),
+            (true_exprs, true_atoms),
+            (certain_falsehood_exprs, certain_falsehood_atoms),
+        ]:
+            for other in other_sequent[exprs]:
+                if other.is_atom:
+                    add_list.append((other.visit_idx, other, atoms))
+                else:
+                    add_list.append((other.visit_idx, other, exprs))
+
+        add_list.sort(key=lambda x: x[0])
+        for idx, expr, side in add_list:
+            self.add_to(side, expr, True)
 
     def get_drawn_width(self, get_width_from_str: Callable[[str], int],
                         margin: int) -> (int, int):
