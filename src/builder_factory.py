@@ -24,16 +24,9 @@ def create_parser(logic_type: int):
         return FoplParser
 
 
-def concat_list_of_lists(list_of_lists):
-    concat = list()
-    for lst in list_of_lists:
-        concat += lst
-    return concat
-
-
 def create_tableau_builder(logic_type: int, left_exprs: list,
                           right_exprs: list, visit_idx:int=0,
-                          cf: list=None):
+                          cf: list=None, constants=[]):
     if logic_type == LogicType.PROPOSITIONAL:
         tableau_builder = PropositionalTableauxBuilder(
             true_exprs=left_exprs,
@@ -42,7 +35,6 @@ def create_tableau_builder(logic_type: int, left_exprs: list,
         )
         return tableau_builder
     if logic_type == LogicType.FOPL:
-        constants = concat_list_of_lists([k.constants for k in left_exprs + right_exprs])
         tableau_builder = FoplTableauxBuilder(
             true_exprs=left_exprs,
             false_exprs=right_exprs,
@@ -59,7 +51,6 @@ def create_tableau_builder(logic_type: int, left_exprs: list,
         )
         return tableau_builder
     if logic_type == LogicType.IFOPL:
-        constants = concat_list_of_lists([k.constants for k in left_exprs + right_exprs])
         tableau_builder = IfoplTableauxBuilder(
             true_exprs=left_exprs,
             false_exprs=right_exprs,

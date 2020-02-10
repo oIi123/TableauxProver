@@ -1,5 +1,13 @@
-from PySide2.QtWidgets import QMainWindow, QWidget
+from PySide2.QtWidgets import QMainWindow, QWidget, QTextEdit
+from antlr4 import RecognitionException
 from src.builder_factory import *
+
+
+def concat_list_of_lists(list_of_lists):
+    concat = list()
+    for lst in list_of_lists:
+        concat += lst
+    return concat
 
 
 class BaseWindow(QMainWindow):
@@ -7,7 +15,7 @@ class BaseWindow(QMainWindow):
     logic_type = LogicType.PROPOSITIONAL
     parser = None
 
-    def parse_exprs(self, txt_area, include_cf=False):
+    def parse_exprs(self, txt_area, scroll_view, include_cf=False):
         parsed_lines = []
         parsed_cf_lines = []
         self.parser = create_parser(self.logic_type)
@@ -23,30 +31,42 @@ class BaseWindow(QMainWindow):
             try:
                 parsed_line = self.parser.parse(line)
             except RecognitionException as e:
-                self.show_error(txt_area, str(e), nr+1)
+                self.show_line_error(scroll_view, txt_area, str(e), nr+1)
                 return None
             if nr in cf_lines:
                 parsed_cf_lines.append(parsed_line)
             else:
                 parsed_lines.append(parsed_line)
-        
-        parsed_lines = [tree.expr for tree in parsed_lines]
-        parsed_cf_lines = [tree.expr for tree in parsed_cf_lines]
 
         if include_cf:
             return (parsed_lines, parsed_cf_lines)
         return parsed_lines
 
-    def show_error(self, view: QWidget, txt: str, line: int):
-        view.setStyleSheet('border: 1px solid rgb(240, 60, 60);')
+    def exprs_from_trees(self, trees):
+        return [tree.expr for tree in trees]
+    
+    def constants_from_trees(self, trees):
+        return concat_list_of_lists([tree.constants for tree in trees if hasattr(tree, 'constants')])
 
-        self.error_widget = QTextEdit(parent=self.scroll_area_content)
-        self.error_widget.setGeometry(25, 400, 732, 62)
+    def show_error(self, scroll_view: QWidget, txt: str):
+        if self.error_widget is not None:
+            self.error_widget.hide()
+            del self.error_widget
+
+        geometry = scroll_view.geometry()
+
+        self.error_widget = QTextEdit(parent=scroll_view)
+        self.error_widget.setGeometry(25, geometry.height() - 85, geometry.width() - 50, 60) #25, 400, 732, 62)
         self.error_widget.setStyleSheet(
             'background-color: rgb(240, 60, 60); border-radius: 10px;')
 
-        txt = f'<b>Error in line {line}</b><p>{txt}</h1>'
         self.error_widget.setHtml(txt)
         self.error_widget.setReadOnly(True)
 
         self.error_widget.show()
+
+    def show_line_error(self, scroll_view: QWidget, txt_view: QWidget, txt: str, line: int):
+        txt_view.setStyleSheet('border: 1px solid rgb(240, 60, 60);')
+
+        txt = f'<b>Error in line {line}</b><p>{txt}</h1>'
+        self.show_error(scroll_view, txt)

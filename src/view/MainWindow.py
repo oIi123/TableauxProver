@@ -1,12 +1,11 @@
 import sys
-
+import threading
 from typing import Union, Optional
 
 import PySide2
 from PySide2.QtGui import QPainter, QPaintEvent, QFontMetrics
 from PySide2.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QTextEdit
 from PySide2.QtCore import QFile, Qt
-from antlr4 import RecognitionException
 from src.view.ui_mainwindow import Ui_MainWindow
 
 from src.Parser.PropParser import PropParser
@@ -44,6 +43,7 @@ class ResolveMode:
 
 class MainWindow(BaseWindow):
     input_window = None
+    calc_thread = None
 
     def __init__(self):
         super().__init__()
@@ -117,13 +117,13 @@ class MainWindow(BaseWindow):
         """
         return 125 + self.row_height * layer
 
-    def manually_entered(self):
+    def manually_entered(self, success):
+        self.input_window = None
+
         for k, btn in self.expr_btns.items():
             btn.hide()
             del btn
         self.expr_btns = dict()
-
-        self.input_window = None
 
         self.scroll_area_content.repaint()
 
@@ -317,18 +317,23 @@ class MainWindow(BaseWindow):
         This function is called after the calculate button is pressed
         """
         # get the entered expressions
-        left_exprs = self.parse_exprs(self.ui.inital_left_exprs_text_edit)
-        right_exprs = self.parse_exprs(self.ui.inital_right_exprs_text_edit)
+        left_exprs = self.parse_exprs(self.ui.inital_left_exprs_text_edit, self.scroll_area_content)
+        right_exprs = self.parse_exprs(self.ui.inital_right_exprs_text_edit, self.scroll_area_content)
 
         if left_exprs is None or right_exprs is None:
             return
+
+        constants = self.constants_from_trees(left_exprs + right_exprs)
+        left_exprs = self.exprs_from_trees(left_exprs)
+        right_exprs = self.exprs_from_trees(right_exprs)
 
         # create tableau builder with expressions
         self.tableaux_builder = create_tableau_builder(
             logic_type=self.logic_type,
             left_exprs=left_exprs,
             right_exprs=right_exprs,
-            visit_idx=self.parser.parse_idx
+            visit_idx=self.parser.parse_idx,
+            constants=constants,
         )
 
         # hide widgets to enter initial expressions
@@ -344,7 +349,14 @@ class MainWindow(BaseWindow):
 
         # if automatic, try to auto resolve the tableau
         if self.mode == ResolveMode.Automatic:
-            self.tableaux_builder.auto_resolve()
+            try:
+                self.tableaux_builder.auto_resolve()
+                self.scroll_area_content.repaint()
+            except:
+                self.show_error(self.scroll_area_content,
+                                '<b>No automatic resolution possible</b>'\
+                                '<p>The automatic resolution failed. Try to calculate the Tableau manually.</p>')
+                self.reset()
 
         self.scroll_area_content.repaint()
 
@@ -355,6 +367,7 @@ class MainWindow(BaseWindow):
         self.ui.start_calc_btn.show()
         self.ui.logic_type_gb.setEnabled(True)
         self.ui.calc_mode_gb.setEnabled(True)
+        self.ui.start_calc_btn.setEnabled(True)
 
         self.max_width = 700
         self.max_height = 400

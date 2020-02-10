@@ -59,13 +59,16 @@ class BaseTableauxBuilder:
         self.children = []
         self.parent = kwargs.get('parent')
 
-    def auto_resolve(self, debug=False, depth=0):
+    def auto_resolve(self, debug=False, max_steps=1000):
         while not self.is_done():
+            max_steps -= 1
+            if max_steps <= 0:
+                raise RuntimeError('Max calculation steps reached')
             if debug:
-                self.print(depth)
+                print(max_steps)
             if len(self.children) > 0:
                 for child in self.children:
-                    child.auto_resolve(debug, depth+1)
+                    child.auto_resolve(debug, max_steps)
                 return
 
             # Options Tuple (Priority, False_Side, Expression)

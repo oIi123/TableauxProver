@@ -1,6 +1,7 @@
 import PySide2
 
 from PySide2.QtGui import QPainter, QFontMetrics
+from PySide2.QtCore import QFile, Qt
 from src.builder_factory import LogicType
 
 
