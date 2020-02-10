@@ -4,7 +4,8 @@ from src.TableauxBuilder.BaseManualTableau import BaseManualTableau
 from src.builder_factory import *
 from src.view.ui_inputwindow import Ui_MainWindow as Ui_InputWindow
 from src.view.CustomPainter import CustomPainter
-from PySide2.QtGui import QPainter, QPaintEvent, QFontMetrics
+from PySide2.QtGui import QPainter, QPaintEvent, QHideEvent, QFontMetrics
+from PySide2.QtCore import QEvent
 from PySide2.QtWidgets import QMainWindow
 from src.view.BaseWindow import BaseWindow
 
@@ -20,6 +21,7 @@ class InputWindow(BaseWindow):
         self.ui.cancel_btn.clicked.connect(self.cancel_pressed)
         self.ui.help_btn.clicked.connect(self.show_help)
 
+        self.installEventFilter(self)
         self.ui.scrollAreaContentsSingle.installEventFilter(self)
         self.ui.scrollAreaContentsBranch.installEventFilter(self)
 
@@ -33,6 +35,8 @@ class InputWindow(BaseWindow):
             self.draw_single()
         elif watched is self.ui.scrollAreaContentsBranch and type(event) is QPaintEvent:
             self.draw_branch()
+        elif event.type() == QEvent.Close:
+            self.callback(False)
         
         return False
 
@@ -57,7 +61,7 @@ class InputWindow(BaseWindow):
             left_exprs = self.exprs_from_trees(left_exprs)
             right_exprs = self.exprs_from_trees(right_exprs)
 
-            if self.manual_tableau.merge(self.expr, [left_exprs], [right_exprs], [cf_exprs]):
+            if self.manual_tableau.merge(self.expr, [left_exprs], [right_exprs], [cf_exprs], constants):
                 self.callback(True)
                 self.close()
                 return
@@ -79,13 +83,14 @@ class InputWindow(BaseWindow):
                 rr_exprs, r_cf_exprs = rr_exprs
                 cf_exprs = (l_cf_exprs, r_cf_exprs)
             
-            constants = self.constants_from_trees(ll_exprs + lr_exprs + rl_exprs + rr_exprs)
+            constants_l = self.constants_from_trees(ll_exprs + lr_exprs)
+            constants_r = self.constants_from_trees(rl_exprs + rr_exprs)
             ll_exprs = self.exprs_from_trees(ll_exprs)
             lr_exprs = self.exprs_from_trees(lr_exprs)
             rl_exprs = self.exprs_from_trees(rl_exprs)
             rr_exprs = self.exprs_from_trees(rr_exprs)
 
-            if self.manual_tableau.merge(self.expr, (ll_exprs, rl_exprs), (lr_exprs, rr_exprs), cf_exprs):
+            if self.manual_tableau.merge(self.expr, (ll_exprs, rl_exprs), (lr_exprs, rr_exprs), cf_exprs, (constants_l, constants_r)):
                 self.callback(True)
                 self.close()
                 return
@@ -106,10 +111,9 @@ class InputWindow(BaseWindow):
         self.callback(False)
         self.close()
 
-    def draw_expr(self, painter):
+    def draw_expr(self, painter, x=400):
         t, f, cf = self.expr
 
-        x = 400
         expr_str = ""
         if t is not None:
             expr_str = str(t)
@@ -127,22 +131,61 @@ class InputWindow(BaseWindow):
         p = CustomPainter()
         p.begin(self.ui.scrollAreaContentsSingle)
 
-        p.draw_tableau_header(self.logic_type, center_x=400, height=275)
-        self.draw_expr(p)
+        center_x = self.get_tableau_center(p)
+        p.draw_tableau_header(self.logic_type, center_x=center_x, height=275)
+        self.draw_expr(p, center_x)
+
+        self.ui.deduction_single_left.setGeometry(center_x - 175, 135, 165, 200)
+        self.ui.deduction_single_right.setGeometry(center_x + 10, 135, 165, 200)
+
+        width = max(400, self.get_expr_width(p) + 2 * self.margin) + 400
 
         p.end()
-    
+        
+        self.ui.scrollAreaContentsSingle.setMinimumSize(width, 407)
+
     def draw_branch(self):
         p = CustomPainter()
         p.begin(self.ui.scrollAreaContentsBranch)
 
-        p.draw_tableau_header(self.logic_type, center_x=400, height=100)
+        center_x = self.get_tableau_center(p)
+        p.draw_tableau_header(self.logic_type, center_x=center_x, height=100)
 
         # draw branch lines
-        p.drawLine(210, 175, 600, 175)
-        p.drawLine(210, 175, 210, 400)
-        p.drawLine(600, 175, 600, 400)
+        l = center_x - 190
+        r = center_x + 190
+        p.drawLine(l, 175, r, 175)
+        p.drawLine(l, 175, l, 400)
+        p.drawLine(r, 175, r, 400)
 
-        self.draw_expr(p)
+        # position text areas
+        self.ui.deduction_branch_ll.setGeometry(l - 175, 185, 165, 200)
+        self.ui.deduction_branch_lr.setGeometry(l + 10, 185, 165, 200)
+        self.ui.deduction_branch_rl.setGeometry(r - 175, 185, 165, 200)
+        self.ui.deduction_branch_rr.setGeometry(r + 10, 185, 165, 200)
+
+        self.draw_expr(p, center_x)
+
+        width = max(400, self.get_expr_width(p) + 2 * self.margin) + 400
 
         p.end()
+
+        self.ui.scrollAreaContentsBranch.setMinimumSize(width, 407)
+
+    def get_tableau_center(self, painter):
+        t, f, cf = self.expr
+        x = 400
+        if t is not None:
+            width = painter.get_text_width(str(t))
+            width += 2 * self.margin
+            x = max(width, x)
+        return x
+
+    def get_expr_width(self, painter):
+        t, f, cf = self.expr
+        if t is not None:
+            return painter.get_text_width(str(t))
+        if f is not None:
+            return painter.get_text_width(str(f))
+        if cf is not None:
+            return painter.get_text_width('[' + str(cf) + ']')

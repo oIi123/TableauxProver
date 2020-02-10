@@ -137,8 +137,8 @@ class MainWindow(BaseWindow):
             if (x,y) not in self.expr_btns:
                 btn = QPushButton(self.scroll_area_content)
                 btn.show()
-                btn.setGeometry(x, y - 20, painter.get_text_width(text), 26)
                 btn.setText(text.replace('&', '&&'))
+                btn.setGeometry(x, y - 20, painter.get_text_width(text), 26)
                 btn.clicked.connect(self.manual_btn_pressed_wrapper(expr, tableau))
 
                 self.expr_btns[(x,y)] = btn
@@ -205,7 +205,7 @@ class MainWindow(BaseWindow):
         
         dotted_underlined = p.draw_dotted_underlined
         normal = p.draw_normal
-        if self.mode == ResolveMode.Manual:
+        if self.mode == ResolveMode.Manual and not closed:
             dotted_underlined = self.draw_btn(p, tableau)
             normal = self.draw_btn(p, tableau)
         expr_pos.extend(self.to_pos_list(partially_exprs, x, p.get_text_width, dotted_underlined))
@@ -387,3 +387,5 @@ if __name__ == '__main__':
     window.show()
 
     sys.exit(app.exec_())
+
+

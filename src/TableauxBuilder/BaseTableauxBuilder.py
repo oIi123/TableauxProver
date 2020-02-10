@@ -109,7 +109,8 @@ class BaseTableauxBuilder:
     def add_multiprocess(self, side, m_p_side, expr):
         if expr in self.sequent[side]:
             self.sequent[side].remove(expr)
-            self.sequent[m_p_side][expr] = []
+            if expr not in self.sequent[m_p_side]:
+                self.sequent[m_p_side][expr] = []
 
             if self.parent is not None:
                 self.parent.add_multiprocess(side, m_p_side, expr)
@@ -304,6 +305,21 @@ class BaseTableauxBuilder:
         add_list.sort(key=lambda x: x[0])
         for idx, expr, side in add_list:
             self.add_to(side, expr, True)
+        
+        # merge constants
+        for const in other_sequent[established_constants]:
+            if const not in self.sequent[established_constants]:
+                self.sequent[established_constants].append(const)
+
+        # merge mutliprocessed exprs
+        for exprs in [processed_true_quantor_expressions, processed_false_quantor_expressions]:
+            for other in other_sequent[exprs]:
+                if other not in self.sequent[exprs]:
+                    self.sequent[exprs][other] = other_sequent[exprs][other]
+                else:
+                    for x in other_sequent[exprs]:
+                        if x not in self.sequent[exprs][other]:
+                            self.sequent[exprs][other].append(x)
 
     def get_drawn_width(self, get_width_from_str: Callable[[str], int],
                         margin: int) -> (int, int):

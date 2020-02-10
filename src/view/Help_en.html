@@ -302,8 +302,29 @@
             <div>
                 <img src="images/branch_derivation.png"/>
             </div>
-
             After pressing ok, the window closes and the tableau is updated.
+            <br/>
+            A derivation is only considered valid applying one rule at the time.
+            I.e. a the following is not valid.
+            <div>
+                <img src="images/invalid_derivation.png"/>
+            </div>
+            While the following, only applying the derivation rule for the disjunction is.
+            <div>
+                <img src="images/valid_derivation.png"/>
+            </div>
+            <br/>
+            Quantifiers are a special case. To derive a quantifier that introduces a new constant, use any constant not used in the current tableau branch.
+            A derivation of quantifiers that do not introduce new constants, have to use all introduced constants that havent been applied to that quantifier.
+            I.e. in the following situation, the quantifier (E)x D(x) has been already applied to the constant X1.
+            <div>
+                <img src="images/derivation_quantifier_before.png"/>
+            </div>
+            Since that, the two constants X2 and X3 have been introduced.
+            A valid derivation of (E)x D(x) has to apply both.
+            <div>
+                <img src="images/derivation_quantifier_entering.png"/>
+            </div>
         </p>
   </body>
 </html>

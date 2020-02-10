@@ -307,6 +307,28 @@
             </div>
             
             Nachdem der "Ok"-Button betätigt wurde, schließt das Fenster und das Tableau wird aktualisiert.
+            <br/>
+            Eine Ableitung wird nur als korrekt akzeptiert, wenn eine Regel pro Ableitung angewendet wird.
+            D.h. die folgende Ableitung ist nicht korrekt.
+            <div>
+                <img src="images/invalid_derivation.png"/>
+            </div>
+            Während die folgende, welche nur die Ableitungsregel für die Disjunktion anwendet valide ist.
+            <div>
+                <img src="images/valid_derivation.png"/>
+            </div>
+            <br/>
+            Quantifikatoren sind ein Spezialfall. Um eine Quantifikation die eine neue Konstante einführt abzuleiten, muss eine Konstante verwendet werden die nicht im aktuellen Tableauzweig verwendet wird.
+            Eine Ableitung eines Quantifikators der keine neue Konstante einführt, muss alle bisher eingeführten Konstanten verwenden.
+            D.h. in der folgenden Situation, wurde der Quantifikator (E)x D(x) bereits auf die Konstante X1 angewendet.
+            <div>
+                <img src="images/derivation_quantifier_before.png"/>
+            </div>
+            Seitdem wurden die zwei neuen Konstanten X2 und X3 eingeführt.
+            Eine korrekte Ableitung von (E)x D(x) muss beide verwenden.
+            <div>
+                <img src="images/derivation_quantifier_entering.png"/>
+            </div>
         </p>
   </body>
 </html>
