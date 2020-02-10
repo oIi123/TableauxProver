@@ -1,5 +1,4 @@
 import sys
-import threading
 from typing import Union, Optional
 
 import PySide2
@@ -13,7 +12,6 @@ from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTablea
 from src.TableauxBuilder.BaseTableauxBuilder import BaseTableauxBuilder
 from src.builder_factory import *
 from src.view.BaseWindow import BaseWindow
-from src.view import HelpWindow
 from src.view.InputWindow import InputWindow
 from src.view.CustomPainter import CustomPainter
 
@@ -43,7 +41,6 @@ class ResolveMode:
 
 class MainWindow(BaseWindow):
     input_window = None
-    calc_thread = None
 
     def __init__(self):
         super().__init__()
@@ -62,7 +59,7 @@ class MainWindow(BaseWindow):
         self.ui.manual_radio_btn.toggled.connect(self.mode_changed)
 
         self.ui.start_calc_btn.clicked.connect(self.calculate_pressed)
-        self.ui.help_button.clicked.connect(HelpWindow.show_help)
+        self.ui.help_button.clicked.connect(self.show_help)
         self.ui.reset_btn.clicked.connect(self.reset)
 
         # subscribe to draw events

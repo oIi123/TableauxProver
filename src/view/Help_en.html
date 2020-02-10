@@ -62,6 +62,12 @@
                         <li><a href="#ifopl_precedence">6.2 Operator Precedences</a></li>
                     </ul>
                 </li>
+                <li><a href="#modes">7 Modes</a>
+                    <ul>
+                        <li><a href="#modes_auto">7.1 Automatic</a></li>
+                        <li><a href="#modes_manual">7.2 Manual</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
@@ -268,6 +274,36 @@
                 <li><b>6. Conditional</b></li>
                 <li><b>7. Biconditional</b></li>
             </ul>
+        </p>
+
+
+        <h1 id="modes">Modes</h1>
+        <h2 id="modes_auto">Automatic</h2>
+        <p>
+            If the mode "Automatic" is selected, the tableau prover trys to solve the tableau automatically after pressing "Calculate".<br/>
+            The default number of derivation steps performed are &lt=1000. After 1000 steps, the solving attempt is aborted and a error message is shown.
+            In the current version this number can not be changed.
+        </p>
+        <h2 id="modes_manual">Manual</h2>
+        <p>
+            If the mode "Manual" is selected, each derivation step is performed by the user.<br/>
+            To perform such a step, first select the formula to derive by pressing the button representing this formula.
+            <div>
+                <img src="images/select_formula.png"/>
+            </div>
+            After pressing the formula-button, a second window opens up.
+            In this window the derivation of that formula can be entered.
+            <br/>
+            If the derivation is not branching, enter the derivation under the "Single"-tab and press the "Ok"-button.
+            <div>
+                <img src="images/single_derivation.png"/>
+            </div>
+            If the derivation is branching, enter the derivation under the "Branch"-tab and press the "Ok"-button.
+            <div>
+                <img src="images/branch_derivation.png"/>
+            </div>
+
+            After pressing ok, the window closes and the tableau is updated.
         </p>
   </body>
 </html>

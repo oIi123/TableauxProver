@@ -18,6 +18,7 @@ class InputWindow(BaseWindow):
 
         self.ui.ok_btn.clicked.connect(self.ok_pressed)
         self.ui.cancel_btn.clicked.connect(self.cancel_pressed)
+        self.ui.help_btn.clicked.connect(self.show_help)
 
         self.ui.scrollAreaContentsSingle.installEventFilter(self)
         self.ui.scrollAreaContentsBranch.installEventFilter(self)

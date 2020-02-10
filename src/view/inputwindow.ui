@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="help_btn">
       <property name="minimumSize">
        <size>
         <width>25</width>
@@ -69,8 +69,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>808</width>
-             <height>431</height>
+             <width>800</width>
+             <height>405</height>
             </rect>
            </property>
            <property name="autoFillBackground">
@@ -127,8 +127,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>808</width>
-             <height>431</height>
+             <width>800</width>
+             <height>405</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -234,7 +234,7 @@
      <x>0</x>
      <y>0</y>
      <width>852</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

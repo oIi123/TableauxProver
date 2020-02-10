@@ -62,6 +62,12 @@
                         <li><a href="#ifopl_precedence">6.2 Operator Prioritäten</a></li>
                     </ul>
                 </li>
+                <li><a href="#modes">7 Modi</a>
+                    <ul>
+                        <li><a href="#modes_auto">7.1 Automatik</a></li>
+                        <li><a href="#modes_manual">7.2 Manuell</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
@@ -271,6 +277,36 @@
                 <li><b>6. Implikation</b></li>
                 <li><b>7. Äquivalenz</b></li>
             </ul>
+        </p>
+
+
+        <h1 id="modes">Modi</h1>
+        <h2 id="modes_auto">Automatik</h2>
+        <p>
+            Wenn der Modus "Automatic" ausgewählt ist, versucht der Tableaubeweiser das Tableau automatisch zu lösen nachdem "Calculate" betätigt wurde.<br/>
+            Die Standardzahl an durchgeführten Ableitungsschritten ist &lt=1000. Nach 1000 Schritten wird der Ableitungsversuch abgebrochen und eine Fehlermeldung angezeigt.
+            In der derzeitigen Version kann diese Zahl nicht verändert werden.
+        </p>
+        <h2 id="modes_manual">Manuell</h2>
+        <p>
+            Ist der Modus "Manual" ausgewählt, wird jeder Ableitungsschritt vom Benutzer ausgeführt.<br/>
+            Um einen Ableitungsschritt durchzuführen, muss die abzuleitende Formel ausgewählt indem der zugehörige Button betätigt wird.
+            <div>
+                <img src="images/select_formula.png"/>
+            </div>
+            Nachdem der Formel-Button betätigt wurde, öffnet ein zweites Fenster.
+            In diesem Fenster kann die Ableitung der Formel eingegeben werden.
+            <br/>
+            Ist die Ableitung nicht verzweigend, muss die Ableitung unter dem "Single"-Tab eingegeben werden und mit dem "Ok"-Button bestätigt werden.
+            <div>
+                <img src="images/single_derivation.png"/>
+            </div>
+            Ist die Ableitung verzweigend, muss die Ableitung unter dem "Branch"-Tab eingegeben werden und mit dem "Ok"-Button bestätigt werden.
+            <div>
+                <img src="images/branch_derivation.png"/>
+            </div>
+            
+            Nachdem der "Ok"-Button betätigt wurde, schließt das Fenster und das Tableau wird aktualisiert.
         </p>
   </body>
 </html>

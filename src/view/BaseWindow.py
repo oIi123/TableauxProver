@@ -1,6 +1,7 @@
 from PySide2.QtWidgets import QMainWindow, QWidget, QTextEdit
 from antlr4 import RecognitionException
 from src.builder_factory import *
+from src.view import HelpWindow
 
 
 def concat_list_of_lists(list_of_lists):
@@ -70,3 +71,6 @@ class BaseWindow(QMainWindow):
 
         txt = f'<b>Error in line {line}</b><p>{txt}</h1>'
         self.show_error(scroll_view, txt)
+
+    def show_help(self):
+        HelpWindow.show_help()
