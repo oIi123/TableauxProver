@@ -19,13 +19,14 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(800, 630)
+        MainWindow.resize(800, 613)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.logic_type_gb = QGroupBox(self.centralwidget)
         self.logic_type_gb.setObjectName(u"logic_type_gb")
+        self.logic_type_gb.setMaximumSize(QSize(16777215, 44))
         self.horizontalLayout_2 = QHBoxLayout(self.logic_type_gb)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.pl_radio_btn = QRadioButton(self.logic_type_gb)
@@ -61,6 +62,7 @@ class Ui_MainWindow(object):
 
         self.calc_mode_gb = QGroupBox(self.centralwidget)
         self.calc_mode_gb.setObjectName(u"calc_mode_gb")
+        self.calc_mode_gb.setMaximumSize(QSize(16777215, 44))
         self.horizontalLayout = QHBoxLayout(self.calc_mode_gb)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
@@ -97,23 +99,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.calc_mode_gb)
 
-        self.scrollArea = QScrollArea(self.centralwidget)
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setMinimumSize(QSize(0, 433))
+        self.scrollArea = QScrollArea(self.widget)
         self.scrollArea.setObjectName(u"scrollArea")
+        self.scrollArea.setGeometry(QRect(0, 0, 778, 433))
         self.scrollArea.setMinimumSize(QSize(0, 0))
         self.scrollArea.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 763, 500))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 755, 500))
         self.scrollAreaWidgetContents.setMinimumSize(QSize(500, 500))
         self.scrollAreaWidgetContents.setStyleSheet(u"#scrollAreaWidgetContents {\n"
 "	background-color: rgb(255, 255, 255);\n"
-"}")
-        self.reset_btn = QPushButton(self.scrollAreaWidgetContents)
-        self.reset_btn.setObjectName(u"reset_btn")
-        self.reset_btn.setGeometry(QRect(5, 5, 31, 28))
-        self.reset_btn.setStyleSheet(u"#reset_btn {\n"
-"	qproperty-icon: url(src/view/images/stornieren.svg);\n"
 "}")
         self.inital_right_exprs_text_edit = QTextEdit(self.scrollAreaWidgetContents)
         self.inital_right_exprs_text_edit.setObjectName(u"inital_right_exprs_text_edit")
@@ -126,13 +126,19 @@ class Ui_MainWindow(object):
         self.start_calc_btn.setObjectName(u"start_calc_btn")
         self.start_calc_btn.setGeometry(QRect(335, 310, 80, 25))
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.reset_btn = QPushButton(self.widget)
+        self.reset_btn.setObjectName(u"reset_btn")
+        self.reset_btn.setGeometry(QRect(5, 5, 31, 28))
+        self.reset_btn.setStyleSheet(u"#reset_btn {\n"
+"	qproperty-icon: url(src/view/images/stornieren.svg);\n"
+"}")
 
-        self.verticalLayout_2.addWidget(self.scrollArea)
+        self.verticalLayout_2.addWidget(self.widget)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 800, 22))
+        self.menubar.setGeometry(QRect(0, 0, 800, 26))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -173,7 +179,7 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(tooltip)
         self.scrollArea.setToolTip("")
 #endif // QT_CONFIG(tooltip)
-        self.reset_btn.setText("")
         self.start_calc_btn.setText(QCoreApplication.translate("MainWindow", u"Calculate", None))
+        self.reset_btn.setText("")
     # retranslateUi
 
