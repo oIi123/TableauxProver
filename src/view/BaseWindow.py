@@ -1,7 +1,7 @@
 from PySide2.QtWidgets import QMainWindow, QWidget, QTextEdit
 from antlr4 import RecognitionException
 from src.builder_factory import *
-from src.view import HelpWindow
+from src.view.Help import HelpWindow
 
 
 def concat_list_of_lists(list_of_lists):

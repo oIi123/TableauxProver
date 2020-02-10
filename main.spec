@@ -6,6 +6,10 @@ import os
 block_cipher = None
 cwd = os.getcwd()
 
+datas = []
+for dir in ['src/view/images/', 'src/view/Help/', 'src/view/Help/images/']:
+   datas.extend([(dir + f, dir) for f in os.listdir(cwd + '/' + dir) if os.path.isfile(dir + '/' + f)])
+
 a = Analysis(['src\\main.py'],
              pathex=[
                   cwd + '\\venv\\Scripts',
@@ -13,15 +17,7 @@ a = Analysis(['src\\main.py'],
                   cwd
                ],
              binaries=[],
-             datas=[
-                ('src/view/images/help.svg','src/view/images'),
-                ('src/view/images/stornieren.svg','src/view/images'),
-                ('src/view/images/change_logic.png','src/view/images'),
-                ('src/view/images/change_mode.png','src/view/images'),
-
-                ('src/view/Help_de.html','src/view/'),
-                ('src/view/Help_en.html','src/view/'),
-             ],
+             datas= datas,
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
