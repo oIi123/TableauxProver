@@ -49,6 +49,12 @@ class MainWindow(BaseWindow):
 
         self.mode = ResolveMode.Automatic
 
+        # create reset button in code to put it over scroll area
+        self.reset_btn = QPushButton(self)
+        self.reset_btn.setStyleSheet('QPushButton {\n	qproperty-icon: url(src/view/images/stornieren.svg);\n}')
+        self.reset_btn.setGeometry(16, 118, 31, 28)
+        self.reset_btn.show()
+
         # setup slots
         self.ui.pl_radio_btn.toggled.connect(self.logic_changed)
         self.ui.fopl_radio_btn.toggled.connect(self.logic_changed)
@@ -60,7 +66,7 @@ class MainWindow(BaseWindow):
 
         self.ui.start_calc_btn.clicked.connect(self.calculate_pressed)
         self.ui.help_button.clicked.connect(self.show_help)
-        self.ui.reset_btn.clicked.connect(self.reset)
+        self.reset_btn.clicked.connect(self.reset)
 
         # subscribe to draw events
         self.scroll_area_content = self.ui.scrollAreaWidgetContents
@@ -90,7 +96,8 @@ class MainWindow(BaseWindow):
                 return False
 
             # calculate horizontal center
-            width_l, width_r = self.tableaux_builder.get_drawn_width(p.get_text_width, self.d_margin)
+            width_l, width_r = self.tableaux_builder.get_drawn_width(
+                                    p.get_text_width, self.d_margin, self.mode == ResolveMode.Manual)
             x = width_l + self.d_margin
             x = max(x, self.d_margin + 125)  # ensure space to border
 
@@ -183,6 +190,7 @@ class MainWindow(BaseWindow):
         Draws all expressions in the tableau
         """
         closed = tableau.is_closed()
+        manual = self.mode == ResolveMode.Manual
 
         parent_processed = ([], [], []) if parent_processed is None else parent_processed
         processed_exprs = tableau.get_processed_exprs()
@@ -193,11 +201,11 @@ class MainWindow(BaseWindow):
 
         # a close tableau does not need to draw unprocessed exprs
         not_include_unprocessed = closed
-        if len(tableau.children) > 0 and self.mode == ResolveMode.Automatic:
+        if len(tableau.children) > 0 and not manual:
             not_include_unprocessed = all([not child.clears_false_exprs for child in tableau.children])
-        unprocessed_exprs = ([], [], []) if not_include_unprocessed else tableau.get_unprocessed_exprs()
+        unprocessed_exprs = ([], [], []) if not_include_unprocessed else tableau.get_unprocessed_exprs(manual)
         atom_exprs = tableau.get_atom_exprs()
-        partially_exprs = tableau.get_partially_processed_exprs()
+        partially_exprs = tableau.get_partially_processed_exprs(manual)
 
         # calculate horizontal positions of expressions
         expr_pos = self.to_pos_list(processed_exprs, x, p.get_text_width, p.draw_underlined)
@@ -257,7 +265,7 @@ class MainWindow(BaseWindow):
             # only a single child that clears false expressions
             child = tableau.children[0]
             width_l, width_r = child.get_drawn_width(p.get_text_width,
-                                                    self.d_margin)
+                                                    self.d_margin, manual)
             y = self.get_y(layer)
             p.drawLine(x - width_l, y, x + width_r, y)
             p.drawLine(x, y, x, self.get_y(layer+1))
@@ -269,7 +277,7 @@ class MainWindow(BaseWindow):
         y = self.get_y(layer)
         left = tableau.children[0]
         width_l, width_r = left.get_drawn_width(p.get_text_width,
-                                                self.d_margin)
+                                                self.d_margin, manual)
         new_x = x - width_r - self.d_margin
         x_1 = new_x - width_l - self.d_margin if left.clears_false_exprs else new_x
         p.drawLine(x, y, x_1, y)
@@ -279,7 +287,7 @@ class MainWindow(BaseWindow):
         # draw right branch
         right = tableau.children[1]
         width_l, width_r = right.get_drawn_width(p.get_text_width,
-                                                 self.d_margin)
+                                                 self.d_margin, manual)
         new_x = x + width_l + self.d_margin
         x_1 = new_x + width_r + self.d_margin if right.clears_false_exprs else new_x
         p.drawLine(x, y, x_1, y)

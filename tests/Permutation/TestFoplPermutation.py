@@ -1,7 +1,7 @@
 import unittest
 
-from src.Parser.PropParser import PropParser as Parser
-from src.Model.PropositionalExpressionTree import *
+from src.Parser.FoplParser import FoplParser as Parser
+from src.Model.FoplExpressionTree import *
 
 
 class TestPlPermutation(unittest.TestCase):
@@ -9,7 +9,7 @@ class TestPlPermutation(unittest.TestCase):
 
     def test_atom(self):
         # A = [A]
-        expr = Atom("A")
+        expr = Predicate("A", [])
 
         permutations = expr.permute()
 
@@ -18,7 +18,7 @@ class TestPlPermutation(unittest.TestCase):
 
     def test_and_1(self):
         expected_permutations = [
-            "A&B",
+            "A()&B()",
         ]
 
         for expr in expected_permutations:
@@ -32,8 +32,8 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_and_2(self):
         expected_permutations = [
-            "A&(B&C)",
-            "(A&B)&C",
+            "A()&(B()&C())",
+            "(A()&B())&C()",
         ]
 
         for expr in expected_permutations:
@@ -47,8 +47,8 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_and_3(self):
         expected_permutations = [
-            "A&(B&C)",
-            "(A&B)&C",
+            "A()&(B()&C())",
+            "(A()&B())&C()",
         ]
 
         for expr in expected_permutations:
@@ -62,11 +62,11 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_and_4(self):
         expected_permutations = [
-            "A&(B&(C&D))",
-            "A&((B&C)&D)",
-            "((A&B)&C)&D",
-            "(A&(B&C))&D",
-            "(A&B)&(C&D)",
+            "A()&(B()&(C()&D()))",
+            "A()&((B()&C())&D())",
+            "((A()&B())&C())&D()",
+            "(A()&(B()&C()))&D()",
+            "(A()&B())&(C()&D())",
         ]
 
         for expr in expected_permutations:
@@ -79,10 +79,10 @@ class TestPlPermutation(unittest.TestCase):
                 self.assertIn(expr, permutations, f"{expected_permutation} missing")
     
     def test_and_5(self):
-        expr = And(Or(Atom("A"), Atom("B")), Atom("C"))
+        expr = And(Or(Predicate("A", []), Predicate("B", [])), Predicate("C", []))
 
         expected_permutations = [
-            "(A|B)&C",
+            "(A()|B())&C()",
         ]
 
         permutations = expr.permute()
@@ -93,10 +93,10 @@ class TestPlPermutation(unittest.TestCase):
             self.assertIn(expr, permutations, f"{expected_permutation} missing")
     
     def test_and_6(self):
-        expr = Or(And(Atom("A"), Atom("B")), Atom("C"))
+        expr = Or(And(Predicate("A", []), Predicate("B", [])), Predicate("C", []))
 
         expected_permutations = [
-            "A&B|C",
+            "A()&B()|C()",
         ]
 
         permutations = expr.permute()
@@ -108,7 +108,7 @@ class TestPlPermutation(unittest.TestCase):
 
     def test_or_1(self):
         expected_permutations = [
-            "A|B",
+            "A()|B()",
         ]
 
         for expr in expected_permutations:
@@ -122,8 +122,8 @@ class TestPlPermutation(unittest.TestCase):
 
     def test_or_2(self):
         expected_permutations = [
-            "(A|B)|C",
-            "A|(B|C)",
+            "(A()|B())|C()",
+            "A()|(B()|C())",
         ]
 
         for expr in expected_permutations:
@@ -137,8 +137,8 @@ class TestPlPermutation(unittest.TestCase):
         
     def test_or_3(self):
         expected_permutations = [
-            "(A|B)|C",
-            "A|(B|C)",
+            "(A()|B())|C()",
+            "A()|(B()|C())",
         ]
 
         for expr in expected_permutations:
@@ -152,11 +152,11 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_or_4(self):
         expected_permutations = [
-            "A|((B|C)|D)",
-            "A|(B|(C|D))",
-            "((A|B)|C)|D",
-            "(A|(B|C))|D",
-            "(A|B)|(C|D)",
+            "A()|((B()|C())|D())",
+            "A()|(B()|(C()|D()))",
+            "((A()|B())|C())|D()",
+            "(A()|(B()|C()))|D()",
+            "(A()|B())|(C()|D())",
         ]
 
         for expr in expected_permutations:
@@ -170,7 +170,7 @@ class TestPlPermutation(unittest.TestCase):
 
     def test_impl_1(self):
         expected_permutations = [
-            "A->B",
+            "A()->B()",
         ]
 
         for expr in expected_permutations:
@@ -184,8 +184,8 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_impl_2(self):
         expected_permutations = [
-            "(A->B)->C",
-            "A->(B->C)",
+            "(A()->B())->C()",
+            "A()->(B()->C())",
         ]
 
         for expr in expected_permutations:
@@ -199,11 +199,11 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_impl_3(self):
         expected_permutations = [
-            "A->((B->C)->D)",
-            "A->(B->(C->D))",
-            "((A->B)->C)->D",
-            "(A->(B->C))->D",
-            "(A->B)->(C->D)",
+            "A()->((B()->C())->D())",
+            "A()->(B()->(C()->D()))",
+            "((A()->B())->C())->D()",
+            "(A()->(B()->C()))->D()",
+            "(A()->B())->(C()->D())",
         ]
 
         for expr in expected_permutations:
@@ -217,7 +217,7 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_eq_1(self):
         expected_permutations = [
-            "A<->B",
+            "A()<->B()",
         ]
 
         for expr in expected_permutations:
@@ -231,8 +231,8 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_eq_2(self):
         expected_permutations = [
-            "A<->(B<->C)",
-            "(A<->B)<->C",
+            "A()<->(B()<->C())",
+            "(A()<->B())<->C()",
         ]
 
         for expr in expected_permutations:
@@ -246,11 +246,11 @@ class TestPlPermutation(unittest.TestCase):
     
     def test_eq_3(self):
         expected_permutations = [
-            "A<->((B<->C)<->D)",
-            "A<->(B<->(C<->D))",
-            "((A<->B)<->C)<->D",
-            "(A<->(B<->C))<->D",
-            "(A<->B)<->(C<->D)",
+            "A()<->((B()<->C())<->D())",
+            "A()<->(B()<->(C()<->D()))",
+            "((A()<->B())<->C())<->D()",
+            "(A()<->(B()<->C()))<->D()",
+            "(A()<->B())<->(C()<->D())",
         ]
 
         for expr in expected_permutations:
@@ -263,7 +263,7 @@ class TestPlPermutation(unittest.TestCase):
                 self.assertIn(expr, permutations, f"{expected_permutation} missing")
 
     def test_not_1(self):
-        expr = Not(Atom("A"))
+        expr = Not(Predicate("A", []))
 
         permutations = expr.permute()
 
@@ -271,7 +271,7 @@ class TestPlPermutation(unittest.TestCase):
         self.assertEqual(expr, permutations[0])
     
     def test_not_2(self):
-        expr = Not(Not(Atom("A")))
+        expr = Not(Not(Predicate("A", [])))
 
         permutations = expr.permute()
 

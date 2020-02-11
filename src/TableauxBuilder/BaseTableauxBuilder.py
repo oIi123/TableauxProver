@@ -288,6 +288,7 @@ class BaseTableauxBuilder:
                 self.children.append(cpy)
         else:
             self._merge_sequents(other_tableau.sequent)
+            self._add_constants(other_tableau.sequent[established_constants])
     
     def _merge_sequents(self, other_sequent: dict):
         add_list = []
@@ -305,11 +306,6 @@ class BaseTableauxBuilder:
         add_list.sort(key=lambda x: x[0])
         for idx, expr, side in add_list:
             self.add_to(side, expr, True)
-        
-        # merge constants
-        for const in other_sequent[established_constants]:
-            if const not in self.sequent[established_constants]:
-                self.sequent[established_constants].append(const)
 
         # merge mutliprocessed exprs
         for exprs in [processed_true_quantor_expressions, processed_false_quantor_expressions]:
@@ -321,12 +317,21 @@ class BaseTableauxBuilder:
                         if x not in self.sequent[exprs][other]:
                             self.sequent[exprs][other].append(x)
 
+    def _add_constants(self, constants):
+        # merge constants
+        for const in constants:
+            if const not in self.sequent[established_constants]:
+                self.sequent[established_constants].append(const)
+        
+        if self.parent is not None:
+            self.parent._add_constants(constants)
+
     def get_drawn_width(self, get_width_from_str: Callable[[str], int],
-                        margin: int) -> (int, int):
+                        margin: int, partially_in_trees=False) -> (int, int):
         """
         Calculates the width of this Tableau Branch
         """
-        exprs = self.get_all_exprs()
+        exprs = self.get_all_exprs(partially_in_trees)
         max_expr_width_left = max(
                                 [get_width_from_str(str(expr))
                                     for expr in exprs[0]],
@@ -343,7 +348,7 @@ class BaseTableauxBuilder:
         if len(self.children) == 1:
             width_l, width_r = self.children[0].get_drawn_width(
                                                     get_width_from_str,
-                                                    margin)
+                                                    margin, partially_in_trees)
             w_l = max(width_l, max_expr_width_left)
             w_r = max(width_r, max_expr_width_right)
             
@@ -351,33 +356,34 @@ class BaseTableauxBuilder:
 
         left_child_width = self.children[0].get_drawn_width(
                                                     get_width_from_str,
-                                                    margin)
+                                                    margin, partially_in_trees)
         right_child_width = self.children[1].get_drawn_width(
                                                     get_width_from_str,
-                                                    margin)
+                                                    margin, partially_in_trees)
 
         width_left = max([sum(left_child_width), max_expr_width_left])
         width_right = max([sum(right_child_width), max_expr_width_right])
 
         return (width_left + margin, width_right + margin)
 
-    def get_all_exprs(self) -> (list, list):
+    def get_all_exprs(self, partially_in_trees=False) -> (list, list, list):
         """
         Returns all expressions left and right in the tableau
         """
-        exprs = (list(), list())
+        exprs = (list(), list(), list())
         for fun in [
                     self.get_processed_exprs,
                     self.get_atom_exprs,
                     self.get_unprocessed_exprs,
                     self.get_partially_processed_exprs,
                     ]:
-            tmp = fun()
+            tmp = fun(partially_in_trees)
             exprs[0].extend(tmp[0])
             exprs[1].extend(tmp[1])
+            exprs[2].extend(tmp[2])
         return exprs
 
-    def get_processed_exprs(self):
+    def get_processed_exprs(self, *args):
         """
         Returns all fully processed expressions
         """
@@ -386,14 +392,14 @@ class BaseTableauxBuilder:
             self.sequent[false_processed],
             self.sequent[certain_falsehood_processed],)
 
-    def get_partially_processed_exprs(self):
+    def get_partially_processed_exprs(self, partially_in_trees=False):
         """
         Returns all partially unprocessed expressions that are not
         partially unprocessed in parent
         """
         return ([], [], [])
 
-    def get_atom_exprs(self):
+    def get_atom_exprs(self, *args):
         """
         Returns all atoms not in the parent tableau
         """
@@ -406,7 +412,7 @@ class BaseTableauxBuilder:
             self.sequent[false_atoms][false_atoms_parent:],
             self.sequent[certain_falsehood_atoms][cf_atoms_parent:],)
 
-    def get_unprocessed_exprs(self):
+    def get_unprocessed_exprs(self, *args):
         """
         Returns all unprocessed expressions that are not unprocessed in parent
         """

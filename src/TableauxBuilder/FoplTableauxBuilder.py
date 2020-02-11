@@ -188,7 +188,20 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
     def visited_Predicate(self, predicate: Predicate):
         self.add_to(false_atoms if self.visiting_false else true_atoms, predicate)
 
-    def get_partially_processed_exprs(self):
+    def get_unprocessed_exprs(self, partially_in_trees=False):
+        t, f, cf = super().get_unprocessed_exprs(partially_in_trees)
+
+        # if partially_in_trees, filter for multiprocess exprs
+        if partially_in_trees and len(self.children) > 0:
+            t = [expr for expr in t if type(expr) is not AllQuantor]
+            f = [expr for expr in f if type(expr) is not ExistentialQuantor]
+            return t, f, cf
+        return t, f, cf
+
+    def get_partially_processed_exprs(self, partially_in_trees=False):
+        if partially_in_trees:
+            return self.get_partially_in_trees()
+
         if self.parent is None:
             return (
                 list(self.sequent[processed_true_quantor_expressions]),
@@ -207,3 +220,14 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
                     if x not in self.parent.sequent[processed_certain_false_exquantor_exprs]]
 
         return (true_exprs, false_exprs, [])
+
+    def get_partially_in_trees(self):
+        p_t, p_f, p_cf = [], [], []
+        if len(self.children) > 0:
+            return (p_t, p_f, p_cf)
+
+        return (
+            list(self.sequent[processed_true_quantor_expressions]),
+            list(self.sequent[processed_false_quantor_expressions]),
+            list(self.sequent[processed_certain_false_allquantor_exprs]) + 
+            list(self.sequent[processed_certain_false_exquantor_exprs]))

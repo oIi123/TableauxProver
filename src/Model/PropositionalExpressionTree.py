@@ -1,9 +1,9 @@
+import copy
+
 from antlr4.tree.Tree import TerminalNodeImpl
 
 from gen.PropositionalParser import PropositionalParser
 from src.Model.Visitor import visitor
-
-import itertools
 
 
 class PropositionalExpressionTree:
@@ -146,37 +146,34 @@ class Operation(Expr):
                     else f"{str(child)}" for child in [self.lhs, self.rhs]]
         return self.printable_operator.join(children)
 
+    def permute(self, permutables=None):
+        permutables = [] if permutables is None else permutables
+        permutables.append(copy.deepcopy(self))
 
-class PermutableOperation(Operation):
-    def permute(self):
-        permutables = self.get_permutables()
-        permuted = list(itertools.permutations(permutables))
-
-        return [self.create_from_perm(list(x)) for x in permuted]
-        
-    def create_from_perm(self, perm):
-        if len(perm) == 2:
-            return type(self)(*perm)
-        return type(self)(perm[0], self.create_from_perm(perm[1:]))
-
-    def get_permutables(self):
-        permutables = []
         if type(self.lhs) == type(self):
-            permutables.extend(self.lhs.get_permutables())
-        else:
-            permutables.append(self.lhs)
-        
+            for p in self.lhs.permute():
+                perm = copy.deepcopy(self)
+                perm.lhs = p.lhs
+                perm.rhs = type(self)(p.rhs, perm.rhs)
+
+                if perm not in permutables:
+                    perm.permute(permutables)
+
         if type(self.rhs) == type(self):
-            permutables.extend(self.rhs.get_permutables())
-        else:
-            permutables.append(self.rhs)
-        
+            for p in self.rhs.permute():
+                perm = copy.deepcopy(self)
+                rhs = perm.rhs
+                perm.rhs = p.rhs
+                perm.lhs = type(self)(perm.lhs, p.lhs)
+
+                if perm not in permutables:
+                    perm.permute(permutables)
+
         return permutables
 
 
-
 @visitor
-class And(PermutableOperation):
+class And(Operation):
     op_priority = 2
     printable_operator: str = "&"
 
@@ -185,7 +182,7 @@ class And(PermutableOperation):
 
 
 @visitor
-class Or(PermutableOperation):
+class Or(Operation):
     op_priority = 3
     printable_operator: str = "|"
 

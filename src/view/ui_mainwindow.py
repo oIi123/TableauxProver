@@ -99,12 +99,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.calc_mode_gb)
 
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setMinimumSize(QSize(0, 433))
-        self.scrollArea = QScrollArea(self.widget)
+        self.scrollArea = QScrollArea(self.centralwidget)
         self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setGeometry(QRect(0, 0, 778, 433))
         self.scrollArea.setMinimumSize(QSize(0, 0))
         self.scrollArea.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.scrollArea.setWidgetResizable(True)
@@ -126,14 +122,8 @@ class Ui_MainWindow(object):
         self.start_calc_btn.setObjectName(u"start_calc_btn")
         self.start_calc_btn.setGeometry(QRect(335, 310, 80, 25))
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.reset_btn = QPushButton(self.widget)
-        self.reset_btn.setObjectName(u"reset_btn")
-        self.reset_btn.setGeometry(QRect(5, 5, 31, 28))
-        self.reset_btn.setStyleSheet(u"#reset_btn {\n"
-"	qproperty-icon: url(src/view/images/stornieren.svg);\n"
-"}")
 
-        self.verticalLayout_2.addWidget(self.widget)
+        self.verticalLayout_2.addWidget(self.scrollArea)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -180,6 +170,5 @@ class Ui_MainWindow(object):
         self.scrollArea.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.start_calc_btn.setText(QCoreApplication.translate("MainWindow", u"Calculate", None))
-        self.reset_btn.setText("")
     # retranslateUi
 

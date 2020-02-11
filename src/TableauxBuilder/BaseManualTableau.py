@@ -33,6 +33,7 @@ class BaseManualTableau:
         self.tableau_builder = tableau_builder
 
         self.expr = None
+        self.perm = None
         self.side = None
         self.processed_side = None
 
@@ -75,6 +76,7 @@ class BaseManualTableau:
             self.processed_side = BaseTableauxBuilder.certain_falsehood_processed
         expr_permutations = self.expr.permute()
         for perm in expr_permutations:
+            self.perm = perm
             new_tableau_builder = create_tableau_builder(
                                         self.logic_type, [], [], 
                                         0, cf=[],
@@ -89,7 +91,7 @@ class BaseManualTableau:
                     cpy = self.tableau_builder.sequent[self.processed_side][self.expr][:]
                     new_tableau_builder.sequent[self.processed_side][self.expr] = cpy
 
-            self.expr.visit(new_tableau_builder)
+            self.perm.visit(new_tableau_builder)
             if self.expr in new_tableau_builder.sequent[self.side]:
                 new_tableau_builder.sequent[self.side].remove(self.expr)
                 if self.processed_side not in [
@@ -204,16 +206,16 @@ class BaseManualTableau:
             self.set_multiprocessed(child)
 
     def new_constant_expr(self):
-        if self.side == BaseTableauxBuilder.false_exprs and type(self.expr) is AllQuantor:
+        if self.side == BaseTableauxBuilder.false_exprs and type(self.perm) is AllQuantor:
             return True
-        elif self.side == BaseTableauxBuilder.true_exprs and type(self.expr) is ExistentialQuantor:
+        elif self.side == BaseTableauxBuilder.true_exprs and type(self.perm) is ExistentialQuantor:
             return True
         return False
     
     def ex_constant_expr(self):
-        if self.side == BaseTableauxBuilder.false_exprs and type(self.expr) is ExistentialQuantor:
+        if self.side == BaseTableauxBuilder.false_exprs and type(self.perm) is ExistentialQuantor:
             return True
-        elif self.side == BaseTableauxBuilder.true_exprs and type(self.expr) is AllQuantor:
+        elif self.side == BaseTableauxBuilder.true_exprs and type(self.perm) is AllQuantor:
             return True
         return False
 
