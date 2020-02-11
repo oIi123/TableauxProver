@@ -5,16 +5,12 @@ from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTablea
 
 
 class TestPropTableauxBuilder(unittest.TestCase):
-    def run_builder(self, builder: PropositionalTableauxBuilder):
-        while not builder.is_done():
-            builder.visit()
-
     def test_not_closing_1(self):
         # A
         expr = Atom("A")
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -22,8 +18,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # A&A
         expr = And(Atom("A"), Atom("A"))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -31,8 +27,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # A | A
         expr = Or(Atom("A"), Atom("A"))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -40,8 +36,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # A&B | !A&B
         expr = Or(And(Atom("A"), Atom("B")), And(Not(Atom("A")), Atom("B")))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
 
@@ -49,8 +45,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # A | !A
         expr = Or(Atom("A"), Not(Atom("A")))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -58,8 +54,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # A -> (B -> A)
         expr = Impl(Atom("A"), Impl(Atom("B"), Atom("A")))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -67,8 +63,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # !A -> (A -> B)
         expr = Impl(Not(Atom("A")), Impl(Atom("A"), Atom("B")))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -76,8 +72,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # A -> (B -> C) <-> A&B -> C
         expr = Eq(Impl(Atom("A"), Impl(Atom("B"), Atom("C"))), Impl(And(Atom("A"), Atom("B")), Atom("C")))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -85,8 +81,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # (A -> B) -> (!B -> !A)
         expr = Impl(Impl(Atom("A"), Atom("B")), Impl(Not(Atom("B")), Not(Atom("A"))))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -94,8 +90,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # (!A -> !B) -> (B -> A)
         expr = Impl(Impl(Not(Atom("A")), Not(Atom("B"))), Impl(Atom("B"), Atom("A")))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -103,8 +99,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # !!A <-> A
         expr = Eq(Not(Not(Atom("A"))), Atom("A"))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -112,8 +108,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # !(A&B) <-> !A|!B
         expr = Eq(Not(And(Atom("A"), Atom("B"))), Or(Not(Atom("A")), Not(Atom("B"))))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -121,8 +117,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # !(A|B) <-> !A&!B
         expr = Eq(Not(Or(Atom("A"), Atom("B"))), And(Not(Atom("A")), Not(Atom("B"))))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -130,8 +126,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # !(!A|!B) <-> A&B
         expr = Eq(Not(Or(Not(Atom("A")), Not(Atom("B")))), And(Atom("A"), Atom("B")))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 
@@ -139,8 +135,8 @@ class TestPropTableauxBuilder(unittest.TestCase):
         # !(!A&!B) <-> A|B
         expr = Eq(Not(And(Not(Atom("A")), Not(Atom("B")))), Or(Atom("A"), Atom("B")))
 
-        builder = PropositionalTableauxBuilder(expr=expr)
-        self.run_builder(builder)
+        builder = PropositionalTableauxBuilder(false_exprs=[expr])
+        builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
 

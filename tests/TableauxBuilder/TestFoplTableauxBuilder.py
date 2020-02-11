@@ -9,7 +9,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         # P()
         tree = FoplExpressionTree(expr=Predicate("P", []))
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
@@ -19,7 +19,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         expr = And(Predicate("P", []), Predicate("P", []))
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
@@ -29,7 +29,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         expr = AllQuantor(Var("x"), And(Predicate("P", [Var("x")]), Predicate("P", [Var("x")])))
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
@@ -39,7 +39,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         expr = Or(Predicate("P", []), Predicate("P", []))
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
@@ -49,7 +49,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         expr = AllQuantor(Var("x"), Or(Predicate("P", [Var("x")]), Predicate("P", [Var("x")])))
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
@@ -59,7 +59,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         expr = Or(And(Predicate("P", []), Predicate("K", [])), And(Not(Predicate("P", [])), Predicate("K", [])))
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
@@ -69,7 +69,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         expr = AllQuantor(Var("x"), Or(And(Predicate("P", [Var("x")]), Predicate("K", [Var("x")])), And(Not(Predicate("P", [Var("x")])), Predicate("K", [Var("x")]))))
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
@@ -79,7 +79,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         expr = AllQuantor(Var("x"), Not(Eq(Predicate("P", [Var("x")]), Predicate("P", [Var("x"), Var("x")]))))
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve()
 
         self.assertFalse(builder.is_closed())
@@ -89,7 +89,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         expr = Impl(Not(ExistentialQuantor(Var("x"), Predicate("A", [Var("x")]))), AllQuantor(Var("x"), Not(Predicate("A", [Var("x")]))))
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -102,7 +102,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -115,7 +115,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -131,7 +131,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -147,7 +147,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -163,7 +163,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -176,7 +176,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -192,7 +192,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -208,7 +208,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -224,7 +224,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -240,7 +240,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -256,7 +256,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_exprs=[tree.expr])
         builder.auto_resolve()
 
         self.assertTrue(builder.is_closed())
@@ -271,7 +271,7 @@ class TestFoplTableauxBuilder(unittest.TestCase):
         )
         tree = FoplExpressionTree(expr=expr)
 
-        builder = FoplTableauxBuilder(tree)
+        builder = FoplTableauxBuilder(false_expr=[tree.expr])
         builder.auto_resolve(True)
 
         self.assertTrue(builder.is_closed())
