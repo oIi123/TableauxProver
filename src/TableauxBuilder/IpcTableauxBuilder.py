@@ -98,7 +98,7 @@ class IpcTableauxBuilder(PropositionalTableauxBuilder):
         else:
             super().visited_Atom(atom)
 
-    def get_partially_processed_exprs(self):
+    def get_partially_processed_exprs(self, partially_in_trees=False):
         if self.parent is None:
             return (list(self.sequent[processed_true_impls]), [], [])
         

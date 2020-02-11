@@ -60,6 +60,7 @@ class InputWindow(BaseWindow):
             constants = self.constants_from_trees(left_exprs + right_exprs)
             left_exprs = self.exprs_from_trees(left_exprs)
             right_exprs = self.exprs_from_trees(right_exprs)
+            cf_exprs = self.exprs_from_trees(cf_exprs)
 
             if self.manual_tableau.merge(self.expr, [left_exprs], [right_exprs], [cf_exprs], constants):
                 self.callback(True)
@@ -81,7 +82,7 @@ class InputWindow(BaseWindow):
             if intuitionistic_logic:
                 lr_exprs, l_cf_exprs = lr_exprs
                 rr_exprs, r_cf_exprs = rr_exprs
-                cf_exprs = (l_cf_exprs, r_cf_exprs)
+                cf_exprs = (self.exprs_from_trees(l_cf_exprs), self.exprs_from_trees(r_cf_exprs))
             
             constants_l = self.constants_from_trees(ll_exprs + lr_exprs)
             constants_r = self.constants_from_trees(rl_exprs + rr_exprs)

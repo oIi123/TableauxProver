@@ -278,7 +278,8 @@ class BaseTableauxBuilder:
 
         if len(self.children) > 0:
             for child in self.children:
-                child.merge(other_tableau)
+                if not child.clears_false_exprs:
+                    child.merge(other_tableau)
             return
         
         if len(other_tableau.children) > 0:
@@ -286,6 +287,10 @@ class BaseTableauxBuilder:
                 cpy = self.create_copy()
                 cpy._merge_sequents(child.sequent)
                 self.children.append(cpy)
+        elif other_tableau.clears_false_exprs:
+            cpy = self.create_copy(clears_false_exprs=True)
+            cpy._merge_sequents(other_tableau.sequent)
+            self.children.append(cpy)
         else:
             self._merge_sequents(other_tableau.sequent)
             self._add_constants(other_tableau.sequent[established_constants])

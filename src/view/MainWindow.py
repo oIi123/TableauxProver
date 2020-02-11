@@ -191,6 +191,8 @@ class MainWindow(BaseWindow):
         """
         closed = tableau.is_closed()
         manual = self.mode == ResolveMode.Manual
+        intuitionistic = self.logic_type in [LogicType.IPROPOSITIONAL, LogicType.IFOPL]
+        child_clears_false = len(tableau.children) > 0 and not all([not child.clears_false_exprs for child in tableau.children])
 
         parent_processed = ([], [], []) if parent_processed is None else parent_processed
         processed_exprs = tableau.get_processed_exprs()
@@ -201,8 +203,8 @@ class MainWindow(BaseWindow):
 
         # a close tableau does not need to draw unprocessed exprs
         not_include_unprocessed = closed
-        if len(tableau.children) > 0 and not manual:
-            not_include_unprocessed = all([not child.clears_false_exprs for child in tableau.children])
+        if not manual:
+            not_include_unprocessed = child_clears_false
         unprocessed_exprs = ([], [], []) if not_include_unprocessed else tableau.get_unprocessed_exprs(manual)
         atom_exprs = tableau.get_atom_exprs()
         partially_exprs = tableau.get_partially_processed_exprs(manual)
@@ -213,7 +215,7 @@ class MainWindow(BaseWindow):
         
         dotted_underlined = p.draw_dotted_underlined
         normal = p.draw_normal
-        if self.mode == ResolveMode.Manual and not closed:
+        if self.mode == ResolveMode.Manual and not closed and not child_clears_false:
             dotted_underlined = self.draw_btn(p, tableau)
             normal = self.draw_btn(p, tableau)
         expr_pos.extend(self.to_pos_list(partially_exprs, x, p.get_text_width, dotted_underlined))

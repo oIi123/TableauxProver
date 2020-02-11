@@ -1,7 +1,7 @@
-from src.Model.FoplExpressionTree import *
 from src.TableauxBuilder.FoplTableauxBuilder import FoplTableauxBuilder
 from src.TableauxBuilder.IpcTableauxBuilder import *
 from src.TableauxBuilder.VariableConsantMapper import VariableConstantMapper
+from src.Model.FoplExpressionTree import *
 
 
 # TODO: implement process_multiprocess_exprs -> should call IpcTableauxBuilder first,
@@ -105,7 +105,15 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
         else:
             super().visited_Predicate(predicate)
 
-    def get_partially_processed_exprs(self):
+    def visited_Eq(self, eq: Eq):
+        side = false_exprs if self.visiting_false else true_exprs
+        if self.visiting_certain_falsehood_exprs:
+            side = certain_falsehood_exprs
+
+        subst = And(Impl(eq.lhs, eq.rhs), Impl(eq.rhs, eq.lhs))
+        self.add_to(side, subst)
+
+    def get_partially_processed_exprs(self, partially_in_trees=False):
         t_1, f_1, cf_1 = IpcTableauxBuilder.get_partially_processed_exprs(self)
         t_2, f_2, cf_2 = FoplTableauxBuilder.get_partially_processed_exprs(self)
 

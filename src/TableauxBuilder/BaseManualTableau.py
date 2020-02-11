@@ -104,7 +104,7 @@ class BaseManualTableau:
                     return True
             else:
                 # check if correct branch derivation
-                if self.check_branch(true_exprs, false_exprs, cf_exprs, new_tableau_builder):
+                if self.check_branch(true_exprs, false_exprs, cf_exprs, new_tableau_builder, constants):
                     return True
         # no valid derivation entered
         return False
@@ -153,8 +153,10 @@ class BaseManualTableau:
             return True
         return False
 
-    def check_branch(self, true_exprs, false_exprs, cf_exprs, new_tableau_builder):
+    def check_branch(self, true_exprs, false_exprs, cf_exprs, new_tableau_builder, constants):
         if len(new_tableau_builder.children) == len(true_exprs) == len(false_exprs) == len(cf_exprs):
+            if len(new_tableau_builder.children) == 1:
+                return self.check_single(true_exprs, false_exprs, cf_exprs, new_tableau_builder.children[0], constants)
             a = new_tableau_builder.children
             b = [new_tableau_builder.children[1], new_tableau_builder.children[0]]
             for children in [a, b]:
@@ -194,6 +196,7 @@ class BaseManualTableau:
         
         for child in tableau.children:
             self.set_processed(child)
+        tableau.add_processed(self.side, self.processed_side, self.expr)
 
     def set_multiprocessed(self, tableau=None):
         tableau = self.tableau_builder if tableau is None else tableau
@@ -210,12 +213,16 @@ class BaseManualTableau:
             return True
         elif self.side == BaseTableauxBuilder.true_exprs and type(self.perm) is ExistentialQuantor:
             return True
+        elif self.side == BaseTableauxBuilder.certain_falsehood_exprs and type(self.perm) is AllQuantor:
+            return True
         return False
     
     def ex_constant_expr(self):
         if self.side == BaseTableauxBuilder.false_exprs and type(self.perm) is ExistentialQuantor:
             return True
         elif self.side == BaseTableauxBuilder.true_exprs and type(self.perm) is AllQuantor:
+            return True
+        elif self.side == BaseTableauxBuilder.certain_falsehood_exprs and type(self.perm) is ExistentialQuantor:
             return True
         return False
 
