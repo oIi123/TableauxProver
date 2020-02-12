@@ -401,6 +401,14 @@ class Impl(Operation):
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0
 
+    def __str__(self):
+        children = [f"({str(child)})" if child.op_priority >= self.op_priority
+                    else f"{str(child)}" for child in [self.lhs, self.rhs]]
+        return self.printable_operator.join(children)
+
+    def permute(self, permutations: list=None):
+        return [self]
+
 
 @visitor
 class Eq(Operation):
