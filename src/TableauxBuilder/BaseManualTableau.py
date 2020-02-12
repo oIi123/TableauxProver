@@ -74,6 +74,11 @@ class BaseManualTableau:
             certainly_false_side = True
             self.side = BaseTableauxBuilder.certain_falsehood_exprs
             self.processed_side = BaseTableauxBuilder.certain_falsehood_processed
+            if type(self.expr) is ExistentialQuantor:
+                # multiprocess expr
+                self.processed_side = BaseTableauxBuilder.processed_certain_false_exquantor_exprs
+            elif type(self.expr) is AllQuantor:
+                self.processed_side = BaseTableauxBuilder.processed_certain_false_allquantor_exprs
         expr_permutations = self.expr.permute()
         for perm in expr_permutations:
             self.perm = perm
@@ -96,7 +101,9 @@ class BaseManualTableau:
                 new_tableau_builder.sequent[self.side].remove(self.expr)
                 if self.processed_side not in [
                         BaseTableauxBuilder.processed_false_quantor_expressions,
-                        BaseTableauxBuilder.processed_true_quantor_expressions]:
+                        BaseTableauxBuilder.processed_true_quantor_expressions,
+                        BaseTableauxBuilder.processed_certain_false_exquantor_exprs,
+                        BaseTableauxBuilder.processed_certain_false_allquantor_exprs]:
                     new_tableau_builder.sequent[self.processed_side].append(self.expr)
             if len(new_tableau_builder.children) == 0:
                 # check if correct single derivation
@@ -148,6 +155,8 @@ class BaseManualTableau:
             self.tableau_builder.merge(new_tableau_builder)
             if ex_const_expr:
                 self.set_multiprocessed()
+            elif self.side == BaseTableauxBuilder.certain_falsehood_exprs and type(self.expr) is AllQuantor:
+                self.set_cf_allquant()
             else:
                 self.set_processed()
             return True
@@ -207,6 +216,19 @@ class BaseManualTableau:
         
         for child in tableau.children:
             self.set_multiprocessed(child)
+
+    def set_cf_allquant(self, tableau=None):
+        if tableau is None:
+            tableau = self.tableau_builder
+            while tableau.parent is not None:
+                tableau = tableau.parent
+
+        if self.expr in tableau.sequent[self.side]:
+            tableau.sequent[self.side].remove(self.expr)
+            tableau.sequent[self.processed_side][self.expr] = 0
+        
+        for child in tableau.children:
+            self.set_cf_allquant(child)
 
     def new_constant_expr(self):
         if self.side == BaseTableauxBuilder.false_exprs and type(self.perm) is AllQuantor:

@@ -359,7 +359,8 @@ class MainWindow(BaseWindow):
             try:
                 self.tableaux_builder.auto_resolve()
                 self.scroll_area_content.repaint()
-            except:
+            except Exception as e:
+                print(e)
                 self.show_error(self.scroll_area_content,
                                 '<b>No automatic resolution possible</b>'\
                                 '<p>The automatic resolution failed. Try to calculate the Tableau manually.</p>')

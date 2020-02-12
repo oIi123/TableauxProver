@@ -28,6 +28,7 @@ class BaseTableauxBuilder:
     left_side_sign = "T"
     right_side_sign = "F"
 
+    last_multiprocess_cf = None
     last_multiprocess_false = None
     last_multiprocess_true = None
     clears_false_exprs = False
@@ -90,6 +91,7 @@ class BaseTableauxBuilder:
         processed_side = self.get_processed_side()
         partially_processed_side = processed_false_quantor_expressions if false_side else processed_true_quantor_expressions
         last = self.last_multiprocess_false if false_side else self.last_multiprocess_true
+        last = self.last_multiprocess_cf if self.visiting_certain_falsehood_exprs else last
         if expr == last and expr in self.sequent[side]:
             # if expr is a partially processed, only remove it from exprs and add to partially processed
             self.sequent[side].remove(expr)
@@ -336,16 +338,21 @@ class BaseTableauxBuilder:
         """
         Calculates the width of this Tableau Branch
         """
-        exprs = self.get_all_exprs(partially_in_trees)
+        t, f, cf = self.get_all_exprs(partially_in_trees)
         max_expr_width_left = max(
                                 [get_width_from_str(str(expr))
-                                    for expr in exprs[0]],
+                                    for expr in t],
                                 default=0)
 
         max_expr_width_right = max(
                                 [get_width_from_str(str(expr))
-                                    for expr in exprs[1]],
+                                    for expr in f],
                                 default=0)
+        max_expr_width_cf = max(
+                                [get_width_from_str(f"[{str(expr)}]")
+                                    for expr in cf],
+                                default=0)
+        max_expr_width_right = max(max_expr_width_right, max_expr_width_cf)
 
         if len(self.children) == 0:
             return (max_expr_width_left, max_expr_width_right)

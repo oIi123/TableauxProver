@@ -7,6 +7,9 @@ from src.Model.FoplExpressionTree import *
 # TODO: implement process_multiprocess_exprs -> should call IpcTableauxBuilder first,
 #  after that it should reprocess the quantor expressions
 class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
+    def is_done(self):
+        return super().is_done() and FoplTableauxBuilder.is_done(self)
+
     def check_unprocessed_quantor_expressions(self):
         """
         Checks if there are any quantors with unprocessed constants
@@ -48,7 +51,7 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
             expr_list.extend([(k, num_of_constants - len(v), 1) for k, v in self.sequent[processed_false_quantor_expressions].items() if len(v) != num_of_constants])
             expr_list.extend([(k, num_of_constants - len(v), 2) for k, v in self.sequent[processed_certain_false_exquantor_exprs].items() if len(v) != num_of_constants])
 
-            max_number_unprocessed_constants = max(expr_list, key=lambda tpl: tpl[1], default=0)
+            max_number_unprocessed_constants = max(expr_list, key=lambda tpl: tpl[1], default=(0,0,0))[1]
             repr_exprs_list = [(k, v - max_number_unprocessed_constants, 0) for k, v in self.sequent[processed_true_impls].items()]
             repr_exprs_list.extend([(k, v - max_number_unprocessed_constants, 2) for k, v in self.sequent[processed_certain_false_allquantor_exprs].items()])
 
@@ -81,6 +84,10 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
 
     def visited_ExistentialQuantor(self, quantor: ExistentialQuantor):
         if self.visiting_certain_falsehood_exprs or self.visiting_false:
+            if self.visiting_false:
+                self.last_multiprocess_false = quantor
+            else:
+                self.last_multiprocess_cf = quantor
             processed_quantor_exprs = processed_certain_false_exquantor_exprs if self.visiting_certain_falsehood_exprs else processed_false_quantor_expressions
             self.generate_existing_constant_expression(quantor, processed_quantor_expressions=processed_quantor_exprs, append_to=false_exprs)
         else:
@@ -94,9 +101,13 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
             child.generate_new_constant_expression(quantor)
             self.children.append(child)
 
-            if child.visiting_certain_falsehood_exprs and quantor not in child.sequent[processed_certain_false_allquantor_exprs]:
-                child.sequent[processed_certain_false_allquantor_exprs][quantor] = []
+            if child.visiting_certain_falsehood_exprs:
+                if quantor not in child.sequent[processed_certain_false_allquantor_exprs]:
+                    child.sequent[processed_certain_false_allquantor_exprs][quantor] = 0
+                if quantor in child.sequent[certain_falsehood_exprs]:
+                    child.sequent[certain_falsehood_exprs].remove(quantor)
         else:
+            self.last_multiprocess_true = quantor
             self.generate_existing_constant_expression(quantor)
 
     def visited_Predicate(self, predicate: Predicate):
