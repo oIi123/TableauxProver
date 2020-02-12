@@ -23,8 +23,8 @@ class FoplParser:
 
         tree = parser.expr()
 
-        if error_listener.handled_errors > 0:
-            raise RecognitionException("The input was not correct.")
+        if error_listener.error_msg is not None:
+            raise RecognitionException(error_listener.error_msg)
 
         expr_tree = FoplExpressionTree(tree, visit_idx=FoplParser.parse_idx)
         FoplParser.parse_idx += 1
@@ -32,7 +32,9 @@ class FoplParser:
 
 
 class FoplParserErrorListener(ErrorListener):
-    handled_errors = 0
+    error_msg = None
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        self.handled_errors += 1
+        if self.error_msg is None:
+            self.error_msg = f"The input was incorrect."
+        self.error_msg += f"<br/>Column {column}: {msg}"
