@@ -203,8 +203,12 @@ class MainWindow(BaseWindow):
 
         # a close tableau does not need to draw unprocessed exprs
         not_include_unprocessed = closed
-        if not manual:
-            not_include_unprocessed = child_clears_false
+        if intuitionistic:
+            not_include_unprocessed = not child_clears_false
+            if len(tableau.children) == 0:
+                not_include_unprocessed = not manual
+        else:
+            not_include_unprocessed = closed
         unprocessed_exprs = ([], [], []) if not_include_unprocessed else tableau.get_unprocessed_exprs(manual)
         atom_exprs = tableau.get_atom_exprs()
         partially_exprs = tableau.get_partially_processed_exprs(manual)
@@ -219,7 +223,7 @@ class MainWindow(BaseWindow):
             dotted_underlined = self.draw_btn(p, tableau)
             normal = self.draw_btn(p, tableau)
         expr_pos.extend(self.to_pos_list(partially_exprs, x, p.get_text_width, dotted_underlined))
-        expr_pos.extend(self.to_pos_list(unprocessed_exprs, x, p.get_text_width, normal))
+        expr_pos.extend(self.to_pos_list(unprocessed_exprs, x, p.get_text_width, normal, include_atoms=True))
 
         # sort by processing order
         expr_pos.sort(key=lambda x: x[1].visit_idx)
