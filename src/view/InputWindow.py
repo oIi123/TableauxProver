@@ -28,6 +28,13 @@ class InputWindow(BaseWindow):
         self.callback = callback
         self.logic_type = logic_type
         self.expr = expr
+        l, r, cf = expr
+        if l:
+            self.expr_name = l.name
+        elif r:
+            self.expr_name = r.name
+        elif cf:
+            self.expr_name = cf.name
         self.manual_tableau = BaseManualTableau(logic_type, tableau_builder)
 
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent):
@@ -66,7 +73,8 @@ class InputWindow(BaseWindow):
                 self.callback(True)
                 self.close()
                 return
-            self.show_error(self.ui.scrollAreaContentsSingle, '<b>Invalid derivation</b><p>The entered formulae are not a valid derivation.</<p>')
+            self.show_error(self.ui.scrollAreaContentsSingle,
+                            f'<b>Wrong Derivation</b><p>Wrong application of the resolution rule for {self.expr_name}</<p>')
         else:
             # branch tab
             ll_exprs = self.parse_exprs(self.ui.deduction_branch_ll, self.ui.scrollAreaContentsBranch)
@@ -95,7 +103,8 @@ class InputWindow(BaseWindow):
                 self.callback(True)
                 self.close()
                 return
-            self.show_error(self.ui.scrollAreaContentsBranch, '<b>Invalid derivation</b><p>The entered formulae are not a valid derivation.</<p>')
+            self.show_error(self.ui.scrollAreaContentsBranch,
+                            f'<b>Wrong Derivation</b><p>Wrong application of the resolution rule for {self.expr_name}</<p>')
 
     def reset(self):
         for txt_input in [

@@ -13,6 +13,7 @@ class PropositionalExpressionTree:
 
 
 class Expr:
+    name = "Expression"
     is_atom = False
     op_priority = 0
 
@@ -71,6 +72,7 @@ class Atom(Expr):
 
 @visitor
 class Not(Expr):
+    name = "Negation"
     op_priority = 1
 
     @staticmethod
@@ -174,6 +176,7 @@ class Operation(Expr):
 
 @visitor
 class And(Operation):
+    name = "Conjunction"
     op_priority = 2
     printable_operator: str = "&"
 
@@ -183,6 +186,7 @@ class And(Operation):
 
 @visitor
 class Or(Operation):
+    name = "Disjunction"
     op_priority = 3
     printable_operator: str = "|"
 
@@ -192,6 +196,7 @@ class Or(Operation):
 
 @visitor
 class Impl(Operation):
+    name = "Conditional"
     op_priority = 4
     printable_operator: str = "->"
 
@@ -212,6 +217,7 @@ class Impl(Operation):
 
 @visitor
 class Eq(Operation):
+    name = "Biconditional"
     op_priority = 5
     printable_operator: str = "<->"
 
