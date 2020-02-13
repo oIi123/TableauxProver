@@ -335,6 +335,7 @@ class MainWindow(BaseWindow):
             return
 
         constants = self.constants_from_trees(left_exprs + right_exprs)
+        functions = self.functions_from_trees(left_exprs + right_exprs)
         left_exprs = self.exprs_from_trees(left_exprs)
         right_exprs = self.exprs_from_trees(right_exprs)
 
@@ -345,6 +346,7 @@ class MainWindow(BaseWindow):
             right_exprs=right_exprs,
             visit_idx=self.parser.parse_idx,
             constants=constants,
+            functions=functions,
         )
 
         # hide widgets to enter initial expressions

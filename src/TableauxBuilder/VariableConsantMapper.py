@@ -14,7 +14,11 @@ class VariableConstantMapper:
         for i, term in enumerate(predicate_or_func.terms):
             if type(term) == Var:
                 if term.name in self.mapping:
-                    predicate_or_func.terms[i] = Const(self.mapping[term.name])
+                    mapping = self.mapping[term.name]
+                    if type(mapping) == str:
+                        predicate_or_func.terms[i] = Const(mapping)
+                    else:
+                        predicate_or_func.terms[i] = mapping
             elif type(term) == Func:
                 self.replace_variables(term)
 

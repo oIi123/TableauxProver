@@ -261,6 +261,39 @@ class TestFoplTableauxBuilder(unittest.TestCase):
 
         self.assertTrue(builder.is_closed())
 
+    def test_closing_13(self):
+        # T (A)x,y M(x, l(x,y))     F M(A,l(A,l(B,NIL)))
+        true_expr = AllQuantor(Var("x"),
+            AllQuantor(Var("y"),
+                Predicate("M",[
+                    Var("x"),
+                    Func("l", [Var("x"), Var("y")])
+                ])
+            )
+        )
+
+        false_expr = Predicate("M",[
+            Const("A"),
+            Func("l", [
+                Const("A"),
+                Func("l", [
+                    Const("B"),
+                    Const("NIL")
+                ])
+            ])
+        ])
+
+        constants = ["A", "B", "NIL"]
+        functions = [("l", 2)]
+
+        builder = FoplTableauxBuilder(true_exprs=[true_expr],
+                                      false_exprs=[false_expr],
+                                      constants=constants,
+                                      functions=functions)
+        builder.auto_resolve()
+
+        self.assertTrue(builder.is_closed())
+
 # This test does not terminate
 """
     def test_not_closing_9(self):

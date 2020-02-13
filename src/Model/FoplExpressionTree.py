@@ -13,12 +13,13 @@ class FoplExpressionTree:
                 expr_context: FOPLParser.ExprContext = None,
                 expr=None,
                 constants: [str] = None,
+                functions: [str] = None,
                 visit_idx: int = 0):
         self.var_stack = []
-        self.constants = []
+        self.constants = [] if constants is None else constants
+        self.functions = [] if functions is None else functions
         if expr is not None:
             self.expr = expr
-            self.constants = [] if constants is None else constants
         else:
             self.expr = Expr.create(expr_context.children, tree=self)
         
@@ -27,6 +28,11 @@ class FoplExpressionTree:
     def add_const(self, name: str):
         if name not in self.constants:
             self.constants.append(name)
+
+    def add_func(self, name: str, vars_len: int):
+        tpl = (name, vars_len)
+        if tpl not in self.functions:
+            self.functions.append(tpl)
 
 
 class Expr:
@@ -136,7 +142,11 @@ class Func(Term):
         if len(func_context.children) == 2:
             return Func(name.symbol.text[:-1], [])
         terms: FOPLParser.TermsContext = func_context.children[1]
-        return Func(name.symbol.text[:-1], Term.create(terms, tree=tree))
+        
+        terms = Term.create(terms, tree=tree)
+        name = name.symbol.text[:-1]
+        tree.add_func(name, len(terms))
+        return Func(name, terms)
 
     def __init__(self, name: str, terms: list):
         self.name = name

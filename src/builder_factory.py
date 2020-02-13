@@ -26,7 +26,7 @@ def create_parser(logic_type: int):
 
 def create_tableau_builder(logic_type: int, left_exprs: list,
                           right_exprs: list, visit_idx:int=0,
-                          cf: list=None, constants=[]):
+                          cf: list=None, constants=[], functions=[]):
     if logic_type == LogicType.PROPOSITIONAL:
         tableau_builder = PropositionalTableauxBuilder(
             true_exprs=left_exprs,
@@ -39,6 +39,7 @@ def create_tableau_builder(logic_type: int, left_exprs: list,
             true_exprs=left_exprs,
             false_exprs=right_exprs,
             constants=constants,
+            functions=functions,
             visit_idx=visit_idx,
         )
         return tableau_builder
@@ -55,6 +56,7 @@ def create_tableau_builder(logic_type: int, left_exprs: list,
             true_exprs=left_exprs,
             false_exprs=right_exprs,
             constants = constants,
+            functions=functions,
             visit_idx=visit_idx,
             cf_exprs=cf if cf is not None else [],
         )

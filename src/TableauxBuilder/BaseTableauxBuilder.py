@@ -13,6 +13,7 @@ processed_true_impls = "processed_true_impls"
 processed_true_quantor_expressions = "processed_true_quantor_expressions"
 processed_false_quantor_expressions = "processed_false_quantor_expressions"
 established_constants = "established_constants"
+established_functions = "established_functions"
 variable_constant_mapping = "variable_constant_mapping"
 certain_falsehood_exprs = "certain_falsehood_exprs"
 certain_falsehood_processed = "certain_falsehood_processed"
@@ -55,6 +56,7 @@ class BaseTableauxBuilder:
                 processed_certain_false_exquantor_exprs: dict(),
                 processed_certain_false_allquantor_exprs: dict(),
                 established_constants: kwargs.get('constants', []),
+                established_functions: kwargs.get('functions', []),
                 variable_constant_mapping: dict(),
             }
         self.children = []

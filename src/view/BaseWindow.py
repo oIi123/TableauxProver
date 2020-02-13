@@ -46,6 +46,9 @@ class BaseWindow(QMainWindow):
     def exprs_from_trees(self, trees):
         return [tree.expr for tree in trees]
     
+    def functions_from_trees(self, trees):
+        return concat_list_of_lists([tree.functions for tree in trees if hasattr(tree, 'functions')])
+
     def constants_from_trees(self, trees):
         return concat_list_of_lists([tree.constants for tree in trees if hasattr(tree, 'constants')])
 
