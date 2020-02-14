@@ -3,6 +3,36 @@ import src.TableauxBuilder.BaseTableauxBuilder as BaseTableauxBuilder
 from src.Model.FoplExpressionTree import AllQuantor, ExistentialQuantor
 
 
+class NestLevelCalculator:
+    nest_level = 0
+    max_nest_level = 0
+
+    def calculate(self, expr):
+        self.nest_level = 0
+        self.max_nest_level = 0
+        expr.visit(self)
+        return self.max_nest_level
+
+    def __getattribute__(self, name):
+        if name.startswith('visited_') and name != 'visited_Func':
+            def visited_any(expr):
+                for attr in ['lhs', 'rhs', 'expr']:
+                    if hasattr(expr, attr):
+                        getattr(expr, attr).visit(self)
+                if hasattr(expr, 'terms'):
+                    for term in expr.terms:
+                        term.visit(self)
+            return visited_any
+        return super().__getattribute__(name)
+
+    def visited_Func(self, func):
+        self.nest_level += 1
+        self.max_nest_level = max(self.max_nest_level, self.nest_level)
+        for term in func.terms:
+            term.visit(self)
+        self.nest_level -= 1
+
+
 class ConstantReplacer:
     def __init__(self, old, new):
         self.old = old
@@ -85,10 +115,12 @@ class BaseManualTableau:
             new_tableau_builder = create_tableau_builder(
                                         self.logic_type, [], [], 
                                         0, cf=[],
-                                        constants=self.tableau_builder.sequent[BaseTableauxBuilder.established_constants][:])
+                                        constants=self.tableau_builder.sequent[BaseTableauxBuilder.established_constants][:],
+                                        functions=self.tableau_builder.sequent[BaseTableauxBuilder.established_functions][:])
             new_tableau_builder.sequent[self.side].append(self.expr)
             new_tableau_builder.visiting_false = false_side
             new_tableau_builder.visiting_certain_falsehood_exprs = certainly_false_side
+            new_tableau_builder.function_depth = self.calc_max_func_nesting(true_exprs, false_exprs, cf_exprs)
 
             # if multiprocess, set already processed ones
             if self.ex_constant_expr():
@@ -142,6 +174,9 @@ class BaseManualTableau:
 
                 if ex_const_expr:
                     new_tableau_builder.sequent[self.processed_side][self.expr] = [new_introduced]
+            elif ex_const_expr:
+                if not self.filter_ex_const_exprs(true_exprs, false_exprs, cf_exprs, new_tableau_builder, constants):
+                    return False
 
             # check correct derivations
             for exprs, sequent_id in [
@@ -194,6 +229,35 @@ class BaseManualTableau:
         for expr in exprs:
             if expr not in tableau.sequent[sequent_id]:
                 return False
+        return True
+
+    def filter_ex_const_exprs(self, true_exprs, false_exprs, cf_exprs, new_tableau_builder, constants):
+        # check if one expr is a new derivation
+        exprs = true_exprs
+        if self.side == BaseTableauxBuilder.false_exprs:
+            exprs = false_exprs
+        elif self.side == BaseTableauxBuilder.certain_falsehood_exprs:
+            exprs = cf_exprs
+        
+        if all(expr not in new_tableau_builder.sequent[self.side] for expr in exprs):
+            return False
+
+        # remove not entered derivations
+        indexes_to_remove = []
+        for i, expr in enumerate(new_tableau_builder.sequent[self.side][:]):
+            if expr not in exprs:
+                new_tableau_builder.sequent[self.side].remove(expr)
+                indexes_to_remove.append(i)
+
+        # update constants
+        len_old = 0
+        if self.expr in self.tableau_builder.sequent[self.processed_side]:
+            len_old = len(self.tableau_builder.sequent[self.processed_side][self.expr])
+        consts_to_remove = [new_tableau_builder.sequent[self.processed_side][self.expr][len_old + idx]
+                             for idx in indexes_to_remove]
+        for const in consts_to_remove:
+            new_tableau_builder.sequent[self.processed_side][self.expr].remove(const)
+        
         return True
 
     def set_processed(self, tableau=None):
@@ -257,3 +321,17 @@ class BaseManualTableau:
     def replace_expr_constant(self, old, new, expr):
         replacer = ConstantReplacer(old, new)
         replacer.replace(expr)
+
+    def calc_max_func_nesting(self, *expr_lists):
+        max_nesting = 0
+        nesting_calculator = NestLevelCalculator()
+
+        for expr_list in expr_lists:
+            for expr in expr_list:
+                if type(expr) is list:
+                    for e in expr:
+                        max_nesting = max(max_nesting, nesting_calculator.calculate(e))
+                else:
+                    max_nesting = max(max_nesting, nesting_calculator.calculate(expr))
+        
+        return max_nesting

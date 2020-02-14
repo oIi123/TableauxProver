@@ -13,6 +13,9 @@ def to_base(s, b, BS):
 
 
 def permute_array(length, array):
+    if len(array) == 1:
+        return [array * length]
+
     perms = []
     idx = 0
     while True:
@@ -28,8 +31,6 @@ def permute_array(length, array):
 
 
 class FoplTableauxBuilder(BaseTableauxBuilder):
-    function_depth = 0
-
     def __init__(self, tree: FoplExpressionTree = None, sequent: dict = None, **kwargs):
         super().__init__(tree=tree, sequent=sequent, **kwargs)
 
@@ -108,18 +109,23 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
         return name
 
     def calculate_functions(self, depth=0):
-        perms = []
         constants = self.sequent[established_constants][:]
-        constants = [Const(x) for x in constants]
+        perms = [Const(x) for x in constants]
         if depth < self.function_depth:
-            perms = self.calc_fun(depth+1)
-        
+            perms = self.calculate_functions(depth+1)
+
+        new_perms = []
         for name, arity in self.sequent[established_functions]:
-            f_perms = permute_array(arity, perms + constants)
+            f_perms = permute_array(arity, perms)
             for f_perm in f_perms:
                 fun = Func(name, f_perm)
-                perms.append(fun)
-        
+                if fun not in new_perms:
+                    new_perms.append(fun)
+
+        for perm in new_perms:
+            if perm not in perms:
+                perms.append(perm)
+
         return perms
 
     def process_multiprocess_exprs(self):
@@ -127,8 +133,7 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
         Processes the quantor with the most unprocessed constants
         :return:
         """
-        num_of_constants = len(self.sequent[established_constants])
-        num_of_constants += len(self.calculate_functions())
+        num_of_constants = len(self.calculate_functions())
 
         # Tuple (Unprocessed_Constants, False_Side, Quantor)
         options = [(num_of_constants - len(v), False, k) for k, v in self.sequent[processed_true_quantor_expressions].items() if len(v) != num_of_constants]
@@ -146,7 +151,8 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
         Checks if there are any quantors with unprocessed constants
         :return: Returns true if all quantors processed all constants
         """
-        num_of_constants = len(self.sequent[established_constants])
+        num_of_constants = len(self.calculate_functions())
+    
         for processed_constants in self.sequent[processed_true_quantor_expressions].values():
             if len(processed_constants) != num_of_constants:
                 return False
@@ -186,31 +192,26 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
         function_strs = [str(fun) for fun in functions]
 
         # Copy established constants in case changed inside loop
-        established_constants_copy = copy.deepcopy(self.sequent[established_constants])
         # Remove already processed constants from list
         for const in self.sequent[processed_quantor_expressions][quantor]:
-            if const in established_constants_copy:
-                established_constants_copy.remove(const)
-            
             if const in function_strs:
                 del functions[function_strs.index(const)]
                 function_strs = [str(fun) for fun in functions]
 
         # Copy expression in quantor scope with all possible mappings
-        for const in established_constants_copy + functions:
+        for const in functions:
             self.sequent[variable_constant_mapping][quantor.variable.name] = const
             expr_copy = copy.deepcopy(quantor.expr)
             self.variable_constant_mapper.map_expr(expr_copy)
             self.add_to(append_to, expr_copy)
 
         # Add constants to list of already processed constants
-        self.sequent[processed_quantor_expressions][quantor].extend(established_constants_copy)
         self.sequent[processed_quantor_expressions][quantor].extend(function_strs)
 
         # Restore stashed mapping
         if stashed_const is not None:
             self.sequent[variable_constant_mapping][quantor.variable.name] = stashed_const
-        else:
+        elif quantor.variable.name in self.sequent[variable_constant_mapping]:
             del self.sequent[variable_constant_mapping][quantor.variable.name]
 
     def generate_new_constant_expression(self, quantor: Quantor):

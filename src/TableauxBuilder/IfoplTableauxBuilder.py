@@ -8,7 +8,7 @@ from src.Model.FoplExpressionTree import *
 #  after that it should reprocess the quantor expressions
 class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
     def is_done(self):
-        return super().is_done() and FoplTableauxBuilder.is_done(self)
+        return self.is_closed() or (super().is_done() and FoplTableauxBuilder.is_done(self))
 
     def check_unprocessed_quantor_expressions(self):
         """
@@ -17,7 +17,7 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
         :return: Returns true if all quantors processed all constants
         """
         if super().check_unprocessed_quantor_expressions():
-            num_of_constants = len(self.sequent[established_constants])
+            num_of_constants = len(self.calculate_functions())
             for processed_constants in self.sequent[processed_certain_false_exquantor_exprs].values():
                 if len(processed_constants) != num_of_constants:
                     return False
@@ -43,7 +43,7 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
             self.visit_expr(True, expr)
         else:
             # If all certain falsehood expressions are processed, reprocess the quantor expressions or implications
-            num_of_constants = len(self.sequent[established_constants])
+            num_of_constants = len(self.calculate_functions())
             # Tuple: (expression, priority, false_side_or_certain_false)
             #   priority is either the number of unprocessed constants or
             #   reprocess_idx_true_impl - max(number_unprocessed_contants)

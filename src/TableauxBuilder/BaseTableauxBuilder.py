@@ -34,6 +34,8 @@ class BaseTableauxBuilder:
     last_multiprocess_true = None
     clears_false_exprs = False
 
+    function_depth = 0
+
     def __init__(self, sequent: dict = None, **kwargs):
         self.visit_idx = kwargs.get('visit_idx', 0)
         self.constant_idx = kwargs.get('constant_idx', 0)

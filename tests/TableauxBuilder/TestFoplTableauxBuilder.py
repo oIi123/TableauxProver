@@ -294,6 +294,399 @@ class TestFoplTableauxBuilder(unittest.TestCase):
 
         self.assertTrue(builder.is_closed())
 
+    def test_permute_functions_1(self):
+        consts = ["X", "Y"]
+        funs = [("l", 2)]
+
+        expected = [
+            Func("l", [Const("X"), Const("X")]),
+            Func("l", [Const("X"), Const("Y")]),
+            Func("l", [Const("Y"), Const("X")]),
+            Func("l", [Const("Y"), Const("Y")]),
+            Const("X"),
+            Const("Y"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_2(self):
+        consts = ["X"]
+        funs = [("l", 2)]
+
+        expected = [
+            Func("l", [Const("X"), Const("X")]),
+            Const("X"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_3(self):
+        consts = ["X"]
+        funs = [("l", 1)]
+
+        expected = [
+            Func("l", [Const("X")]),
+            Const("X"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_4(self):
+        consts = ["X"]
+        funs = [("l", 1)]
+
+        expected = [
+            Func("l", [Const("X")]),
+            Func("l", [Func("l", [Const("X")])]),
+            Const("X"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 1
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_5(self):
+        consts = ["X", "Y"]
+        funs = [("l", 1)]
+
+        expected = [
+            Func("l", [Const("X")]),
+            Func("l", [Const("Y")]),
+            Func("l", [Func("l", [Const("X")])]),
+            Func("l", [Func("l", [Const("Y")])]),
+            Const("X"),
+            Const("Y"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 1
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_6(self):
+        consts = ["X", "Y"]
+        funs = [("l", 2)]
+
+        expected = [
+            Const("X"),
+            Const("Y"),
+            Func("l", [Const("X"), Const("X")]),
+            Func("l", [Const("X"), Const("Y")]),
+            Func("l", [Const("Y"), Const("X")]),
+            Func("l", [Const("Y"), Const("Y")]),
+
+            Func("l", [Func("l", [Const("X"), Const("X")]), Const("X")]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Const("X")]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Const("X")]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Const("X")]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Const("Y")]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Const("Y")]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Const("Y")]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Const("Y")]),
+
+            Func("l", [Const("X"), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Const("X"), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Const("X"), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Const("X"), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Const("Y"), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Const("Y"), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Const("Y"), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Const("Y"), Func("l", [Const("Y"), Const("Y")])]),
+
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("l", [Const("Y"), Const("Y")])]),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 1
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+
+    def test_permute_functions_7(self):
+        consts = ["X"]
+        funs = [("l", 1), ("j", 1)]
+
+        expected = [
+            Func("l", [Const("X")]),
+            Func("j", [Const("X")]),
+            Const("X"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_8(self):
+        consts = ["X", "Y"]
+        funs = [("l", 1), ("j", 1)]
+
+        expected = [
+            Func("l", [Const("X")]),
+            Func("l", [Const("Y")]),
+            Func("j", [Const("X")]),
+            Func("j", [Const("Y")]),
+            Const("X"),
+            Const("Y"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_9(self):
+        consts = ["X", "Y"]
+        funs = [("l", 2), ("j", 1)]
+
+        expected = [
+            Func("l", [Const("X"), Const("X")]),
+            Func("l", [Const("X"), Const("Y")]),
+            Func("l", [Const("Y"), Const("X")]),
+            Func("l", [Const("Y"), Const("Y")]),
+            Func("j", [Const("X")]),
+            Func("j", [Const("Y")]),
+            Const("X"),
+            Const("Y"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_10(self):
+        consts = ["X", "Y"]
+        funs = [("l", 2), ("j", 2)]
+
+        expected = [
+            Func("l", [Const("X"), Const("X")]),
+            Func("l", [Const("X"), Const("Y")]),
+            Func("l", [Const("Y"), Const("X")]),
+            Func("l", [Const("Y"), Const("Y")]),
+            Func("j", [Const("X"), Const("X")]),
+            Func("j", [Const("X"), Const("Y")]),
+            Func("j", [Const("Y"), Const("X")]),
+            Func("j", [Const("Y"), Const("Y")]),
+            Const("X"),
+            Const("Y"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+
+    def test_permute_functions_11(self):
+        consts = ["X", "Y"]
+        funs = [("l", 2), ("j", 1)]
+
+        expected = [
+            Const("X"),
+            Const("Y"),
+            Func("j", [Const("X")]),
+            Func("j", [Const("Y")]),
+            Func("l", [Const("X"), Const("X")]),
+            Func("l", [Const("X"), Const("Y")]),
+            Func("l", [Const("Y"), Const("X")]),
+            Func("l", [Const("Y"), Const("Y")]),
+
+            Func("j", [Func("j", [Const("X")])]),
+            Func("j", [Func("j", [Const("Y")])]),
+            Func("j", [Func("l", [Const("X"), Const("X")])]),
+            Func("j", [Func("l", [Const("X"), Const("Y")])]),
+            Func("j", [Func("l", [Const("Y"), Const("X")])]),
+            Func("j", [Func("l", [Const("Y"), Const("Y")])]),
+
+            Func("l", [Const("X"), Func("j", [Const("X")])]),
+            Func("l", [Const("X"), Func("j", [Const("Y")])]),
+            Func("l", [Const("Y"), Func("j", [Const("X")])]),
+            Func("l", [Const("Y"), Func("j", [Const("Y")])]),
+            Func("l", [Func("j", [Const("X")]), Const("X")]),
+            Func("l", [Func("j", [Const("X")]), Const("Y")]),
+            Func("l", [Func("j", [Const("Y")]), Const("X")]),
+            Func("l", [Func("j", [Const("Y")]), Const("Y")]),
+
+            Func("l", [Func("j", [Const("X")]), Func("j", [Const("X")])]),
+            Func("l", [Func("j", [Const("X")]), Func("j", [Const("Y")])]),
+            Func("l", [Func("j", [Const("Y")]), Func("j", [Const("X")])]),
+            Func("l", [Func("j", [Const("Y")]), Func("j", [Const("Y")])]),
+
+            Func("l", [Const("X"), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Const("X"), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Const("X"), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Const("X"), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Const("Y"), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Const("Y"), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Const("Y"), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Const("Y"), Func("l", [Const("Y"), Const("Y")])]),
+
+            Func("l", [Func("l", [Const("X"), Const("X")]), Const("X")]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Const("X")]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Const("X")]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Const("X")]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Const("Y")]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Const("Y")]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Const("Y")]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Const("Y")]),
+
+            Func("l", [Func("j", [Const("X")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("j", [Const("X")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("j", [Const("X")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("j", [Const("X")]), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Func("j", [Const("Y")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("j", [Const("Y")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("j", [Const("Y")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("j", [Const("Y")]), Func("l", [Const("Y"), Const("Y")])]),
+
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("j", [Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("j", [Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("j", [Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("j", [Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("j", [Const("Y")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("j", [Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("j", [Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("j", [Const("Y")])]),
+
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("X")]), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("l", [Const("X"), Const("Y")]), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("X")]), Func("l", [Const("Y"), Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("l", [Const("X"), Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("l", [Const("X"), Const("Y")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("l", [Const("Y"), Const("X")])]),
+            Func("l", [Func("l", [Const("Y"), Const("Y")]), Func("l", [Const("Y"), Const("Y")])]),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts,
+                                      functions=funs)
+        builder.function_depth = 1
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+
+    def test_permute_functions_12(self):
+        consts = ["X", "Y"]
+
+        expected = [
+            Const("X"),
+            Const("Y"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_13(self):
+        consts = ["X"]
+
+        expected = [
+            Const("X"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+    
+    def test_permute_functions_14(self):
+        consts = ["X", "Y", "Z"]
+
+        expected = [
+            Const("X"),
+            Const("Y"),
+            Const("Z"),
+        ]
+
+        builder = FoplTableauxBuilder(constants=consts)
+        builder.function_depth = 0
+        perms = builder.calculate_functions()
+
+        self.assertEqual(len(expected), len(perms))
+        for exp in expected:
+            self.assertIn(exp, perms)
+
 # This test does not terminate
 """
     def test_not_closing_9(self):
