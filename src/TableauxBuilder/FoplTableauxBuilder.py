@@ -105,6 +105,8 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
         self.constant_idx += 1
         self.sequent[established_constants].append(name)
 
+        return name
+
     def calculate_functions(self, depth=0):
         perms = []
         constants = self.sequent[established_constants][:]
@@ -213,7 +215,7 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
 
     def generate_new_constant_expression(self, quantor: Quantor):
         # Create new constant
-        self.establish_new_constant()
+        name = self.establish_new_constant()
 
         # Stash existing mapping in case already existing in outer scope
         stashed_const = None
