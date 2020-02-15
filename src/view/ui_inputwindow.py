@@ -31,6 +31,7 @@ class Ui_MainWindow(object):
         self.help_btn.setStyleSheet(u"QPushButton {\n"
 "    qproperty-icon: url(src/view/images/help.svg);\n"
 "}")
+        self.help_btn.setIconSize(QSize(23, 23))
 
         self.verticalLayout.addWidget(self.help_btn)
 
@@ -51,7 +52,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaContentsSingle = QWidget()
         self.scrollAreaContentsSingle.setObjectName(u"scrollAreaContentsSingle")
-        self.scrollAreaContentsSingle.setGeometry(QRect(0, 0, 800, 405))
+        self.scrollAreaContentsSingle.setGeometry(QRect(0, 0, 808, 431))
         self.scrollAreaContentsSingle.setAutoFillBackground(False)
         self.scrollAreaContentsSingle.setStyleSheet(u"#scrollAreaWidgetContents {\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -78,7 +79,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaContentsBranch = QWidget()
         self.scrollAreaContentsBranch.setObjectName(u"scrollAreaContentsBranch")
-        self.scrollAreaContentsBranch.setGeometry(QRect(0, 0, 800, 405))
+        self.scrollAreaContentsBranch.setGeometry(QRect(0, 0, 808, 431))
         self.scrollAreaContentsBranch.setStyleSheet(u"#scrollAreaWidgetContentsBranch {\n"
 "	background-color: rgb(255, 255, 255);\n"
 "}")
@@ -128,7 +129,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 852, 26))
+        self.menubar.setGeometry(QRect(0, 0, 852, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")

@@ -37,6 +37,12 @@
       <property name="text">
        <string/>
       </property>
+      <property name="iconSize">
+       <size>
+        <width>23</width>
+        <height>23</height>
+       </size>
+      </property>
      </widget>
     </item>
     <item>
@@ -69,8 +75,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>800</width>
-             <height>405</height>
+             <width>808</width>
+             <height>431</height>
             </rect>
            </property>
            <property name="autoFillBackground">
@@ -127,8 +133,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>800</width>
-             <height>405</height>
+             <width>808</width>
+             <height>431</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -234,7 +240,7 @@
      <x>0</x>
      <y>0</y>
      <width>852</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
