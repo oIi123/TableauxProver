@@ -137,7 +137,7 @@ Aufgrund dieser Anforderungen werden nachfolgend verschiedene Konzepte erarbeite
 \subsection{Konzept 1\label{sec:concept_1}}
 Für das erste Konzept werden 2 Fenster für die Hauptinteraktion benötigt. Das erste Fenster (Hauptfenster), stellt das gesamte Tableau dar. Im Hauptfenster kann zudem zwischen den Modi Automatik und Manuell gewechselt werden. Im Modus Automatik, ist nach dem Start der automatischen Ableitung keine weitere Interaktion nötig/möglich außer dem Start einer neuen Ableitung. Der erste Entwurf des Konzepts im Automatikbetrieb, ist in \autoref{fig:gui_concept_1_automatic} zu sehen.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.7]{images/gui_concept_1_automatic.png}
 \caption{Konzept 1 im Modus Automatik}
@@ -147,7 +147,7 @@ Für das erste Konzept werden 2 Fenster für die Hauptinteraktion benötigt. Das
 
 Im Modus Manuell, muss jeder Ableitungsschritt vom Benutzer selbst ausgeführt werden. Hierfür wird jede noch nicht verarbeitete, nicht Atomare Formel als Button dargestellt. Dies ist in \autoref{fig:gui_concept_1_manual} zu sehen.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.7]{images/gui_concept_1_manual.png}
 \caption{Konzept 1 im Modus Manuell}
@@ -157,7 +157,7 @@ Im Modus Manuell, muss jeder Ableitungsschritt vom Benutzer selbst ausgeführt w
 
 Wird ein solcher Formel-Button betätigt, öffnet sich das zweite Fenster (Ableitungseingabefenster). Im Ableitungseingabefenster kann ausgewählt werden, ob die Ableitung der Formel eine verzweigte oder nicht verzweigte ist. Die Eingabe einer nicht verzweigten Ableitung, nach Betätigung des Buttons \enquote{B|!C} (B$\vee\neg$C, siehe Syntaxdefinition \textbf{EINGEBEN!!!!!}) zeigt \autoref{fig:gui_concept_1_manual_enter_single}. Nach Eingabe einer Ableitung muss das Tableau neu gezeichnet werden. Dies ist der Nachteil an diesem Konzept, da es verwirrend auf den Benutzer wirken kann nach Eingabe eine andere Stelle im Tableau zu sehen. Das Problem kann allerdings relativiert werden, indem nach Eingabe die zuletzt abgeleitete Formel in das Zentrum des Blickfeldes gerückt wird.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.7]{images/gui_concept_1_manual_enter_single.png}
 \caption{Konzept 1: Eingabe einer Ableitung im Modus Manuell}
@@ -167,7 +167,7 @@ Wird ein solcher Formel-Button betätigt, öffnet sich das zweite Fenster (Ablei
 
 Die Eingabe einer verzweigenden Ableitung, nach Betätigen des Buttons \enquote{B\&!C} (B$\wedge\neg$C siehe Syntaxdefinition \textbf{EINGEBEN!!!!}) zeigt \autoref{fig:gui_concept_1_manual_enter_branch}.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.7]{images/gui_concept_1_manual_enter_branch.png}
 \caption{Konzept 1: Eingabe einer verzweigenden Ableitung im Modus Manuell}
@@ -179,7 +179,7 @@ Die Eingabe einer verzweigenden Ableitung, nach Betätigen des Buttons \enquote{
 Das zweite Konzept ähnelt dem Ersten stark. Der Unterschied hierbei ist, es muss keine Formel zur Ableitung ausgewählt werden, sondern nur das Ergebnis eingegeben werden. Im Modus Automatik ist die Funktionsweise die selbe wie bei Konzept 1, siehe \autoref{fig:gui_concept_1_automatic}.
 
 Im Modus Manuell hingegen, kann an das Tableau an den noch nicht geschlossenen Zweigen erweitert werden. Hierbei gibt es zwei Möglichkeiten, bei einer nicht verzweigenden Ableitung wird das Ergebnis in die Textfelder eingegeben und der +-Button betätigt. Dies ist in \autoref{fig:gui_concept_2_manual_enter_single} zu sehen.
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.7]{images/gui_concept_2_manual_enter_single.png}
 \caption{Konzept 2: Eingabe einer Ableitung im Modus Manuell}
@@ -189,7 +189,7 @@ Im Modus Manuell hingegen, kann an das Tableau an den noch nicht geschlossenen Z
 
 Wird hingegen eine verzweigende Ableitung behandelt, kann ein neuer Zweig über den nach Rechts angedeuteten Pfad mit dem +-Button geöffnet werden. Die Eingabe der Ableitung erfolgt dann ebenfalls in den Textfeldern und wird über die +-Buttons bestätigt. Dies wird in \autoref{fig:gui_concept_2_manual_enter_branch} dargestellt. Der Vorteil dieses Konzepts ist, dass nach Eingabe einer Formel das Tableau höchstens minimal breiter gezeichnet werden muss, falls die eingegebene Formel Überbreite hat. Dies wirkt deutlich weniger verwirrend auf den Benutzer, als das neu zeichnen in Konzept 1.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.7]{images/gui_concept_2_manual_enter_branch.png}
 \caption{Konzept 2: Eingabe einer verzweigenden Ableitung im Modus Manuell}
@@ -215,11 +215,13 @@ Grundsätzlich wird zur Umsetzung der Zeichenlogik auf die in \autoref{lst:pysid
 \item Wiederhole Schritt 2 bis zur Wurzel.
 \end{enumerate}
 
-Zur verbesserten Leserlichkeit des Tableau werden die Breiten L und R jeweils um ein Offset O erhöht. Die Berechnung der Breiten ist in \autoref{fig:drawing_logic_calc_widths} visualisiert.
+Zur verbesserten Leserlichkeit des Tableau werden die Breiten L und R jeweils um ein Offset O erhöht.
+
+Die Berechnung der Breiten ist in \autoref{fig:drawing_logic_calc_widths} visualisiert. Hier werden die Breiten der Formeln (L$_{f}$ und R$_{f}$) mit einem Gitter hinterlegt dargestellt. Der Offset O wird mit schrägen Linien dargestellt. Die nach oben ``vererbte'' Breite wird mit unterbrochenen Linien dargestellt. Dies ist die Breite L$_{l}$ bzw. R$_{r}$ abzüglich der Formelbreite L$_{f}$ bzw. R$_{f}$ und des Offsets O.
 
 Nach Berechnung der Breiten der Verzweigungen ist das Zeichnen des Tableau trivial.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=1]{images/drawing_logic_calc_widths.png}
 \caption{Visualisierung der Breitenberechnung von Verzweigungen im Tableau}
@@ -232,7 +234,7 @@ Ein weiterer wichtiger Aspekt bei der Darstellung ist die Konvertierung der inte
 
 Vorweg ist dazu zu sagen, dass die Aussagen zu einem Syntaxbaum geparsed werden. Ein Beispiel eines solchen Syntaxbaumes ist in \autoref{fig:example_syntax_tree} zu sehen. Die interne Repräsentation der Aussagen wird in \textbf{ANGEBEN!!!!!!!} näher behandelt. Dieser Abschnitt soll sich darauf konzentrieren, wie dieser zu einer korrekten Zeichenkette umgewandelt werden kann.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=1]{images/example_syntax_tree.png}
 \caption{Beispiel eines Syntaxbaumes der Aussage A$\vee$B$\rightarrow\neg$C}
@@ -269,6 +271,8 @@ class And(Operation):
 \end{lstlisting}
 
 Da der atomaren Aussagen bzw. einem Prädikat die Priorität 0 zugeordnet wird, wird um dieses nie eine Klammer gesetzt.
+
+Eine Ausnahme der oben genannten Regel ist die Implikation. Dies ist der einzige der Operator der nicht Assoziativ ist, also für den gilt (a$\rightarrow$b)$\rightarrow$c$\nleftrightarrow$a$\rightarrow$(b$\rightarrow$c). Deshalb muss für diesen der Vergleich mit der Priorität des Kindoperators statt > auf $\geq$ prüfen.
 
 \subsection{Fehlermeldungen und Beschreibung}
 Wird beispielsweise eine Aussage mit fehlerhafter Syntax eingegeben, muss hierfür eine benutzerfreundliche Fehlermeldung angezeigt werden. Hierfür wird bei der Eingabe der Initialen Aussage bzw. der Eingabe einer Ableitung im externen Fenster ein roter Balken am unteren Fensterrand dargestellt. In diesem wird eine Fehlerbeschreibung, sowie die Zeile in der der Fehler aufgetreten ist dargestellt. Dies ist in \autoref{fig:display_error_message} dargestellt.

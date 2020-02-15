@@ -13,7 +13,7 @@ Dieses Verfahren hat starke Ähnlichkeiten zum Tableauxverfahren, verzichtet abe
 Das grundlegende Verfahren ist momentan das Leistungsfähigste bekannte. Dies beweist der Theorembeweiser ``Vampire'', welcher der Gewinner der CADE ATP System Competition im Jahr 2019 (und den meisten Jahren zuvor) war. Dies ist ein jährlich abgehaltener Wettbewerb, bei dem Theorembeweiser auf ihre Leistungsfähigkeit im Bezug auf erfolgreich gelöste Probleme und Laufzeit verglichen werden. \cite{casc_atp_comp} Vampire basiert dabei auf einer Weiterentwicklung des Resolutionsverfahrens.
 
 \section{Modell Eliminierung}
-Die Modell Eliminierung ist ein von D.W. Loveland entwickeltes automatisches Beweisverfahren. Das Verfahren wird im folgenden kurz erklärt.
+Die Modell Eliminierung ist ein von D.W. Loveland entwickeltes automatisches Beweisverfahren. \cite{atp_d_loveland} Das Verfahren wird im folgenden kurz erklärt.
 
 Sei $\overline{L}$ das Gegenteil von L, d.h. $\neg$L wenn L eine atomare Aussage und M wenn L=$\neg$M. Eine Kette ist eine Liste von A-literals und B-literals. B-literals sind dabei Elemente der Ausgangsformelmenge und A-literals davon abgeleitet. Ein A-literal wird durch rechteckige Klammern hervorgehoben. Des weiteren ist eine elementare Kette, eine Kette von B-literals. Und eine akzeptable Kette ist eine Kette die links mit einem B-literal beginnt. Die Modell Eliminierung wird nun durch 3 Operationen auf Ketten definiert. Ein gültiger Beweis der Ungültigkeit ist, wenn durch diese eine leere Kette erzeugt wird. \cite{model_elimination}
 
