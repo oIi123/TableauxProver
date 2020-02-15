@@ -109,6 +109,17 @@ class BaseManualTableau:
                 self.processed_side = BaseTableauxBuilder.processed_certain_false_exquantor_exprs
             elif type(self.expr) is AllQuantor:
                 self.processed_side = BaseTableauxBuilder.processed_certain_false_allquantor_exprs
+        
+        max_depth = self.calc_max_func_nesting(true_exprs, false_exprs, cf_exprs)
+        depth = 0
+        while depth <= max_depth:
+            if self.merge_with_depth(depth, true_exprs, false_exprs, cf_exprs, constants, false_side, certainly_false_side):
+                return True
+            depth += 1
+        
+        return False
+
+    def merge_with_depth(self, depth, true_exprs, false_exprs, cf_exprs, constants, false_side, certainly_false_side):
         expr_permutations = self.expr.permute()
         for perm in expr_permutations:
             self.perm = perm
@@ -120,7 +131,7 @@ class BaseManualTableau:
             new_tableau_builder.sequent[self.side].append(self.expr)
             new_tableau_builder.visiting_false = false_side
             new_tableau_builder.visiting_certain_falsehood_exprs = certainly_false_side
-            new_tableau_builder.function_depth = self.calc_max_func_nesting(true_exprs, false_exprs, cf_exprs)
+            new_tableau_builder.function_depth = depth
 
             # if multiprocess, set already processed ones
             if self.ex_constant_expr():
