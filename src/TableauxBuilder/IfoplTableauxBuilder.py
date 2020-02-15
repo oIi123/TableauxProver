@@ -22,9 +22,8 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
                 if len(processed_constants) != num_of_constants:
                     return False
 
-            for processed_constants in self.sequent[processed_certain_false_allquantor_exprs].values():
-                if len(processed_constants) != num_of_constants:
-                    return False
+            if len(self.sequent[processed_certain_false_allquantor_exprs]) > 0:
+                return False
 
             return True
         return False
