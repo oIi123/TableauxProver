@@ -190,6 +190,7 @@ class MainWindow(BaseWindow):
         Draws all expressions in the tableau
         """
         closed = tableau.is_closed()
+        done = tableau.is_done()
         manual = self.mode == ResolveMode.Manual
         intuitionistic = self.logic_type in [LogicType.IPROPOSITIONAL, LogicType.IFOPL]
         child_clears_false = len(tableau.children) > 0 and not all([not child.clears_false_exprs for child in tableau.children])
@@ -219,7 +220,7 @@ class MainWindow(BaseWindow):
         
         dotted_underlined = p.draw_dotted_underlined
         normal = p.draw_normal
-        if self.mode == ResolveMode.Manual and not closed and not child_clears_false:
+        if self.mode == ResolveMode.Manual and not closed and not done and not child_clears_false:
             dotted_underlined = self.draw_btn(p, tableau)
             normal = self.draw_btn(p, tableau)
         expr_pos.extend(self.to_pos_list(partially_exprs, x, p.get_text_width, dotted_underlined))
@@ -250,8 +251,6 @@ class MainWindow(BaseWindow):
 
         if len(tableau.children) == 0:
             # draw end sign of the branch
-            done = tableau.is_done()
-
             if closed:
                 width = 10
                 y = self.get_y(layer)
