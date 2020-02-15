@@ -374,6 +374,9 @@ class MainWindow(BaseWindow):
         self.scroll_area_content.repaint()
 
     def reset(self):
+        if self.tableaux_builder is None:
+            self.ui.inital_left_exprs_text_edit.setText('')
+            self.ui.inital_right_exprs_text_edit.setText('')
         self.tableaux_builder = None
         self.ui.inital_left_exprs_text_edit.show()
         self.ui.inital_right_exprs_text_edit.show()
