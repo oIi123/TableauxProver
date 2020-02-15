@@ -4,6 +4,9 @@ from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTablea
 
 
 class IpcTableauxBuilder(PropositionalTableauxBuilder):
+    left_side_sign = "P"
+    right_side_sign = "C"
+    
     def is_done(self):
         if self.is_closed():
             return True
