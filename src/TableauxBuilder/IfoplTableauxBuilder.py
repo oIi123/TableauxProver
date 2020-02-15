@@ -83,10 +83,10 @@ class IfoplTableauxBuilder(IpcTableauxBuilder, FoplTableauxBuilder):
 
     def visited_ExistentialQuantor(self, quantor: ExistentialQuantor):
         if self.visiting_certain_falsehood_exprs or self.visiting_false:
-            if self.visiting_false:
-                self.last_multiprocess_false = quantor
-            else:
+            if self.visiting_certain_falsehood_exprs:
                 self.last_multiprocess_cf = quantor
+            else:
+                self.last_multiprocess_false = quantor
             processed_quantor_exprs = processed_certain_false_exquantor_exprs if self.visiting_certain_falsehood_exprs else processed_false_quantor_expressions
             self.generate_existing_constant_expression(quantor, processed_quantor_expressions=processed_quantor_exprs, append_to=false_exprs)
         else:
