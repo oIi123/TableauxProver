@@ -319,13 +319,13 @@
             </div>
             <br/>
             Quantifikatoren sind ein Spezialfall. Um eine Quantifikation die eine neue Konstante einführt abzuleiten, muss eine Konstante verwendet werden die nicht im aktuellen Tableauzweig verwendet wird.
-            Eine Ableitung eines Quantifikators der keine neue Konstante einführt, muss alle bisher eingeführten Konstanten verwenden.
+            Eine Ableitung eines Quantifikators der keine neue Konstante einführt, muss die bisher eingeführten Konstanten verwenden die von diesem noch nicht verwendet wurden.
             D.h. in der folgenden Situation, wurde der Quantifikator (E)x D(x) bereits auf die Konstante X1 angewendet.
             <div>
                 <img src="images/derivation_quantifier_before.png"/>
             </div>
             Seitdem wurden die zwei neuen Konstanten X2 und X3 eingeführt.
-            Eine korrekte Ableitung von (E)x D(x) muss beide verwenden.
+            Eine korrekte Ableitung von (E)x D(x) muss eine oder beide Konstanten verwenden aber nicht die Konstante X1.
             <div>
                 <img src="images/derivation_quantifier_entering.png"/>
             </div>
