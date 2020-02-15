@@ -51,8 +51,8 @@ class MainWindow(BaseWindow):
 
         # create reset button in code to put it over scroll area
         self.reset_btn = QPushButton(self)
-        self.reset_btn.setStyleSheet('QPushButton {\n	qproperty-icon: url(src/view/images/stornieren.svg);\n}')
-        self.reset_btn.setGeometry(16, 118, 31, 28)
+        self.reset_btn.setText('Reset')
+        self.reset_btn.setGeometry(16, 118, 45, 28)
         self.reset_btn.show()
 
         # setup slots

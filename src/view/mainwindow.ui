@@ -170,6 +170,12 @@
          <property name="text">
           <string/>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>23</width>
+           <height>23</height>
+          </size>
+         </property>
          <property name="autoDefault">
           <bool>false</bool>
          </property>
@@ -219,7 +225,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>755</width>
+         <width>763</width>
          <height>500</height>
         </rect>
        </property>
@@ -281,7 +287,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
