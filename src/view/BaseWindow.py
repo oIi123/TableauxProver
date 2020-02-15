@@ -8,7 +8,7 @@ def concat_list_of_lists(list_of_lists):
     concat = list()
     for lst in list_of_lists:
         concat += lst
-    return concat
+    return list(set(concat))
 
 
 class BaseWindow(QMainWindow):
