@@ -35,7 +35,7 @@ class CustomPainter(QPainter):
         Returns painted width of the text
         """
         fm = QFontMetrics(self.font())
-        return fm.horizontalAdvance(text)
+        return max(20, fm.horizontalAdvance(text))
 
     def draw_dotted_underlined(self, text: str, x: int, y: int, **kwargs):
         """
