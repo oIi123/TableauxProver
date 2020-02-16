@@ -43,10 +43,10 @@ class BaseTableauxBuilder:
             self.sequent = sequent
         else:
             self.sequent = {
-                false_exprs: kwargs.get('false_exprs', []),
-                true_exprs: kwargs.get('true_exprs', []),
-                false_atoms: [],
-                true_atoms: [],
+                false_exprs: [ex for ex in kwargs.get('false_exprs', []) if not ex.is_atom],
+                true_exprs: [ex for ex in kwargs.get('true_exprs', []) if not ex.is_atom],
+                false_atoms: [at for at in kwargs.get('false_exprs', []) if at.is_atom],
+                true_atoms: [at for at in kwargs.get('true_exprs', []) if at.is_atom],
                 false_processed: [],
                 true_processed: [],
                 certain_falsehood_exprs: kwargs.get('cf_exprs', []),
