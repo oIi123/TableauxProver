@@ -3,7 +3,7 @@ import unittest
 from src.builder_factory import LogicType
 from src.Parser.PropParser import PropParser
 from src.TableauxBuilder.BaseManualTableau import BaseManualTableau, BaseTableauxBuilder
-from src.TableauxBuilder.IpcTableauxBuilder import IpcTableauxBuilder
+from src.TableauxBuilder.PropositionalTableauxBuilder import PropositionalTableauxBuilder
 
 
 def parse(expr: str):
@@ -18,7 +18,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('(a->c)'),
         ]
 
-        tableau = IpcTableauxBuilder(false_exprs=[expr])
+        tableau = PropositionalTableauxBuilder(false_exprs=[expr])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((None, expr, None), [l_expr], [[]], [[]], [])
@@ -37,7 +37,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('(a->c)'),
         ]
 
-        tableau = IpcTableauxBuilder(false_exprs=[expr])
+        tableau = PropositionalTableauxBuilder(false_exprs=[expr])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((None, expr, None), [l_expr], [r_expr], [[]], [])
@@ -55,7 +55,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('(b->c)'),
         ]
 
-        tableau = IpcTableauxBuilder(false_exprs=[expr])
+        tableau = PropositionalTableauxBuilder(false_exprs=[expr])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((None, expr, None), [l_expr], [r_expr], [[]], [])
@@ -74,7 +74,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('(a->c)'),
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
+        tableau = PropositionalTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t, None, None), [l_expr], [r_expr], [[]], [])
@@ -91,7 +91,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('a'),
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
+        tableau = PropositionalTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((None, expr_f, None), [l_expr], [r_expr], [[]], [])
@@ -108,7 +108,7 @@ class TestPlManualTableau(unittest.TestCase):
 
         r_expr = []
 
-        tableau = IpcTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
+        tableau = PropositionalTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t, None, None), [l_expr], [r_expr], [[]], [])
@@ -125,7 +125,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('!a')
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
+        tableau = PropositionalTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t, None, None), [l_expr], [r_expr], [[]], [])
@@ -143,7 +143,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('b')
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
+        tableau = PropositionalTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((None, expr_f, None), [l_expr], [r_expr], [[]], [])
@@ -162,7 +162,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('(a->c)')
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
+        tableau = PropositionalTableauxBuilder(true_exprs=[expr_t], false_exprs=[expr_f])
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((None, expr_f, None), [l_expr], [r_expr], [[]], [])
@@ -187,7 +187,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('!p')
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((None, expr_f[0], None), [l_expr], [r_expr], [[]], [])
@@ -212,7 +212,7 @@ class TestPlManualTableau(unittest.TestCase):
             [], [parse('p')]
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t[0], None, None), l_expr, r_expr, [[],[]], [])
@@ -237,7 +237,7 @@ class TestPlManualTableau(unittest.TestCase):
             [parse('p')], []
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t[0], None, None), l_expr, r_expr, [[],[]], [])
@@ -262,7 +262,7 @@ class TestPlManualTableau(unittest.TestCase):
             [], []
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t[0], None, None), l_expr, r_expr, [[],[]], [])
@@ -287,7 +287,7 @@ class TestPlManualTableau(unittest.TestCase):
             [], []
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t[0], None, None), l_expr, r_expr, [[],[]], [])
@@ -311,7 +311,7 @@ class TestPlManualTableau(unittest.TestCase):
 
         r_expr = []
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t[0], None, None), [l_expr], [r_expr], [[]], [])
@@ -335,7 +335,7 @@ class TestPlManualTableau(unittest.TestCase):
 
         r_expr = []
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         success = manual_tableau.merge((expr_t[0], None, None), [l_expr], [r_expr], [[]], [])
@@ -359,7 +359,7 @@ class TestPlManualTableau(unittest.TestCase):
 
         r_expr = []
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         manual_tableau.merge((expr_t[0], None, None), [l_expr], [r_expr], [[]], [])
@@ -399,7 +399,7 @@ class TestPlManualTableau(unittest.TestCase):
 
         r_expr = []
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         manual_tableau.merge((expr_t[0], None, None), [l_expr], [r_expr], [[]], [])
@@ -441,7 +441,7 @@ class TestPlManualTableau(unittest.TestCase):
             parse('!p')
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         manual_tableau.merge((None, expr_f[0], None), [l_expr], [r_expr], [[]], [])
@@ -483,7 +483,7 @@ class TestPlManualTableau(unittest.TestCase):
             [parse('q')], [],
         ]
 
-        tableau = IpcTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
+        tableau = PropositionalTableauxBuilder(true_exprs=expr_t, false_exprs=expr_f)
         manual_tableau = BaseManualTableau(LogicType.PROPOSITIONAL, tableau)
 
         manual_tableau.merge((expr_t[0], None, None), l_expr, r_expr, [[],[]], [])
