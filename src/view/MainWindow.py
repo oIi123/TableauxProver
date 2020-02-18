@@ -14,6 +14,7 @@ from src.builder_factory import *
 from src.view.BaseWindow import BaseWindow
 from src.view.InputWindow import InputWindow
 from src.view.CustomPainter import CustomPainter
+from src.view.DrawingCalculator import DrawingCalculator
 
 
 def get_child_widget(parent: QWidget, name: str) -> Union[Optional[QWidget], None]:
@@ -86,8 +87,8 @@ class MainWindow(BaseWindow):
 
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent):
         if watched is self.scroll_area_content and type(event) is QPaintEvent:
-            p = CustomPainter()
-            p.begin(self.scroll_area_content)
+            p = CustomPainter(self.scroll_area_content)
+            p.begin()
 
             if self.tableaux_builder is None:
                 # no expression entered yet
@@ -106,7 +107,13 @@ class MainWindow(BaseWindow):
             p.drawText(x - 65, 50, self.tableaux_builder.left_side_sign)
             p.drawText(x + 62, 50, self.tableaux_builder.right_side_sign)
 
-            self.draw_path(p, self.tableaux_builder, x=x)
+            manual = self.mode == ResolveMode.Manual
+            intuitionistic = self.logic_type in [LogicType.IPROPOSITIONAL, LogicType.IFOPL]
+            drawing_calculator = DrawingCalculator(
+                self.tableaux_builder, p, manual,
+                intuitionistic, self.margin, x
+            )
+            self.draw_path(p, self.tableaux_builder, drawing_calculator, x=x)
 
             p.end()
 
@@ -151,89 +158,15 @@ class MainWindow(BaseWindow):
                 self.expr_btns[(x,y)] = btn
         return draw_btn
 
-    def to_pos_list(self, exprs, x, txt_width_fun, draw_fun, include_atoms=False):
-        """
-        Converts a list of expressions to a list of tuples
-        Tuples are added if include_atoms is True or the expr is not a atom
-        (x-pos, expression, draw_function)
-        """
-        lst = [(
-                    x - self.margin - txt_width_fun(str(expr)),
-                    expr,
-                    curry(draw_fun, expr=(expr, None, None)),
-                    str(expr),
-                )
-               for expr in exprs[0] if not expr.is_atom or include_atoms]
-        lst.extend([(
-                        x + self.margin,
-                        expr,
-                        curry(draw_fun, expr=(None, expr, None)),
-                        str(expr)
-                    )
-                    for expr in exprs[1] if not expr.is_atom or include_atoms])
-        lst.extend([(
-                        x + self.margin,
-                        expr,
-                        curry(draw_fun, expr=(None, None, expr)),
-                        '[' + str(expr) + ']',
-                    )
-                    for expr in exprs[2] if not expr.is_atom or include_atoms])
-
-        return lst
-
     def draw_path(
                     self, p: CustomPainter,
                     tableau: BaseTableauxBuilder,
-                    layer=0, x=375,
-                    parent_processed: (list, list, list)=None):
+                    drawing_calculator,
+                    layer=0, x=375):
         """
         Draws all expressions in the tableau
         """
-        closed = tableau.is_closed()
-        done = tableau.is_done()
-        manual = self.mode == ResolveMode.Manual
-        intuitionistic = self.logic_type in [LogicType.IPROPOSITIONAL, LogicType.IFOPL]
-        child_clears_false = len(tableau.children) > 0 and not all([not child.clears_false_exprs for child in tableau.children])
-
-        parent_processed = ([], [], []) if parent_processed is None else parent_processed
-        processed_exprs = tableau.get_processed_exprs()
-        l = [x for x in processed_exprs[0] if x not in parent_processed[0]]
-        r = [x for x in processed_exprs[1] if x not in parent_processed[1]]
-        cf = [x for x in processed_exprs[2] if x not in parent_processed[2]]
-        processed_exprs = (l, r, cf)
-
-        # a close tableau does not need to draw unprocessed exprs
-        not_include_unprocessed = closed
-        if intuitionistic:
-            not_include_unprocessed = not child_clears_false
-            if len(tableau.children) == 0:
-                not_include_unprocessed = not manual
-        else:
-            not_include_unprocessed = closed
-        unprocessed_exprs = ([], [], []) if not_include_unprocessed else tableau.get_unprocessed_exprs(manual)
-        atom_exprs = tableau.get_atom_exprs()
-        partially_exprs = tableau.get_partially_processed_exprs(manual)
-
-        # calculate horizontal positions of expressions
-        expr_pos = self.to_pos_list(processed_exprs, x, p.get_text_width, p.draw_underlined)
-        expr_pos.extend(self.to_pos_list(atom_exprs, x, p.get_text_width, p.draw_normal, include_atoms=True))
-        
-        dotted_underlined = p.draw_dotted_underlined
-        normal = p.draw_normal
-        if self.mode == ResolveMode.Manual and not closed and not done and not child_clears_false:
-            dotted_underlined = self.draw_btn(p, tableau)
-            normal = self.draw_btn(p, tableau)
-        expr_pos.extend(self.to_pos_list(partially_exprs, x, p.get_text_width, dotted_underlined))
-        expr_pos.extend(self.to_pos_list(unprocessed_exprs, x, p.get_text_width, normal, include_atoms=True))
-
-        # sort by processing order
-        expr_pos.sort(key=lambda x: x[1].visit_idx)
-
-        # unvisited expressions have idx = -1
-        # put those at the end of the list
-        unvisited_exprs = [x for x in expr_pos if x[1].visit_idx == -1]
-        expr_pos = expr_pos[len(unvisited_exprs):]
-        expr_pos.extend(unvisited_exprs)
+        expr_pos = drawing_calculator.calc_expr_positions(self.draw_btn)
 
         # draw expressions
         for pos_x, expr, draw_fun, expr_str in expr_pos:
@@ -251,30 +184,29 @@ class MainWindow(BaseWindow):
 
         if len(tableau.children) == 0:
             # draw end sign of the branch
-            if closed:
+            if drawing_calculator.closed:
                 width = 10
                 y = self.get_y(layer)
                 p.drawLine(x - width, y, x + width, y)
 
-            if done and not closed:
+            if drawing_calculator.done and not drawing_calculator.closed:
                 diameter = 10
                 p.drawEllipse(x - diameter / 2, self.get_y(layer),
                               diameter, diameter)
             return
 
-        parent_processed = (parent_processed[0] + processed_exprs[0],
-                            parent_processed[1] + processed_exprs[1],
-                            parent_processed[2] + processed_exprs[2],)
-
         if len(tableau.children) == 1 and tableau.children[0].clears_false_exprs:
             # only a single child that clears false expressions
             child = tableau.children[0]
             width_l, width_r = child.get_drawn_width(p.get_text_width,
-                                                    self.d_margin, manual)
+                                                    self.d_margin,
+                                                    drawing_calculator.manual)
             y = self.get_y(layer)
             p.drawLine(x - width_l, y, x + width_r, y)
             p.drawLine(x, y, x, self.get_y(layer+1))
-            self.draw_path(p, child, layer+1, x, parent_processed)
+            self.draw_path(p, child,
+                           drawing_calculator.get_child(0, x),
+                           layer+1, x)
 
             return
 
@@ -282,22 +214,28 @@ class MainWindow(BaseWindow):
         y = self.get_y(layer)
         left = tableau.children[0]
         width_l, width_r = left.get_drawn_width(p.get_text_width,
-                                                self.d_margin, manual)
+                                                self.d_margin,
+                                                drawing_calculator.manual)
         new_x = x - width_r - self.d_margin
         x_1 = new_x - width_l - self.d_margin if left.clears_false_exprs else new_x
         p.drawLine(x, y, x_1, y)
         p.drawLine(new_x, y, new_x, self.get_y(layer+1))
-        self.draw_path(p, left, layer+1, new_x, parent_processed)
+        self.draw_path(p, left,
+                       drawing_calculator.get_child(0, new_x),
+                       layer+1, new_x)
 
         # draw right branch
         right = tableau.children[1]
         width_l, width_r = right.get_drawn_width(p.get_text_width,
-                                                 self.d_margin, manual)
+                                                 self.d_margin,
+                                                 drawing_calculator.manual)
         new_x = x + width_l + self.d_margin
         x_1 = new_x + width_r + self.d_margin if right.clears_false_exprs else new_x
         p.drawLine(x, y, x_1, y)
         p.drawLine(new_x, y, new_x, self.get_y(layer+1))
-        self.draw_path(p, right, layer+1, new_x, parent_processed)
+        self.draw_path(p, right,
+                       drawing_calculator.get_child(1, new_x),
+                       layer+1, new_x)
 
     def logic_changed(self):
         """

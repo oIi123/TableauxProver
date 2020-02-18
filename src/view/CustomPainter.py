@@ -6,14 +6,16 @@ from src.builder_factory import LogicType
 
 
 class CustomPainter(QPainter):
-    def __init__(self):
+    def __init__(self, widget):
         super().__init__()
         self.normal_font = PySide2.QtGui.QFont('MS Shell Dlg 2', 14)
         self.underlined_font = PySide2.QtGui.QFont('MS Shell Dlg 2', 14)
         self.underlined_font.setUnderline(True)
 
-    def begin(self, widget):
-        super().begin(widget)
+        self.widget = widget
+
+    def begin(self):
+        super().begin(self.widget)
         self.setFont(self.normal_font)
         self.setPen(PySide2.QtGui.QColor(0, 0, 0))
 
