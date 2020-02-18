@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Help</title>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         #toc_container {
             background: #f9f9f9 none repeat scroll 0 0;
@@ -24,13 +25,24 @@
             list-style: outside none none !important;
         }
 
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+        }
+
         img {
             width: 75%;
         }
     </style>
   </head>
   <body>
-        <p>
+    <a id="back-to-top" href="#beginning" class="btn btn-light btn-lg back-to-top" role="button">
+        <i class="fa fa-angle-up" title="Up"></i>
+    </a>
+    
+    <div class="container">
+        <p id="beginning">
             Change Language to <a href="Help_de.html">German</a>.
         </p>
         <div id="toc_container">
@@ -469,6 +481,7 @@
         <h1 id="about">About</h1>
         <a target="_blank" href="https://icons8.com/icons/set/info--v1">Info Button icon</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
         <br/>
-
+        
+    </div>
   </body>
 </html>
