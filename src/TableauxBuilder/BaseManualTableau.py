@@ -245,19 +245,25 @@ class BaseManualTableau:
     def filter_ex_const_exprs(self, true_exprs, false_exprs, cf_exprs, new_tableau_builder, constants):
         # check if one expr is a new derivation
         exprs = true_exprs
+        side = self.side
         if self.side == BaseTableauxBuilder.false_exprs:
             exprs = false_exprs
         elif self.side == BaseTableauxBuilder.certain_falsehood_exprs:
-            exprs = cf_exprs
+            if type(self.perm) == ExistentialQuantor:
+                # ex quntifier on cf resolves to false exprs
+                exprs = false_exprs
+                side = BaseTableauxBuilder.false_exprs
+            else:
+                exprs = cf_exprs
         
-        if all(expr not in new_tableau_builder.sequent[self.side] for expr in exprs):
+        if all(expr not in new_tableau_builder.sequent[side] for expr in exprs):
             return False
 
         # remove not entered derivations
         indexes_to_remove = []
-        for i, expr in enumerate(new_tableau_builder.sequent[self.side][:]):
+        for i, expr in enumerate(new_tableau_builder.sequent[side][:]):
             if expr not in exprs:
-                new_tableau_builder.sequent[self.side].remove(expr)
+                new_tableau_builder.sequent[side].remove(expr)
                 indexes_to_remove.append(i)
 
         # update constants
