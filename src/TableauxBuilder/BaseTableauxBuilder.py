@@ -290,7 +290,7 @@ class BaseTableauxBuilder:
         
         if len(other_tableau.children) > 0:
             for child in other_tableau.children:
-                cpy = self.create_copy()
+                cpy = self.create_copy(clears_false_exprs=child.clears_false_exprs)
                 cpy._merge_sequents(child.sequent)
                 self.children.append(cpy)
         elif other_tableau.clears_false_exprs:
