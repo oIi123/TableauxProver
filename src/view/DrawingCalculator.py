@@ -40,14 +40,24 @@ class DrawingCalculator:
             self.margin, new_x, parent_processed,
         )
 
+    def get_child_clears_false(self, tableau=None):
+        if tableau is None:
+            tableau = self.tableau
+        child_clears_false = len(tableau.children) > 0 and not all([not child.clears_false_exprs for child in tableau.children])
+        if len(self.tableau.children) > 0:
+            if any([child.clears_false_exprs for child in tableau.children]):
+                return True
+            return any([self.get_child_clears_false(c) for c in tableau.children])
+        return False
+
     def calc_expr_positions(self, draw_btn_fun):
-        child_clears_false = len(self.tableau.children) > 0 and not all([not child.clears_false_exprs for child in self.tableau.children])
+        child_clears_false = self.get_child_clears_false()
 
         # a close tableau does not need to draw unprocessed exprs
         not_include_unprocessed = self.closed
         if self.intuitionistic:
             not_include_unprocessed = not child_clears_false
-            if len(tableau.children) == 0:
+            if len(self.tableau.children) == 0:
                 not_include_unprocessed = not self.manual
         else:
             not_include_unprocessed = self.closed
