@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>280</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>__Or1:Or__
+--
+name = "Disjunction"
+op_priority = 3
+printable_operator = "|"
+is_atom = False</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>340</x>
+      <y>450</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>__A:Atom__
+--
+id = "A"
+op_priority = 0
+is_atom = True</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>330</y>
+      <w>140</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=lhs</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>450</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>__Impl1:Impl__
+--
+name = "Conditional"
+op_priority = 4
+printable_operator = "-&gt;"
+is_atom = False</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>330</y>
+      <w>120</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=rhs</panel_attributes>
+    <additional_attributes>80.0;120.0;80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>590</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>__B:Atom__
+--
+id = "B"
+op_priority = 0
+is_atom = True</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>490</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=lhs</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>850</x>
+      <y>590</y>
+      <w>210</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>__Not1:Not__
+--
+name = "Negation"
+op_priority = 1
+is_atom = False</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>880</x>
+      <y>490</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=rhs</panel_attributes>
+    <additional_attributes>80.0;100.0;80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>750</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>__C:Atom__
+--
+id = "C"
+op_priority = 0
+is_atom = True</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>950</x>
+      <y>660</y>
+      <w>60</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=expr</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

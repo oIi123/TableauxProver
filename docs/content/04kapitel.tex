@@ -1,4 +1,280 @@
 %!TEX root = ../dokumentation.tex
 
-\chapter{Entwicklung}
+\chapter{Darstellung und Interaktion}
+Der wichtigste Aspekt bei der Darstellung, ist offensichtlich das Tableau. Da mit diesem vom Benutzer Interagiert werden soll, muss es manuell gezeichnet werden. Deshalb ist der erste Schritt in diesem Kapitel, die Wahl eines geeigneten \ac{GUI} Frameworks, mit dem ein interaktives Tableau umgesetzt werden kann. Im nächsten Schritt werden verschiedene Darstellungs- und Interaktionskonzepte erarbeitet und verglichen. Der letzte Teil beschreibt die Implementierung des erarbeiteten Konzepts.
 
+\section{Frameworks}
+Grundsätzlich gibt es sehr viele \ac{GUI}-Frameworks für Python. Wie zum Beispiel im Falle von PyJamas, ist dies allerdings eher ein JavaScript Konverter mit dem Python Code, mit dem Browser als \ac{GUI} laufen kann.
+
+Deshalb fallen bereits schon einige Frameworks aus der Betrachtung heraus. Ebenfalls inpraktikabel sind Plattformgebundene Frameworks, wie Beispielsweise PyObjC, welches nur auf der MacOS Plattform funktioniert.
+
+In dieser Betrachtung werden deshalb nur ein paar bekanntere Frameworks betrachtet. Diese sind:
+\begin{itemize}
+\item \textbf{TkInter}: Das ``Standard'' Framework welches in der CPython-Distribution mitgeliefert wird.
+
+\item \textbf{PySide2}: Python Bindings für das bekannte C++-Framework \textit{Qt}.
+
+\item \textbf{PyGObject}: Python Bindings für das GTK-Framework.
+\end{itemize}
+Neben diesen gibt es noch viele weitere Frameworks wobei diese oft Bindings für selbe Frameworks wie Beispielsweise \textit{Qt} sind.
+
+\subsection{TkInter}
+Das Framework TkInter hat den Vorteil, als die Standardbibliothek ohne Aufwand direkt verwendet werden zu können. Zudem ist es relativ einfach möglich auf einer Zeichenfläche Linien zu zeichnen und auf selbiger zusätzlich Buttons unterzubringen wie in \autoref{lst:tkinterDrawLine} dargestellt ist.
+\begin{lstlisting}[caption={Zeichnen von Linien und Buttons mit TkInter},label=lst:tkinterDrawLine]
+import tkinter
+class Window(tkinter.Frame):
+	...
+	def draw_line(self, from, to):
+		"""Draws a line on the canvas from 'from' to 'to'"""
+		self.canvas.create_line(from.x, from.y, to.x, to.y)
+	
+	def add_button(self, pos, title, command):
+		"""Adds a new button on position with the given title and command callback"""
+		new_button = tkinter.Button(self)
+		new_button["text"] = title
+		new_button["command"] = command
+		new_button.place(x=pos.x, y=pos.y)
+\end{lstlisting}
+
+Nachteilig ist allerdings, dass es zu diesem Framework keinen moderneren \ac{GUI}-Builder, also eine Software mit der die Benutzeroberfläche graphisch erstellt werden kann, gibt. Die \ac{GUI} muss also im Code erstellt werden. Zudem haben die Standardelemente des Frameworks ein eher veraltetes Aussehen wie in \autoref{fig:screenshot_tkinter} zu sehen ist.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/tkinter_screenshot.png}
+\caption{Screenshot einer mit TkInter erzeugten GUI.}
+\label{fig:screenshot_tkinter}
+\end{center}
+\end{figure}
+
+\subsection{PySide2}
+PySide2 ist der Nachfolger von PySide. Das PySide-Framework bietet die Möglichkeit über Python das \textit{Qt-Framework} zu verwenden. \textit{Qt} ist ein umfangreiches Framework das neben der \ac{GUI} Erstellung auch noch weitere Funktionen wie beispielsweise Datenbankzugriffe ermöglicht.
+
+Das Zeichnen von Linien und Buttons in diesem Framework ist ebenfalls relativ einfach wie \autoref{lst:pyside2DrawLine} zeigt. Im Gegensatz zu TkInter muss das Zeichnen aber immer in einem paint-event ausgeführt werden.
+\begin{lstlisting}[caption={Zeichnen von Linien mit Qt},label=lst:pyside2DrawLine]
+class DrawingCanvas(QWidget):
+	lines = []
+	
+	...
+
+	def paintEvent(self, paintEvent):
+    	p = QPainter()
+    	p.begin(self)
+    	for line in lines:
+	    	p.drawLine(line)
+    	p.end()
+\end{lstlisting}
+Für \textit{Qt} Anwendungen gibt es zudem einen modernen \ac{GUI}-Builder \textit{Qt Creator}. Die Standardelemente haben wie in \autoref{fig:screenshot_pyside2} dargestellt, auch ein moderneres Aussehen.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/pyside2_screenshot.png}
+\caption{Screenshot einer mit Qt erzeugten GUI.}
+\label{fig:screenshot_pyside2}
+\end{center}
+\end{figure}
+
+Im Gegensatz zu TkInter muss PySide2 aber über den Paketmanager \textit{pip} nachgeladen werden. Der Aufwand hierfür ist aber vernachlässigbar gering.
+
+\subsection{PyGObject}
+Das letzte Framework in dieser Betrachtung ist PyGObject. Mit diesem kann das relativ bekannte Framework Gtk, welches in Anwendungen wie GIMP verwendet wird, in Python verwendet werden.
+
+Vorausgesetzt die von Gtk unabhängige Bibliothek Cairo ist vorhanden, stellt sich das Zeichnen ebenfalls relativ leicht dar. Dies wird in \autoref{lst:pygobjectDrawLine} dargestellt.
+\begin{lstlisting}[caption={Zeichnen von Linien mit Gtk},label=lst:pygobjectDrawLine]
+lines = []
+
+def draw(da, ctx):
+	ctx.set_source_rgb(0,0,0)
+	ctx.set_line_width(1)
+	for line in lines:
+		ctx.move_to(line.from.x, line.from.y)
+		ctx.rel_line_to(line.to.x, line.to.y)
+\end{lstlisting}
+Ähnlich wie \textit{Qt}, ist auch bei Gtk das Zeichnen nur in einem paint-event möglich.
+
+Auch für PyGObject gibt es einen modernen \ac{GUI}-Builder \textit{Glade}. Zudem haben die Standardelemente ebenfalls ein modernes Aussehen wie in \autoref{fig:screenshot_pygobject} zu sehen.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/pygobject_screenshot.png}
+\caption{Screenshot einer mit Gtk erzeugten GUI.}
+\label{fig:screenshot_pygobject}
+\end{center}
+\end{figure}
+
+Die Installation stellt sich hingegen für PyGObject etwas schwieriger dar. Während PySide2 einfach über den Paketmanager geladen werden kann, hat PyGObject noch weitere externe Abhängigkeiten die zusätzlich installiert werden müssen.
+
+\subsection{Gesamtübersicht}
+Eine Gesamtübersicht der betrachteten Faktoren bei den Frameworks wird in \autoref{tbl:comparison_gui_frameworks} dargestellt.
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+Framework & Einfachheit & Aussehen & GUI-Builder & Installation \\
+\hline
+TkInter & {\cellcolor{green!50}}Sehr einfach & \cellcolor{red!50}Veraltet & \cellcolor{red!50}Schlecht & \cellcolor{green!50}Bereits installiert \\
+Qt & \cellcolor{green!25}Einfach & \cellcolor{green!50}Modern & \cellcolor{green!50}Gut & \cellcolor{green!25}Leicht über Paketmanager \\
+Gtk & \cellcolor{green!25}Einfach & \cellcolor{green!50}Modern & \cellcolor{green!50}Gut & \cellcolor{red!50}Schwierig
+\end{tabular}
+\end{center}
+\caption{\label{tbl:comparison_gui_frameworks}Gesamtübersicht der 3 verglichenen GUI-Frameworks}
+\end{table}
+
+Das einzige Framework ohne größere Defizite ist also \textit{Qt}, weshalb dieses verwendet wird.
+
+\section{Konzepterarbeitung}
+Prinzipiell gibt es an die \ac{GUI} folgende Anforderungen:
+\begin{itemize}
+\item \textbf{Leichte Übersicht über Tableau}: Das gesamte Tableau anzusehen soll auch bei großen Tableaux möglichst einfach realisierbar sein.
+
+\item \textbf{Benutzerfreundliche Interaktion}: Beim Interaktiven Modus soll der Benutzer die einzelnen Ableitungsschritte selbst eingeben und Feedback über Korrektheit bekommen. Dies soll benutzerfreundlich möglich sein.
+
+\item \textbf{Einfaches umschalten zwischen Modi und Logik}: Der Tableaux-Beweiser soll in zwei verschiedenen Modi laufen: Automatisch oder Interaktiv. Zudem kann zwischen 4 Logiken (klassische/nichtklassische Aussagenlogik/Prädikatenlogik) umgeschalten werden. Die Umschaltung zwischen den Modi und Logiken sollte einfach sein.
+
+\item \textbf{Hilfebeschreibungen}: Über verschiedene Eigenheiten (z.B. welches Zeichen für die Negation verwendet wird) soll in der \ac{GUI} aufgeklärt werden. Auch die allgemeine Bedienung muss intuitiv möglich bzw. in einer Hilfe beschrieben sein.
+\end{itemize}
+
+Aufgrund dieser Anforderungen werden nachfolgend verschiedene Konzepte erarbeitet und verglichen.
+
+\subsection{Konzept 1\label{sec:concept_1}}
+Für das erste Konzept werden 2 Fenster für die Hauptinteraktion benötigt. Das erste Fenster (Hauptfenster), stellt das gesamte Tableau dar. Im Hauptfenster kann zudem zwischen den Modi Automatik und Manuell gewechselt werden. Im Modus Automatik, ist nach dem Start der automatischen Ableitung keine weitere Interaktion nötig/möglich außer dem Start einer neuen Ableitung. Der erste Entwurf des Konzepts im Automatikbetrieb, ist in \autoref{fig:gui_concept_1_automatic} zu sehen.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_1_automatic.png}
+\caption{Konzept 1 im Modus Automatik}
+\label{fig:gui_concept_1_automatic}
+\end{center}
+\end{figure}
+
+Im Modus Manuell, muss jeder Ableitungsschritt vom Benutzer selbst ausgeführt werden. Hierfür wird jede noch nicht verarbeitete, nicht Atomare Formel als Button dargestellt. Dies ist in \autoref{fig:gui_concept_1_manual} zu sehen.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_1_manual.png}
+\caption{Konzept 1 im Modus Manuell}
+\label{fig:gui_concept_1_manual}
+\end{center}
+\end{figure}
+
+Wird ein solcher Formel-Button betätigt, öffnet sich das zweite Fenster (Ableitungseingabefenster). Im Ableitungseingabefenster kann ausgewählt werden, ob die Ableitung der Formel eine verzweigte oder nicht verzweigte ist. Die Eingabe einer nicht verzweigten Ableitung, nach Betätigung des Buttons \enquote{B|!C} (B$\vee\neg$C, siehe Syntaxdefinition \textbf{EINGEBEN!!!!!}) zeigt \autoref{fig:gui_concept_1_manual_enter_single}. Nach Eingabe einer Ableitung muss das Tableau neu gezeichnet werden. Dies ist der Nachteil an diesem Konzept, da es verwirrend auf den Benutzer wirken kann nach Eingabe eine andere Stelle im Tableau zu sehen. Das Problem kann allerdings relativiert werden, indem nach Eingabe die zuletzt abgeleitete Formel in das Zentrum des Blickfeldes gerückt wird.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_1_manual_enter_single.png}
+\caption{Konzept 1: Eingabe einer Ableitung im Modus Manuell}
+\label{fig:gui_concept_1_manual_enter_single}
+\end{center}
+\end{figure}
+
+Die Eingabe einer verzweigenden Ableitung, nach Betätigen des Buttons \enquote{B\&!C} (B$\wedge\neg$C siehe Syntaxdefinition \textbf{EINGEBEN!!!!}) zeigt \autoref{fig:gui_concept_1_manual_enter_branch}.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_1_manual_enter_branch.png}
+\caption{Konzept 1: Eingabe einer verzweigenden Ableitung im Modus Manuell}
+\label{fig:gui_concept_1_manual_enter_branch}
+\end{center}
+\end{figure}
+
+\subsection{Konzept 2}
+Das zweite Konzept ähnelt dem Ersten stark. Der Unterschied hierbei ist, es muss keine Formel zur Ableitung ausgewählt werden, sondern nur das Ergebnis eingegeben werden. Im Modus Automatik ist die Funktionsweise die selbe wie bei Konzept 1, siehe \autoref{fig:gui_concept_1_automatic}.
+
+Im Modus Manuell hingegen, kann an das Tableau an den noch nicht geschlossenen Zweigen erweitert werden. Hierbei gibt es zwei Möglichkeiten, bei einer nicht verzweigenden Ableitung wird das Ergebnis in die Textfelder eingegeben und der +-Button betätigt. Dies ist in \autoref{fig:gui_concept_2_manual_enter_single} zu sehen.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_2_manual_enter_single.png}
+\caption{Konzept 2: Eingabe einer Ableitung im Modus Manuell}
+\label{fig:gui_concept_2_manual_enter_single}
+\end{center}
+\end{figure}
+
+Wird hingegen eine verzweigende Ableitung behandelt, kann ein neuer Zweig über den nach Rechts angedeuteten Pfad mit dem +-Button geöffnet werden. Die Eingabe der Ableitung erfolgt dann ebenfalls in den Textfeldern und wird über die +-Buttons bestätigt. Dies wird in \autoref{fig:gui_concept_2_manual_enter_branch} dargestellt. Der Vorteil dieses Konzepts ist, dass nach Eingabe einer Formel das Tableau höchstens minimal breiter gezeichnet werden muss, falls die eingegebene Formel Überbreite hat. Dies wirkt deutlich weniger verwirrend auf den Benutzer, als das neu zeichnen in Konzept 1.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{images/gui_concept_2_manual_enter_branch.png}
+\caption{Konzept 2: Eingabe einer verzweigenden Ableitung im Modus Manuell}
+\label{fig:gui_concept_2_manual_enter_branch}
+\end{center}
+\end{figure}
+
+Die Behandlung einer nur teilweise eingegebenen verzweigenden Ableitung erhöht dabei die Komplexität des Konzepts erheblich. Problematisch ist aber vor allem die Unübersichtlichkeit, wird in einem großen Tableau eine weit oben stehende Formel abgeleitet. Zudem muss eine verzweigende Ableitung in jedem der nachfolgenden Zweige erneut eingegeben werden was die Benutzerfreundlichkeit einschränkt und die Implementierung erschwert.
+
+\subsection{Vergleich}
+Wie oben erwähnt, ist der Nachteil des Konzept 1 die potenzielle Verwirrung die nach dem neu zeichnen des Tableau nach Eingabe von Ableitungen entsteht. Verglichen mit dem Konzept 2, ist dieser Nachteil allerdings vernachlässigbar gering.
+
+Aus diesem Grund wird das in \autoref{sec:concept_1} vorgestellte Konzept implementiert. Wie die Zeichenlogik, sowie die restliche Implementierung umgesetzt wurde wird in \autoref{sec:ui_impl} behandelt.
+
+\section{Implementierung der \ac{GUI}\label{sec:ui_impl}}
+\subsection{Zeichenlogik}
+Grundsätzlich wird zur Umsetzung der Zeichenlogik auf die in \autoref{lst:pyside2DrawLine} vorgestellte Zeichen-API von PySide2 zurückgegriffen. Die Schwierigkeit hierbei ist die Berechnung, wie breit die einzelnen Verzweigungen sein müssen. Hierfür wird die Zeichenfläche zuerst in horizontale Reihen aufgeteilt. In jeder Reihe darf in jeder Verzweigung jeweils nur eine Formel stehen oder das Tableau verzweigt in dieser Reihe. Dies verhindert Komplikationen bei einseitig oft verzweigenden Tableaux, da Verzweigungen potenziell weniger Platz in vertikaler Richtung benötigen würden. Für die Berechnung der Breiten der Verzweigungen wird eine Berechnung nach dem Bottom-Up Verfahren umgesetzt. D.h. die Berechnung läuft in folgenden Schritten ab:
+\begin{enumerate}
+\item Berechne die Breite der Blattknoten (Ableitungszweige die nicht weiter verzweigen) indem die Breite der einzelnen Formeln berechnet wird. Unterscheide dabei zwischen der Breite der links stehenden Formeln L und der rechts stehenden Formeln R.
+
+\item Betrachte die nächst höhere Ebene im Baum mit den Breiten des linken Kindknoten (L$_{l}$ und R$_{l}$) und des rechten Kindknoten (L$_{r}$ und R$_{r}$). Die Länge der Linie, die nach links gezeichnet werden muss beträgt R$_{l}$ und die nach rechts L$_{l}$. Sind L$_{f}$ und R$_{f}$ die Breiten der breitesten Formeln links und rechts, so berechnet sich die Gesamtbreite für L = max(L$_{l}$+R$_{l}$, L$_{f}$) und R = max(L$_{r}$+R$_{r}$, R$_{f}$).
+
+\item Wiederhole Schritt 2 bis zur Wurzel.
+\end{enumerate}
+
+Zur verbesserten Leserlichkeit des Tableau werden die Breiten L und R jeweils um ein Offset O erhöht.
+
+Die Berechnung der Breiten ist in \autoref{fig:drawing_logic_calc_widths} visualisiert. Hier werden die Breiten der Formeln (L$_{f}$ und R$_{f}$) mit einem Gitter hinterlegt dargestellt. Der Offset O wird mit schrägen Linien illustriert. Die nach oben ``vererbte'' Breite, also L$_{l}$ bzw. R$_{r}$ abzüglich der Formelbreite L$_{f}$ bzw. R$_{f}$ und des Offsets O, wird mit unterbrochenen Linien dargestellt.
+
+Nach Berechnung der Breiten der Verzweigungen ist das Zeichnen des Tableau trivial.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=1]{images/drawing_logic_calc_widths.png}
+\caption{Visualisierung der Breitenberechnung von Verzweigungen im Tableau}
+\label{fig:drawing_logic_calc_widths}
+\end{center}
+\end{figure}
+
+\subsection{Umwandlung zur Zeichenkette}
+Ein weiterer wichtiger Aspekt bei der Darstellung ist die Konvertierung der internen Datenstruktur zu einer Zeichenkette, die die Aussage korrekt repräsentiert. Insbesondere ist dabei wichtig, dass Klammern korrekt gesetzt bzw. korrekt ausgelassen werden, wenn diese nicht benötigt werden.
+
+Vorweg ist dazu zu sagen, dass die Aussagen zu einem Syntaxbaum geparsed werden. Ein Beispiel eines solchen Syntaxbaumes ist in \autoref{fig:example_syntax_tree} zu sehen. Die interne Repräsentation der Aussagen wird in \textbf{ANGEBEN!!!!!!!} näher behandelt. Dieser Abschnitt soll sich darauf konzentrieren, wie dieser zu einer korrekten Zeichenkette umgewandelt werden kann.
+
+Um keine Klammern unnötig zu setzen bzw. diese fälschlich wegzulassen, wird jedem Junktor und der atomaren Aussage eine Priorität zugeordnet. Die genaue Prioritätenfolge entspricht den in \autoref{clamps_and_prio} festgelegten Prioritäten, wobei der atomaren Aussage bzw. dem Prädikat die Priorität 0 zugeordnet wird.
+
+Nun ist es wichtig die Frage zu beantworten, wann eine Klammer gesetzt werden muss und wie dies im Verhältnis zu den Prioritäten steht. Hierfür werden die im Bezug auf korrekte Reihenfolge eindeutigen Syntaxbäume in Präfixschreibweise verwendet. In Präfixschreibweise wäre die für den Syntaxbaum in \autoref{fig:example_syntax_tree} verwendete Aussage $\vee$(A,$\rightarrow$(B,$\neg$C)). Für die Aussage $\wedge$($\vee$(A,B),C) also A$\vee$B$\wedge$C werden keine Klammern benötigt. Hingegen wird für die Aussage  $\vee$($\wedge$(A,B),C) also (A$\wedge$B)$\vee$C eine Klammer benötigt. Sieht man sich in diesem Zusammenhang die Prioritäten der Operatoren an, ist die Priorität für $\wedge$ höher als die von $\vee$. Dieser Umstand wird zu Konvertierung von Syntaxbaum zu Zeichenkette ausgenutzt. Ein Teil des zur Umwandlung implementierten Codes ist in \autoref{lst:conv_syn_to_str} zu sehen.
+
+\begin{lstlisting}[caption={Umwandlung von Syntaxbaum zu Zeichenkette},label=lst:conv_syn_to_str]
+class Operation(Expr):
+	...
+	def __str__(self):
+		left = ""
+		right = ""
+		if self.left_child.op_priority > self.op_priority:
+			left = f"({str(self.left_child)})"
+		else:
+			left = f"{str(self.left_child)}"
+      	
+      	if self.right_child.op_priority > self.op_priority:
+			right = f"({str(self.right_child)})"
+		else:
+			right = f"{str(self.right_child)}"
+		
+		return left + self.printable_operator + right
+
+class And(Operation):
+	op_priority: int = 2
+	printable_operator: str = "&"
+	...
+\end{lstlisting}
+
+Da der atomaren Aussagen bzw. einem Prädikat die Priorität 0 zugeordnet wird, wird um dieses nie eine Klammer gesetzt.
+
+Eine Ausnahme der oben genannten Regel ist die Implikation. Dies ist der einzige der Operator der nicht Assoziativ ist, also für den gilt (a$\rightarrow$b)$\rightarrow$c$\nleftrightarrow$a$\rightarrow$(b$\rightarrow$c). Deshalb muss für diesen der Vergleich mit der Priorität des Kindoperators statt > auf $\geq$ prüfen.
+
+\subsection{Fehlermeldungen und Beschreibung}
+Wird beispielsweise eine Aussage mit fehlerhafter Syntax eingegeben, muss hierfür eine benutzerfreundliche Fehlermeldung angezeigt werden. Hierfür wird bei der Eingabe der Initialen Aussage bzw. der Eingabe einer Ableitung im externen Fenster ein roter Balken am unteren Fensterrand dargestellt. In diesem wird eine Fehlerbeschreibung, sowie die Zeile in der der Fehler aufgetreten ist dargestellt. Dies ist in \autoref{fig:display_error_message} dargestellt.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.8]{images/display_error_message.png}
+\caption{Darstellung von Fehlermeldungen bei fehlerhafter Syntax}
+\label{fig:display_error_message}
+\end{center}
+\end{figure}
+
+Zudem sollte von der Benutzeroberfläche aus eine Dokumentation über Syntaxdefinition und sonstige wichtige Informationen erreichbar sein. Hierfür wird nach betätigen des Info-Buttons der am oberen Fensterrand von \autoref{fig:display_error_message} zu sehen ist ein Fenster geöffnet, in dem alle wichtigen Informationen dokumentiert sind.
