@@ -1,9 +1,9 @@
 %!TEX root = ../dokumentation.tex
 
-\chapter{Parsen und Datenstruktur}
+\chapter{\label{sec:parsen}Parsen und Datenstruktur}
 Der erste Schritt zum automatischen Beweisen eines Tableau, ist das Parsen der String-Repräsentation zu einer vom Programm weiterverarbeitbaren Datenstruktur. Hierfür wird im folgenden zuerst die Syntax definiert in der die Formeln als String dargestellt werden. Danach wird die Datenstruktur in der die Formel weiterverarbeitet wird besprochen. Zuletzt wird der Parser und die Implementierung dessen behandelt.
 
-\section{Syntaxdefinition}
+\section{\label{sec:syntaxdef}Syntaxdefinition}
 Prinzipiell wurde die Syntax in der die Formeln als String repräsentiert werden bereits in \autoref{sec:ind_form_regeln} beschrieben. Da die Buchstaben zur Darstellung der Junktoren aber auf handelsüblichen Tastaturen nicht vorhanden sind, müssen hierfür benutzerfreundlichere Alternativen definiert werden. Da die Zielgruppe des Tableaubeweisers meist schon mit Programmiersprachen in Berührung gekommen ist, wird sich dabei an den in Programmiersprachen üblichen Buchstaben orientiert. So wird z.B. für das Oder ($\vee$) das in Java, C\#, Swift und weiteren verwendete | definiert (in diesen Sprachen steht das einfache | für ein Bitweises-Oder, in diesem Fall gibt es allerdings keine Integer-Werte was eine Unterscheidung sinnlos macht).
 
 Die vollständige Definition der insgesamt 7 Junktoren zu ihren Tastaturfreundlichen gegenspielern wird in \autoref{tbl:junktor_mapping} aufgeführt.
@@ -99,13 +99,111 @@ Da nun klar ist, wie die Syntax und Datenstruktur der Formeln aussieht, muss noc
 Zum erstellen des Parsers, wird der Parsergenerator ANTLR verwendet. Mit ANTLR kann eine Grammatik definiert werden von der dann ein LL(*)-Parser in einer von vielen möglichen Programmiersprachen generiert wird. Generiert werden kann unter anderem Java, C\#, JavaScript aber auch Python. \cite{antlr_doc}
 
 \subsection{LL(*)-Parser}
-Der vorherrschende Parsertyp beruht auf einer LR(k)-Syntaxanalyse, wobei das ``L'' für das Durchgehen der Eingabe von links nach rechts steht, das ``R'' für das Erstellen der umgekehrten Rechtsableitung und das k dafür, wie viele Eingabesymbole bei Entscheidungen während der Analyse im Voraus betrachtet werden. \cite{compiler_dragon_book}
+Im Gegensatz zu dem vorherrschenden Bottom-Up Parsertyp LR(k), wird für von ANTLR generierte Parser ein Top-Down Parser erzeugt. \cite{compiler_dragon_book}\cite{ll_star_parser}
 
-Diese Methode wird von den durch ANTLR generierten Parsern allerdings nicht angewandt. Für von ANTLR generierte Parser, wird ein eigens für ANTLR entwickeltes Verfahren Namens LL(*) verwendet. \cite{ll_star_parser}
+Der hierfür verwendete Parsertyp LL(*) wurde eigens für ANTLR entwickelt. LL steht dafür, dass die Eingabe von links nach rechts gelesen und eine Linksableitung davon gebildet wird. Der Stern bedeutet, dass bei jedem Schritt für Parsing-Entscheidungen beliebig viele Eingabesymbole vorausgeschaut wird. \cite{ll_star_parser} Im Gegensatz dazu wird beim Parsertyp LR(k), bei dem das L ebenfalls für das Lesen der Eingabe von links nach rechts steht, das R für das erstellen einer umgekehrten Rechtsableitung und das k dafür wie viele Zeichen nach vorn geschaut wird. Die Vorausschau wird also durch k gedeckelt. \cite{compiler_dragon_book}
 
+Mit LL(*) werden von ANTLR Kontextfreie Grammatiken geparsed. Eine Kontextfreie Grammatik G ist ein 4-Tupel (N, $\Sigma$, P, S). Die Elemente haben folgende Bedeutung:
+\begin{itemize}
+\item \textbf{N}: N ist eine endliche Menge von Nichtterminalen, also Variablen die mittels Produktionsregeln in P auf weitere Nichtterminale bzw. Terminale abgeleitet werden können.
 
+\item \textbf{$\Sigma$}: $Sigma$ ist eine endliche Menge von Terminalen, also Ausdrücken die nicht weiter abgeleitet werden können. Diese Menge wird oft auch als Alphabet der Sprache von G bezeichnet.
 
+\item \textbf{P}: P ist eine endliche Relation von V nach (V$\cup\Sigma$)*, wobei der * den kleenschen Hüllenoperator bedeutet (siehe Unten).
 
+\item \textbf{S}: S$\in$N definiert das Startsymbol von dem aus alle Sätze der Sprache mittels der Produktionsregeln in P abgeleitet werden können.
+\end{itemize}
 
+Die kleensche Hülle $\Sigma$* einer Menge $\Sigma$ ist wie folgt definiert. $\epsilon\in\Sigma$*, wobei $\epsilon$ das leere Wort repräsentiert. Zudem gilt $\forall$w,a (w$\in\Sigma$*)$\vee$(a$\in\Sigma$)$\rightarrow$wa$\in\Sigma$*. \cite{compiler_dragon_book}
 
+Eine Beispiel Grammatik G = (N, $\Sigma$, P, Expr) wäre folgende: \\
+N = \{Expr, Id\} \\
+$\Sigma$ = \{a, b, +, -\} \\
+P = \{Expr$\rightarrow$Expr+Expr, Expr$\rightarrow$Expr-Expr, Expr$\rightarrow$Id, Id$\rightarrow$a, Id$\rightarrow$b\} \\
 
+Aus dieser Grammatik könnten unter anderem folgende Sätze abgeleitet werden: a+b, a+b-a, a+a+a, ...
+
+Die schwierige Herausforderung eines Parsers ist es nun zu entscheiden, ob eine gegebene Zeichenfolge mit der Grammatik erzeugbar ist und mit welchen Terminalen diese Aufgebaut ist. Insbesondere wird dies schwierig, sind Terminale mit Ähnlichem Präfix vorhanden wie z.B.: ab und abb. Der Parser muss hierbei in der Zeichenkette also bis zu 3 Zeichen untersuchen bis er Entscheiden kann zu welchem der beiden Terminale diese Zugeordnet werden kann.
+
+LL(*) erzeugt hierfür einen \ac{DEA} für jede Ableitungsregel. Der \ac{DEA} wechselt für jedes Zeichen bzw. für jedes Terminal den Zustand wodurch die Zutreffende Ableitungsregel am Ende der Zeichenkette erreicht ist. Eine Ausnahme hierfür sind Rekursiv definierte Regeln wie die obige für das Nichtterminal Expr. Diese leitet wieder auf das Nichtterminal Expr ab. Für solche Regeln, wird ein \ac{DEA} für die ersten m Rekursionsebenen erzeugt, ist danach noch keine eindeutige Ableitung erreicht, wird mittels Backtracking der Rest der Zeichenkette analysiert.
+Die beliebig weite Vorausschau ergibt sich eben durch das Backtracking, aber auch durch die Definition von Terminalen durch Reguläre Ausdrücke. Um welches Terminal es sich handelt, wird durch Abgleich aller regulärer Ausdrücke entschieden wobei bei mehreren Treffern das zuerst definierte Terminal gewinnt. \cite{ll_star_parser}
+
+Top-Down Parser können Grammatiken die eine Linksrekursion enthalten generell nicht handhaben. \cite{compiler_dragon_book} Eine Grammatik enthält eine Linksrekursion, gdw. Sie eine Ableitung der Form A$\xrightarrow{\text{+}}$A$\alpha$ enthält, wobei $\xrightarrow{\text{+}}$ bedeutet, dass die Ableitung über beliebig viele andere Ableitungen zu A$\alpha$ abgeleitet werden kann.
+Eine solche Ableitungsregel gilt es deshalb in der Grammatikdefinition zu vermeiden.
+
+\subsection{ANTLR-Grammatiken}
+Eine ANTLR-Grammatik ist relativ simpel aufgebaut. Nichtterminale werden in Kleinbuchstaben geschrieben, während Terminale in Großbuchstaben geschrieben werden. Wichtig ist es, dass zur Vermeidung von Grammatiken die einen Satz über mehrere Ableitungsfolgen erzeugen können, die Ableitungsregeln die zuerst definiert werden eine höhere Priorität gegenüber später definierten haben. \cite{antlr_doc}
+Dieser Umstand kann auch zur Abbildung der Prioritäten von Operatoren genutzt werden.
+
+Kann ein Nichtterminal mit mehreren Produktionsregeln abgeleitet werden, so können diese mit ``|'' getrennt aufgelistet werden. Ein Terminal kann wie oben bereits erwähnt, durch reguläre Ausdrücke definiert werden.
+
+\subsection{Grammatikdefinition}
+Nun muss aus in \autoref{sec:syntaxdef} definierter Syntax eine ANTLR-Grammatik definiert werden.
+
+Die Grammatik für Aussagenlogik ist relativ simpel und in \autoref{lst:grammatik_aussagenlogik} zu sehen.
+
+\begin{lstlisting}[caption={Grammatik der Aussagenlogik},label=lst:grammatik_aussagenlogik]
+expr :
+	ATOM |
+	NOT expr |
+	expr AND expr |
+	expr OR expr |
+	expr IMPL expr |
+	expr EQ expr |
+	OPENCLAMP expr CLOSECLAMP;
+
+ATOM : [A-Za-z0-9]+;
+
+OR : '|' | '+';
+AND : '&' | '*';
+IMPL : '->';
+NOT : '!' | '-';
+EQ : '<->';
+OPENCLAMP : '(';
+CLOSECLAMP : ')';
+\end{lstlisting}
+
+Da die Grammatik der Prädikatenlogik zusätzlich Prädikate und Funktionen beliebiger Stelligkeit abbilden muss, ist diese etwas komplexer. Die Grammatik ist in \autoref{lst:grammatik_prädlogik} zu sehen.
+
+\begin{lstlisting}[caption={Grammatik der Prädikatenlogik},label=lst:grammatik_prädlogik]
+expr :
+    predicate |
+    quantor expr |
+    NOT expr |
+    expr AND expr |
+    expr OR expr |
+    expr IMPL expr |
+    expr EQ expr |
+    OPENCLAMP expr CLOSECLAMP;
+
+predicate : PREDNAME (terms |) CLOSECLAMP;
+
+quantor : (ALL_QUANTOR | EX_QUANTOR) var varlist;
+
+terms : term termlist;
+termlist : COMMA term termlist | ;
+term : var | const | func;
+
+var : VARNAME;
+const : CONSTNAME;
+varlist : COMMA var varlist |;
+
+func : FUNCNAME (terms |) CLOSECLAMP;
+
+PREDNAME : [A-Z][A-Za-z0-9_]*'(';
+VARNAME : [a-z][A-Za-z0-9]*;
+CONSTNAME : [A-Z][A-Za-z0-9]*;
+FUNCNAME : [a-z][A-Za-z0-9_]*'(';
+
+OR : '|' | '+';
+AND : '&' | '*';
+IMPL : '->';
+NOT : '!' | '-';
+EQ : '<->';
+OPENCLAMP : '(';
+CLOSECLAMP : ')';
+COMMA : ',';
+
+ALL_QUANTOR : '(A)' | '/\';
+EX_QUANTOR : '(E)' | '\/';
+\end{lstlisting}
