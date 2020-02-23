@@ -103,20 +103,26 @@ Im Gegensatz zu dem vorherrschenden Bottom-Up Parsertyp LR(k), wird für von ANT
 
 Der hierfür verwendete Parsertyp LL(*) wurde eigens für ANTLR entwickelt. LL steht dafür, dass die Eingabe von links nach rechts gelesen und eine Linksableitung davon gebildet wird. Der Stern bedeutet, dass bei jedem Schritt für Parsing-Entscheidungen beliebig viele Eingabesymbole vorausgeschaut wird. \cite{ll_star_parser} Im Gegensatz dazu wird beim Parsertyp LR(k), bei dem das L ebenfalls für das Lesen der Eingabe von links nach rechts steht, das R für das erstellen einer umgekehrten Rechtsableitung und das k dafür wie viele Zeichen nach vorn geschaut wird. Die Vorausschau wird also durch k gedeckelt. \cite{compiler_dragon_book}
 
-Mit LL(*) werden von ANTLR Kontextfreie Grammatiken geparsed. Eine Kontextfreie Grammatik G ist ein 4-Tupel (N, $\Sigma$, P, S). Die Elemente haben folgende Bedeutung:
+Mit LL(*) werden von ANTLR prädikative Grammatiken geparsed. Eine prädikative Grammatik G ist ein 6-Tupel (N, T, P, S, $\Pi$, M). Die Elemente haben folgende Bedeutung \cite{ll_star_parser}:
 \begin{itemize}
 \item \textbf{N}: N ist eine endliche Menge von Nichtterminalen, also Variablen die mittels Produktionsregeln in P auf weitere Nichtterminale bzw. Terminale abgeleitet werden können.
 
-\item \textbf{$\Sigma$}: $Sigma$ ist eine endliche Menge von Terminalen, also Ausdrücken die nicht weiter abgeleitet werden können. Diese Menge wird oft auch als Alphabet der Sprache von G bezeichnet.
+\item \textbf{T}: T ist eine endliche Menge von Terminalen, also Ausdrücken die nicht weiter abgeleitet werden können. Diese Menge wird oft auch als Alphabet der Sprache von G bezeichnet.
 
-\item \textbf{P}: P ist eine endliche Relation von V nach (V$\cup\Sigma$)*, wobei der * den kleenschen Hüllenoperator bedeutet (siehe Unten).
+\item \textbf{P}: P ist eine endliche Relation von V nach (V$\cup\Sigma$)*, wobei der * den kleenschen Hüllenoperator bedeutet (siehe Unten). Zudem sind mit Prädikaten bedingte Produktionen und Mutatoren als Produktionsregeln möglich. Eine mit Prädikat $\pi_{i}\in\Pi$ bedingte Produktion kann angewandt werden gdw. $\pi_{i}$ wahr ist. Ein Mutator $\mu_{i}\in$M ist wird mit einem Zustand aufgerufen und gibt einen neuen Zustand zurück.
 
 \item \textbf{S}: S$\in$N definiert das Startsymbol von dem aus alle Sätze der Sprache mittels der Produktionsregeln in P abgeleitet werden können.
+
+\item \textbf{$\Pi$}: $\Pi$ definiert semantische Prädikate. Ein solches Prädikat wird in der Zielsprache (z.B. Python) in der Grammatik angegeben. Das Prädikat nimmt den aktuellen Parse-Zustand als Eingabe und gibt einen Wahrheitswert zurück.
+
+\item \textbf{M}: M definiert eine Menge von Aktionen oder Mutatoren. Diese werden in der Zielsprache in der Grammatik angegeben. Dieser nimmt den Parse-Zustand als Eingabe und gibt einen neuen Zustand zurück.
 \end{itemize}
 
 Die kleensche Hülle $\Sigma$* einer Menge $\Sigma$ ist wie folgt definiert. $\epsilon\in\Sigma$*, wobei $\epsilon$ das leere Wort repräsentiert. Zudem gilt $\forall$w,a (w$\in\Sigma$*)$\vee$(a$\in\Sigma$)$\rightarrow$wa$\in\Sigma$*. \cite{compiler_dragon_book}
 
-Eine Beispiel Grammatik G = (N, $\Sigma$, P, Expr) wäre folgende: \\
+Für die hier behandelten Zwecke wird der Sprachumfang der prädikativen Grammatiken nicht benötigt. Es genügt die kontextfreie Grammatik zu betrachten wobei $\Pi$ und M wegfällt.
+
+Eine Beispiel Grammatik G = (N, T, P, Expr) wäre folgende: \\
 N = \{Expr, Id\} \\
 $\Sigma$ = \{a, b, +, -\} \\
 P = \{Expr$\rightarrow$Expr+Expr, Expr$\rightarrow$Expr-Expr, Expr$\rightarrow$Id, Id$\rightarrow$a, Id$\rightarrow$b\} \\
