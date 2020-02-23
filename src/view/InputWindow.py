@@ -138,8 +138,8 @@ class InputWindow(BaseWindow):
         painter.draw_normal(expr_str, x, 125)
 
     def draw_single(self):
-        p = CustomPainter()
-        p.begin(self.ui.scrollAreaContentsSingle)
+        p = CustomPainter(self.ui.scrollAreaContentsSingle)
+        p.begin()
 
         center_x = self.get_tableau_center(p)
         p.draw_tableau_header(self.logic_type, center_x=center_x, height=275)
@@ -155,8 +155,8 @@ class InputWindow(BaseWindow):
         self.ui.scrollAreaContentsSingle.setMinimumSize(width, 407)
 
     def draw_branch(self):
-        p = CustomPainter()
-        p.begin(self.ui.scrollAreaContentsBranch)
+        p = CustomPainter(self.ui.scrollAreaContentsBranch)
+        p.begin()
 
         center_x = self.get_tableau_center(p)
         p.draw_tableau_header(self.logic_type, center_x=center_x, height=100)
