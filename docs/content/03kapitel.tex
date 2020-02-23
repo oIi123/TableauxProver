@@ -1,17 +1,17 @@
 %!TEX root = ../dokumentation.tex
 
 \chapter{\label{sec:parsen}Parsen und Datenstruktur}
-Der erste Schritt zum automatischen Beweisen eines Tableau, ist das Parsen der String-Repräsentation zu einer vom Programm weiterverarbeitbaren Datenstruktur. Hierfür wird im folgenden zuerst die Syntax definiert in der die Formeln als String dargestellt werden. Danach wird die Datenstruktur in der die Formel weiterverarbeitet wird besprochen. Zuletzt wird der Parser und die Implementierung dessen behandelt.
+Der erste Schritt zum automatischen Beweisen eines Tableau, ist das Parsen der String-Repräsentation zu einer vom Programm weiterverarbeitbaren Datenstruktur. Hierfür wird im folgenden zuerst die Syntax definiert, in der die Formeln als Zeichenkette dargestellt werden. Danach wird die Datenstruktur, in der die Formel weiterverarbeitet wird, besprochen. Zuletzt wird der Parser und die Implementierung dessen behandelt.
 
 \section{\label{sec:syntaxdef}Syntaxdefinition}
-Prinzipiell wurde die Syntax in der die Formeln als String repräsentiert werden bereits in \autoref{sec:ind_form_regeln} beschrieben. Da die Buchstaben zur Darstellung der Junktoren aber auf handelsüblichen Tastaturen nicht vorhanden sind, müssen hierfür benutzerfreundlichere Alternativen definiert werden. Da die Zielgruppe des Tableaubeweisers meist schon mit Programmiersprachen in Berührung gekommen ist, wird sich dabei an den in Programmiersprachen üblichen Buchstaben orientiert. So wird z.B. für das Oder ($\vee$) das in Java, C\#, Swift und weiteren verwendete | definiert (in diesen Sprachen steht das einfache | für ein Bitweises-Oder, in diesem Fall gibt es allerdings keine Integer-Werte was eine Unterscheidung sinnlos macht).
+Prinzipiell wurde die Syntax in der die Formeln als String repräsentiert werden bereits in \autoref{sec:ind_form_regeln} beschrieben. Da die Buchstaben zur Darstellung der Operatoren aber auf handelsüblichen Tastaturen nicht vorhanden sind, müssen hierfür benutzerfreundlichere Alternativen definiert werden. Da die Zielgruppe des Tableaubeweisers meist schon mit Programmiersprachen in Berührung gekommen ist, wird sich dabei an den in Programmiersprachen üblichen Buchstaben orientiert. So wird z.B. für das Oder ($\vee$) das in Java, C\#, Swift und weiteren verwendete | definiert (in diesen Sprachen steht das einfache | für ein Bitweises-Oder, in diesem Fall gibt es allerdings keine Integer-Werte was eine Unterscheidung sinnlos macht).
 
-Die vollständige Definition der insgesamt 7 Junktoren zu ihren Tastaturfreundlichen gegenspielern wird in \autoref{tbl:junktor_mapping} aufgeführt.
+Die vollständige Definition der insgesamt 7 Operatoren zu ihren tastaturfreundlichen Gegenspielern wird in \autoref{tbl:operator_mapping} aufgeführt.
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline
-Junktor-Symbol & Tastaturfreundliches Symbol & Alternatives Symbol \\
+Operator-Symbol & Tastaturfreundliches Symbol & Alternatives Symbol \\
 \hline
 $\forall$ & (A) & /\textbackslash \\
 \hline
@@ -29,14 +29,14 @@ $\leftrightarrow$ & <-> & \\
 \hline
 \end{tabular}
 \end{center}
-\caption{\label{tbl:junktor_mapping}Definition der tastaturfreundlichen Junktor-Symbole}
+\caption{\label{tbl:operator_mapping}Definition der tastaturfreundlichen Operator-Symbole}
 \end{table}
 
 Zur Darstellung für Klammern werden nach wie vor die Runden Klammern ( und ) verwendet.
 
 Ebenfalls zur Definition der Syntax gehört es zu definieren in welcher Form die atomaren Aussagen sowie Variablen, Konstanten und Funktionen in der Prädikatenlogik angegeben werden. Da es in der klassischen sowie nichtklassischen Aussagenlogik kein Risiko für Ambiguitäten zwischen Funktion und Prädikat oder ähnlichem gibt, dürfen diese mit Klein- und Großbuchstaben beginnen. Zudem darf die atomare Aussage Zahlen und Unterstriche enthalten, muss aber mit einem Buchstaben beginnen.
 
-Bei der klassischen und nichtklassischen Prädikatenlogik kann es allerdings zu besagten Ambiguitäten kommen. Um bereits an der Schreibweise zu klären um was es sich handelt werden hier folgende Regeln eingeführt:
+Bei der klassischen und nichtklassischen Prädikatenlogik kann es allerdings zu besagten Ambiguitäten kommen. Um bereits an der Schreibweise zu klären, um was es sich handelt werden hier folgende Regeln eingeführt:
 \begin{itemize}
 \item \textbf{Prädikat}: Ein Prädikat muss mit einem Großbuchstaben beginnen. Danach kann dieses beliebe Klein- und Großbuchstaben sowie Zahlen und Unterstriche enthalten.
 
@@ -47,7 +47,7 @@ Bei der klassischen und nichtklassischen Prädikatenlogik kann es allerdings zu 
 \item \textbf{Variable}: Eine Variable muss mit einem Kleinbuchstaben beginnen. Danach kann dieses beliebe Klein- und Großbuchstaben sowie Zahlen enthalten.
 \end{itemize}
 
-Man beachte, dass Konstanten und Variablen keine Unterstriche enthalten dürfen. Dies liegt daran, dass während des automatischen Beweisens von Prädikatenlogischen Aussagen unter Umständen neue Konstanten eingeführt werden. Um keine Analyse der existierenden Konstanten durchführen zu müssen um zu berechnen welche Konstanten noch nicht eingeführt sind, wird das Unterstrich-Zeichen für diese Konstanten reserviert. Eine dadurch eingeführte Konstante wird dann als ``X\_n'' eingeführt wobei n der Index der eingeführten Konstante ist.
+Man beachte, dass Konstanten und Variablen keine Unterstriche enthalten dürfen. Dies liegt daran, dass während des automatischen Beweisens von prädikatenlogischen Aussagen unter Umständen neue Konstanten eingeführt werden. Um keine Analyse der existierenden Konstanten durchführen zu müssen, um zu berechne,n welche Konstanten noch nicht eingeführt sind, wird das Unterstrich-Zeichen für diese Konstanten reserviert. Eine dadurch eingeführte Konstante wird dann als ``X\_n'' eingeführt, wobei n der fortlaufende Index der eingeführten Konstante ist.
 
 
 \section{Datenstruktur}
@@ -62,7 +62,7 @@ Deshalb wird diese in einen Syntaxbaum geparsed. In einem Syntaxbaum stellt jede
 \end{center}
 \end{figure}
 
-Das Konzept eines Syntaxbaums übersetzt in die für diese Arbeit verwendete objektorientierte Programmiersprache Python, ergibt eine Datenstruktur in der die einzelnen Operatoren und atomaren Aussagen Objekten entsprechen die jeweils ihre Kind-Knoten als variablen halten. Das Klassendiagramm für die Aussagenlogik ist in \autoref{fig:class_diag_ds_pl} zu sehen.
+Das Konzept eines Syntaxbaums übersetzt in die für diese Arbeit verwendete objektorientierte Programmiersprache Python, ergibt eine Datenstruktur, in der die einzelnen Operatoren und atomaren Aussagen Objekten entsprechen, die jeweils ihre Kind-Knoten als Variablen halten. Das Klassendiagramm für die Aussagenlogik ist in \autoref{fig:class_diag_ds_pl} zu sehen.
 
 \begin{figure}[H]
 \begin{center}
@@ -96,12 +96,12 @@ In der definierten Datenstruktur sieht der in \autoref{fig:example_syntax_tree} 
 \section{Parsen}
 Da nun klar ist, wie die Syntax und Datenstruktur der Formeln aussieht, muss noch die Zeichenketten-Repräsentation zur Datenstruktur geparsed werden.
 
-Zum erstellen des Parsers, wird der Parsergenerator ANTLR verwendet. Mit ANTLR kann eine Grammatik definiert werden von der dann ein LL(*)-Parser in einer von vielen möglichen Programmiersprachen generiert wird. Generiert werden kann unter anderem Java, C\#, JavaScript aber auch Python. \cite{antlr_doc}
+Zum Erstellen des Parsers, wird der Parsergenerator ANTLR verwendet. Mit ANTLR kann eine Grammatik definiert werden, von der dann ein LL(*)-Parser in einer von vielen möglichen Programmiersprachen generiert wird. Generiert werden kann unter anderem Java, C\#, JavaScript aber auch Python. \cite{antlr_doc}
 
 \subsection{LL(*)-Parser}
 Im Gegensatz zu dem vorherrschenden Bottom-Up Parsertyp LR(k), wird für von ANTLR generierte Parser ein Top-Down Parser erzeugt. \cite{compiler_dragon_book}\cite{ll_star_parser}
 
-Der hierfür verwendete Parsertyp LL(*) wurde eigens für ANTLR entwickelt. LL steht dafür, dass die Eingabe von links nach rechts gelesen und eine Linksableitung davon gebildet wird. Der Stern bedeutet, dass bei jedem Schritt für Parsing-Entscheidungen beliebig viele Eingabesymbole vorausgeschaut wird. \cite{ll_star_parser} Im Gegensatz dazu wird beim Parsertyp LR(k), bei dem das L ebenfalls für das Lesen der Eingabe von links nach rechts steht, das R für das erstellen einer umgekehrten Rechtsableitung und das k dafür wie viele Zeichen nach vorn geschaut wird. Die Vorausschau wird also durch k gedeckelt. \cite{compiler_dragon_book}
+Der hierfür verwendete Parsertyp LL(*) wurde eigens für ANTLR entwickelt. LL steht dafür, dass die Eingabe von links nach rechts gelesen und eine Linksableitung davon gebildet wird. Der Stern bedeutet, dass bei jedem Schritt für Parsing-Entscheidungen beliebig viele Eingabesymbole vorausgeschaut wird. \cite{ll_star_parser} Im Gegensatz dazu wird beim Parsertyp LR(k), bei dem das L ebenfalls für das Lesen der Eingabe von links nach rechts steht, das R für das Erstellen einer umgekehrten Rechtsableitung und das k dafür wie viele Zeichen nach vorn geschaut wird. Die Vorausschau wird also durch k gedeckelt. \cite{compiler_dragon_book}
 
 Mit LL(*) werden von ANTLR prädikative Grammatiken geparsed. Eine prädikative Grammatik G ist ein 6-Tupel (N, T, P, S, $\Pi$, M). Die Elemente haben folgende Bedeutung \cite{ll_star_parser}:
 \begin{itemize}
@@ -129,16 +129,16 @@ P = \{Expr$\rightarrow$Expr+Expr, Expr$\rightarrow$Expr-Expr, Expr$\rightarrow$I
 
 Aus dieser Grammatik könnten unter anderem folgende Sätze abgeleitet werden: a+b, a+b-a, a+a+a, ...
 
-Die schwierige Herausforderung eines Parsers ist es nun zu entscheiden, ob eine gegebene Zeichenfolge mit der Grammatik erzeugbar ist und mit welchen Terminalen diese Aufgebaut ist. Insbesondere wird dies schwierig, sind Terminale mit Ähnlichem Präfix vorhanden wie z.B.: ab und abb. Der Parser muss hierbei in der Zeichenkette also bis zu 3 Zeichen untersuchen bis er Entscheiden kann zu welchem der beiden Terminale diese Zugeordnet werden kann.
+Die schwierige Herausforderung eines Parsers ist es nun zu entscheiden, ob eine gegebene Zeichenfolge mit der Grammatik erzeugbar ist und mit welchen Terminalen diese aufgebaut ist. Insbesondere wird dies schwierig, sind Terminale mit ähnlichem Präfix vorhanden wie z.B.: ab und abb. Der Parser muss hierbei in der Zeichenkette also bis zu 3 Zeichen untersuchen bis er entscheiden kann zu welchem der beiden Terminale diese zugeordnet werden kann.
 
-LL(*) erzeugt hierfür einen \ac{DEA} für jede Ableitungsregel. Der \ac{DEA} wechselt für jedes Zeichen bzw. für jedes Terminal den Zustand wodurch die Zutreffende Ableitungsregel am Ende der Zeichenkette erreicht ist. Eine Ausnahme hierfür sind Rekursiv definierte Regeln wie die obige für das Nichtterminal Expr. Diese leitet wieder auf das Nichtterminal Expr ab. Für solche Regeln, wird ein \ac{DEA} für die ersten m Rekursionsebenen erzeugt, ist danach noch keine eindeutige Ableitung erreicht, wird mittels Backtracking der Rest der Zeichenkette analysiert.
-Die beliebig weite Vorausschau ergibt sich eben durch das Backtracking, aber auch durch die Definition von Terminalen durch Reguläre Ausdrücke. Um welches Terminal es sich handelt, wird durch Abgleich aller regulärer Ausdrücke entschieden wobei bei mehreren Treffern das zuerst definierte Terminal gewinnt. \cite{ll_star_parser}
+LL(*) erzeugt hierfür einen \ac{DEA} für jede Ableitungsregel. Der \ac{DEA} wechselt für jedes Zeichen bzw. für jedes Terminal den Zustand wodurch die zutreffende Ableitungsregel am Ende der Zeichenkette erreicht ist. Eine Ausnahme hierfür sind Rekursiv definierte Regeln, wie die obige, für das Nichtterminal Expr. Diese leitet wieder auf das Nichtterminal Expr ab. Für solche Regeln, wird ein \ac{DEA} für die ersten m Rekursionsebenen erzeugt, ist danach noch keine eindeutige Ableitung erreicht, wird mittels Backtracking der Rest der Zeichenkette analysiert.
+Die beliebig weite Vorausschau ergibt sich eben durch das Backtracking, aber auch durch die Definition von Terminalen durch reguläre Ausdrücke. Um welches Terminal es sich handelt, wird durch Abgleich aller regulärer Ausdrücke entschieden, wobei bei mehreren Treffern das zuerst definierte Terminal gewinnt. \cite{ll_star_parser}
 
-Top-Down Parser können Grammatiken die eine Linksrekursion enthalten generell nicht handhaben. \cite{compiler_dragon_book} Eine Grammatik enthält eine Linksrekursion, gdw. Sie eine Ableitung der Form A$\xrightarrow{\text{+}}$A$\alpha$ enthält, wobei $\xrightarrow{\text{+}}$ bedeutet, dass die Ableitung über beliebig viele andere Ableitungen zu A$\alpha$ abgeleitet werden kann.
+Top-Down Parser können Grammatiken die eine Linksrekursion enthalten generell nicht handhaben. \cite{compiler_dragon_book} Eine Grammatik enthält eine Linksrekursion, gdw. sie eine Ableitung der Form A$\xrightarrow{\text{+}}$A$\alpha$ enthält, wobei $\xrightarrow{\text{+}}$ bedeutet, dass die Ableitung über beliebig viele andere Ableitungen zu A$\alpha$ abgeleitet werden kann.
 Eine solche Ableitungsregel gilt es deshalb in der Grammatikdefinition zu vermeiden.
 
 \subsection{ANTLR-Grammatiken}
-Eine ANTLR-Grammatik ist relativ simpel aufgebaut. Nichtterminale werden in Kleinbuchstaben geschrieben, während Terminale in Großbuchstaben geschrieben werden. Wichtig ist es, dass zur Vermeidung von Grammatiken die einen Satz über mehrere Ableitungsfolgen erzeugen können, die Ableitungsregeln die zuerst definiert werden eine höhere Priorität gegenüber später definierten haben. \cite{antlr_doc}
+Eine ANTLR-Grammatik ist relativ simpel aufgebaut. Nichtterminale werden in Kleinbuchstaben geschrieben, während Terminale in Großbuchstaben geschrieben werden. Wichtig ist es, dass zur Vermeidung von Grammatiken, die einen Satz über mehrere Ableitungsfolgen erzeugen können, die Ableitungsregeln, die zuerst definiert werden eine höhere Priorität gegenüber später definierten haben. \cite{antlr_doc}
 Dieser Umstand kann auch zur Abbildung der Prioritäten von Operatoren genutzt werden.
 
 Kann ein Nichtterminal mit mehreren Produktionsregeln abgeleitet werden, so können diese mit ``|'' getrennt aufgelistet werden. Ein Terminal kann wie oben bereits erwähnt, durch reguläre Ausdrücke definiert werden.

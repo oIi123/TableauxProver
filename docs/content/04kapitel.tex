@@ -232,7 +232,7 @@ Nach Berechnung der Breiten der Verzweigungen ist das Zeichnen des Tableau trivi
 \subsection{Umwandlung zur Zeichenkette}
 Ein weiterer wichtiger Aspekt bei der Darstellung ist die Konvertierung der internen Datenstruktur zu einer Zeichenkette, die die Aussage korrekt repräsentiert. Insbesondere ist dabei wichtig, dass Klammern korrekt gesetzt bzw. korrekt ausgelassen werden, wenn diese nicht benötigt werden.
 
-Vorweg ist dazu zu sagen, dass die Aussagen zu einem Syntaxbaum geparsed werden. Ein Beispiel eines solchen Syntaxbaumes ist in \autoref{fig:example_syntax_tree} zu sehen. Die interne Repräsentation der Aussagen wird in \autoref{sec:parsen} näher behandelt. Dieser Abschnitt soll sich darauf konzentrieren, wie dieser zu einer korrekten Zeichenkette umgewandelt werden kann.
+Wie bereits in \autoref{sec:parsen} behandelt, wird die Aussage intern als Syntaxbaum repräsentiert. Ein Beispiel eines solchen Syntaxbaumes ist in \autoref{fig:example_syntax_tree} zu sehen. Dieser Abschnitt soll sich darauf konzentrieren, wie dieser zu einer korrekten Zeichenkette umgewandelt werden kann.
 
 Um keine Klammern unnötig zu setzen bzw. diese fälschlich wegzulassen, wird jedem Junktor und der atomaren Aussage eine Priorität zugeordnet. Die genaue Prioritätenfolge entspricht den in \autoref{clamps_and_prio} festgelegten Prioritäten, wobei der atomaren Aussage bzw. dem Prädikat die Priorität 0 zugeordnet wird.
 
