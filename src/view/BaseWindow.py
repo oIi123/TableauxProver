@@ -2,6 +2,7 @@ from PySide2.QtWidgets import QMainWindow, QWidget, QTextEdit
 from src.builder_factory import *
 from src.view.Help import HelpWindow
 from src.Parser.ParseException import ParseException, RecognitionException
+from html import escape
 
 
 def concat_list_of_lists(list_of_lists):
@@ -77,11 +78,11 @@ class BaseWindow(QMainWindow):
 
         line_txt = lines[line-1]
         if column >= len(line_txt):
-            line_txt = line_txt[:-1] + f'<u style="color: red;">{line_txt[-1]} </u>'
+            line_txt = escape(line_txt[:-1]) + f'<u style="color: red;">{escape(line_txt[-1])} </u>'
         else:
-            _line_txt = line_txt[:column]
-            _line_txt += f'<u style="color: red;">{line_txt[column:column+width]}</u>' 
-            _line_txt += line_txt[column+width:]
+            _line_txt = escape(line_txt[:column])
+            _line_txt += f'<u style="color: red;">{escape(line_txt[column:column+width])}</u>' 
+            _line_txt += escape(line_txt[column+width:])
             line_txt = _line_txt
         lines[line-1] = line_txt
         txt_view.setHtml('<br />'.join(lines))
@@ -93,7 +94,8 @@ class BaseWindow(QMainWindow):
     def reset_txt_edit(self, txt_view: QTextEdit):
         txt_view.textChanged.disconnect()
         cursor_pos = txt_view.textCursor().position()
-        txt_view.setHtml(txt_view.toPlainText().replace('\n', '<br />'))
+        new_txt = txt_view.toPlainText().replace('\n', '<br />')
+        txt_view.setHtml(escape(new_txt))
         cursor = txt_view.textCursor()
         cursor.setPosition(cursor_pos)
         txt_view.setTextCursor(cursor)
