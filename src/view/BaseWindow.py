@@ -1,7 +1,7 @@
 from PySide2.QtWidgets import QMainWindow, QWidget, QTextEdit
-from antlr4 import RecognitionException
 from src.builder_factory import *
 from src.view.Help import HelpWindow
+from src.Parser.ParseException import ParseException, RecognitionException
 
 
 def concat_list_of_lists(list_of_lists):
@@ -31,8 +31,11 @@ class BaseWindow(QMainWindow):
         for nr, line in enumerate(lines):
             try:
                 parsed_line = self.parser.parse(line)
+            except ParseException as e:
+                self.show_line_error(scroll_view, txt_area, str(e), nr+1, lines, e.column, e.width)
+                return None
             except RecognitionException as e:
-                self.show_line_error(scroll_view, txt_area, str(e), nr+1)
+                self.show_line_error(scroll_view, txt_area, str(e), nr+1, lines)
                 return None
             if nr in cf_lines:
                 parsed_cf_lines.append(parsed_line)
@@ -69,11 +72,31 @@ class BaseWindow(QMainWindow):
 
         self.error_widget.show()
 
-    def show_line_error(self, scroll_view: QWidget, txt_view: QWidget, txt: str, line: int):
+    def show_line_error(self, scroll_view: QWidget, txt_view: QTextEdit, txt: str, line: int, lines, column=0, width=1):
         txt_view.setStyleSheet('border: 1px solid rgb(240, 60, 60);')
+
+        line_txt = lines[line-1]
+        if column >= len(line_txt):
+            line_txt = line_txt[:-1] + f'<u style="color: red;">{line_txt[-1]} </u>'
+        else:
+            _line_txt = line_txt[:column]
+            _line_txt += f'<u style="color: red;">{line_txt[column:column+width]}</u>' 
+            _line_txt += line_txt[column+width:]
+            line_txt = _line_txt
+        lines[line-1] = line_txt
+        txt_view.setHtml('<br />'.join(lines))
+        txt_view.textChanged.connect(lambda: self.reset_txt_edit(txt_view))
 
         txt = f'<b>Error in line {line}</b><p>{txt}</h1>'
         self.show_error(scroll_view, txt)
+
+    def reset_txt_edit(self, txt_view: QTextEdit):
+        txt_view.textChanged.disconnect()
+        cursor_pos = txt_view.textCursor().position()
+        txt_view.setHtml(txt_view.toPlainText().replace('\n', '<br />'))
+        cursor = txt_view.textCursor()
+        cursor.setPosition(cursor_pos)
+        txt_view.setTextCursor(cursor)
 
     def show_help(self):
         HelpWindow.show_help()
