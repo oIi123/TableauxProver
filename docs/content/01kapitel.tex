@@ -93,7 +93,7 @@ Bsp.: $\forall$x P(x) $\leftrightarrow P(x_{0})\wedge$P$(x_{1})\wedge$...$\wedge
 Bsp.: $\exists$x P(x) $\leftrightarrow P(x_{0})\vee$P$(x_{1})\vee$...$\vee$P$(x_{n})$ mit n=$\infty$.
 \end{itemize}
 
-Zur Vereinfachung der Syntax, können aufeinanderfolgende gleiche Quantoren ($\exists$x$\exists$y P(x,y) oder $\forall$x$\forall$y P(x,y)) verkürzt geschrieben werden, in dem die Variablen der Quantoren, durch Komma getrennt hinter den ersten Quantor geschrieben werden ($\exists$x,y P(x,y) oder $\forall$x,y P(x,y)). 
+Zur Vereinfachung der Syntax, können aufeinanderfolgende gleiche Quantoren ($\exists$x$\exists$y P(x,y) oder $\forall$x$\forall$y P(x,y)) verkürzt geschrieben werden, indem die Variablen der Quantoren, durch Komma getrennt hinter den ersten Quantor geschrieben werden ($\exists$x,y P(x,y) oder $\forall$x,y P(x,y)). 
 
 Die Quantoren arbeiten dabei immer über einem sogenannten Diskursuniversum, dies ist eine Menge von Objekten, welche von einem Quantor eingesetzt werden können. Das Diskursuniversum kann bei einem automatisierten Beweisverfahren dynamisch während der Behandlung der Quantoren erweitert bzw. definiert oder die Menge zu Anfangs festgelegt werden. Offensichtlich kann bei einem vorab definierten Diskursuniversum keine Menge mit unendlicher Kardinalität angegeben werden, deshalb wird im Rahmen dieser Arbeit das Diskursuniversum dynamisch generiert. Wie neue Objekte zum Diskursuniversum hinzugefügt werden, wird in Abschnitt \ref{tableaux_classic_pred} behandelt.
 
@@ -137,7 +137,7 @@ Mit dem Diskursuniversum \{Aristoteles, Platon\} und der Formel $\forall$x Mensc
 \section{Intuitionistische Logik}
 Die Intuitionistische oder auch nichtklassiche Logik ist ein anderes logisches Paradigma. Anstelle von wahren und falschen Aussagen und Atomen, behandelt die intuitionistische Logik beweisbare bzw. widerlegbare Aussagen und Atome. Beispielsweise wird die Aussage $\alpha\vee\neg\alpha$ in klassischer Logik als ``\textit{$\alpha$ trifft entweder zu, oder $\alpha$ trifft nicht zu}'' interpretiert. Die intuitionistische Interpretation lautet hingegen ``\textit{$\alpha$ ist beweisbar, oder $\alpha$ ist widerlegbar}''.
 
-Dies klingt zuerst nach rein sprachlicher Formalität, hat aber einige Implikationen. Beispielsweise gilt der in klassischer Logik geltende Satz des ausgeschlossenen Dritten im Intuitionismus nicht. Der Satz des ausgeschlossenen Dritten besagt, dass jede Aussage entweder wahr oder falsch sein muss. Wie Gödel mit dem Gödelschen Unvollständigkeitssatz bewiesen hat, gibt es allerdings auch Aussagen die weder beweisbar noch widerlegbar sind \cite{B62}. 
+Dies klingt zuerst nach rein sprachlicher Formalität, hat aber einige Implikationen. Beispielsweise gilt der in klassischer Logik geltende Satz des ausgeschlossenen Dritten im Intuitionismus nicht. Der Satz des ausgeschlossenen Dritten besagt, dass jede Aussage entweder wahr oder falsch sein muss. Wie Gödel mit dem Gödelschen Unvollständigkeitssatz bewiesen hat, gibt es allerdings auch Aussagen die weder beweisbar noch widerlegbar sind \cite{B62}.
 
 Dies betrifft nicht nur Aussagen, die weder beweisbar noch nicht beweisbar sind sondern kann auch als ``Weder $\alpha$ noch $\neg\alpha$ konnten bis heute bewiesen werden'', interpretiert werden. Die Ungültigkeit des Satzes vom ausgeschlossenen Dritten hat einige Implikationen \cite{B62}
 \begin{itemize}
