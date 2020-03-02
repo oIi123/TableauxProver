@@ -94,8 +94,8 @@ class BaseWindow(QMainWindow):
     def reset_txt_edit(self, txt_view: QTextEdit):
         txt_view.textChanged.disconnect()
         cursor_pos = txt_view.textCursor().position()
-        new_txt = txt_view.toPlainText().replace('\n', '<br />')
-        txt_view.setHtml(escape(new_txt))
+        new_txt = escape(txt_view.toPlainText()).replace('\n', '<br />')
+        txt_view.setHtml(new_txt)
         cursor = txt_view.textCursor()
         cursor.setPosition(cursor_pos)
         txt_view.setTextCursor(cursor)
