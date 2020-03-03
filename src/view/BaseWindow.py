@@ -33,7 +33,11 @@ class BaseWindow(QMainWindow):
             try:
                 parsed_line = self.parser.parse(line)
             except ParseException as e:
-                self.show_line_error(scroll_view, txt_area, str(e), nr+1, lines, e.column, e.width)
+                column = e.column
+                if nr in cf_lines:
+                    lines[nr] = f'[{lines[nr]}]'
+                    e.column += 1
+                self.show_line_error(scroll_view, txt_area, str(e), nr+1, lines, column, e.width)
                 return None
             except RecognitionException as e:
                 self.show_line_error(scroll_view, txt_area, str(e), nr+1, lines)
@@ -85,6 +89,9 @@ class BaseWindow(QMainWindow):
             _line_txt += escape(line_txt[column+width:])
             line_txt = _line_txt
         lines[line-1] = line_txt
+        # throws if nothing is connected
+        try:txt_view.textChanged.disconnect()
+        except RuntimeError:pass
         txt_view.setHtml('<br />'.join(lines))
         txt_view.textChanged.connect(lambda: self.reset_txt_edit(txt_view))
 
