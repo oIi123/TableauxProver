@@ -79,7 +79,7 @@ Dieser Prioritätenfolge nach, wird obiges Beispiel also als $\alpha\vee(\beta\w
 Spezielle Aussageklassen sind Tautologien und Kontradiktionen. Diesen kann unabhängig der Wahrheitswerte der Atome, immer der Wahrheitswert wahr (Tautologie) oder falsch (Kontradiktion) zugewiesen werden. Das einfachste Beispiel für eine Tautologie wäre die Aussage $\alpha\vee\neg\alpha$. Für die Kontradiktion wäre das die Aussage $\alpha\wedge\neg\alpha$.
 
 \section{Prädikatenlogik 1. Ordnung}
-Eine Erweiterung der oben vorgestellten Aussagenlogik ist die Prädikatenlogik. Statt atomaren Aussagen, behandelt die Prädikatenlogik sogenannte Prädikate. Ein Prädikat stellt dabei eine Beziehung zu n Attributen dar, wobei n endlich und $n\in\N_{0}$. Der Satz ``Erna liebt Max'', stellt Beispielsweise das Prädikat ``liebt'' mit den Attributen Erna und Max dar. Die übliche Notation hierfür ist die Präfix, wodurch der Satz zu liebt(Erna, Max) wird \cite{KB14}.
+Eine Erweiterung der oben vorgestellten Aussagenlogik ist die Prädikatenlogik. Statt atomaren Aussagen, behandelt die Prädikatenlogik sogenannte Prädikate. Ein einstelliges Prädikat attributiert dabei eine Eigenschaft eines Objekts. Mehrstellige Prädikate stellen eine Beziehung zwischen n Attributen dar, wobei n endlich und $n\in\N_{0}\textbackslash$\{1\}. Der Satz ``Erna liebt Max'', stellt Beispielsweise das Prädikat ``liebt'' mit den Attributen Erna und Max dar. Das Prädikat schreibt dabei den Objekten Erna und Max die gerichtete Beziehung ``liebt'' zu. Die übliche Notation hierfür ist die Präfix, wodurch der Satz zu liebt(Erna, Max) wird. Der Satz ``Max ist ein Mensch'' stellt das einstellige Prädikat Mensch(Max) dar, welches dem Objekt Max die Eigenschaft Mensch zuschreibt \cite{KB14}.
 
 \subsection{Quantoren}
 Das Einführen von Attributen in die Prädikatenlogik ermöglicht es, Aussagen über eine Menge von Objekten zu machen. Z.B. $P(x_{0})\wedge$P$(x_{1})\wedge$...$\wedge$P$(x_{n})$. Mit den aktuellen Mitteln ist es allerdings nicht möglich eine solche Aussage für n=$\infty$ zu tätigen. Dafür werden in der Prädikatenlogik Quantoren eingeführt, mit denen Aussagen über alle möglichen Objekte getätigt werden können \cite{KB14}.
@@ -93,13 +93,16 @@ Bsp.: $\forall$x P(x) $\leftrightarrow P(x_{0})\wedge$P$(x_{1})\wedge$...$\wedge
 Bsp.: $\exists$x P(x) $\leftrightarrow P(x_{0})\vee$P$(x_{1})\vee$...$\vee$P$(x_{n})$ mit n=$\infty$.
 \end{itemize}
 
+Zur Vereinfachung der Syntax, können aufeinanderfolgende gleiche Quantoren ($\exists$x$\exists$y P(x,y) oder $\forall$x$\forall$y P(x,y)) verkürzt geschrieben werden, indem die Variablen der Quantoren, durch Komma getrennt hinter den ersten Quantor geschrieben werden ($\exists$x,y P(x,y) oder $\forall$x,y P(x,y)). 
+
 Die Quantoren arbeiten dabei immer über einem sogenannten Diskursuniversum, dies ist eine Menge von Objekten, welche von einem Quantor eingesetzt werden können. Das Diskursuniversum kann bei einem automatisierten Beweisverfahren dynamisch während der Behandlung der Quantoren erweitert bzw. definiert oder die Menge zu Anfangs festgelegt werden. Offensichtlich kann bei einem vorab definierten Diskursuniversum keine Menge mit unendlicher Kardinalität angegeben werden, deshalb wird im Rahmen dieser Arbeit das Diskursuniversum dynamisch generiert. Wie neue Objekte zum Diskursuniversum hinzugefügt werden, wird in Abschnitt \ref{tableaux_classic_pred} behandelt.
 
 \subsection{Induktive Formationsregeln}
 Ähnlich der Aussagenlogik, sind korrekte prädikatenlogische Aussagen rekursiv definiert. Eine korrekte Aussage wird \ac{wff} genannt. Die Regeln lauten:
 \begin{itemize}
 \item
-Prädikate mit der korrekten Anzahl Terme sind \ac{wff}. Z.B.: links(x), sieht(x,y), ...
+Prädikate mit der korrekten Anzahl Terme sind \ac{wff}. Z.B.: links(x), sieht(x,y), links(f(x)) ... \\
+Ein Term kann eine gebundene Variable, Objektkonstante oder eine Funktion sein (siehe \autoref{sec:objvar_objconst}).
 
 \item
 Ist $\alpha$ \ac{wff}, so ist auch $\neg\alpha$ \ac{wff}.
@@ -108,7 +111,7 @@ Ist $\alpha$ \ac{wff}, so ist auch $\neg\alpha$ \ac{wff}.
 Sind $\alpha$ und $\beta$ \ac{wff}, so sind auch $(\alpha\wedge\beta)$, $(\alpha\vee\beta)$, $(\alpha\rightarrow\beta)$ und $(\alpha\leftrightarrow\beta)$ alle \ac{wff}.
 
 \item
-Ist $\alpha$ \ac{wff}, so ist $\forall\nu\alpha$ und $\exists\nu\alpha$ auch \ac{wff} für jede Variable $\nu$.
+Ist $\alpha$ \ac{wff}, so ist $\forall\nu\alpha$ und $\exists\nu\alpha$ auch \ac{wff} für jede Variable $\nu$ sofern diese eine Variable in $\alpha$ und nicht bereits in $\alpha$ durch einen anderen Quantor quantifiziert wird.
 \end{itemize}
 
 Die in Abschnitt \ref{clamps_and_prio} definierten Prioritäten der Junktoren, trifft auch in der Prädikatenlogik zu. Für die Priorität der Quantoren gibt es leider keine feste Konvention, deshalb werden die Quantoren im Rahmen dieser Arbeit als am stärksten Bindend definiert. Dies führt zu folgender Prioritäten-folge:
@@ -122,19 +125,19 @@ Die in Abschnitt \ref{clamps_and_prio} definierten Prioritäten der Junktoren, t
 \item Äquivalenz ($\leftrightarrow$)
 \end{enumerate}
 
-\subsection{Objektvariablen und Objektkonstanten}
-In der Formel $\forall x P(x)$ wird der Term x in P(x) als gebundene Variable bezeichnet, da diese über den Allquantor quantifiziert wird. Im gegensatz dazu wird der Term x in der Formel K(x) als freie Variable bezeichnet, da diese nicht quantifiziert wird. Wie oben bereits erwähnt wurde, wird das Diskursuniversum von der in dieser Arbeit erarbeiteten Implementierung dynamisch erweitert. Die freien Variablen werden dabei als initiale Elemente des Diskursuniversum verwendet. Generell wird zwischen Objektvariablen und Objektkonstanten unterschieden:
+\subsection{\label{sec:objvar_objconst}Objektvariablen und Objektkonstanten}
+In der Formel $\forall x P(x)$ wird der Term x in P(x) als gebundene Variable bezeichnet, da diese über den Allquantor quantifiziert wird. Im gegensatz dazu wird der Term x in der Formel K(x) als freie Variable bezeichnet, da diese nicht quantifiziert wird. Eine Formel mit freien Variablen ist nicht \ac{wff}. Wie oben bereits erwähnt wurde, wird das Diskursuniversum von der in dieser Arbeit erarbeiteten Implementierung dynamisch erweitert. Die freien Variablen werden dabei als initiale Elemente des Diskursuniversum verwendet. Generell wird zwischen Objektvariablen und Objektkonstanten unterschieden:
 
 Ein Term x ist eine Objektvariable gdw. diese eine gebundene Variable ist.
 
 Ein Term x ist eine Objektkonstante gdw. diese eine freie Variable und im Diskursuniversum enthalten ist.
 
-Mit dem Diskursuniversum {Aristoteles, Platon} und der Formel $\forall x Mensch(x) \wedge Philosoph(Aristoteles)$ wird also x als Objektvariable und Aristoteles als Objektkonstante bezeichnet. Wird der Allquantor umgeschrieben zu $Mensch(Aristoteles) \wedge Mensch(Platon) \wedge Philosoph(Aristoteles)$ so sind sowohl Aristoteles als auch Platon Objektkonstanten.
+Mit dem Diskursuniversum \{Aristoteles, Platon\} und der Formel $\forall$x Mensch(x) $\wedge$ Philosoph(Aristoteles) wird also x als Objektvariable und Aristoteles als Objektkonstante bezeichnet. Wird der Allquantor umgeschrieben zu $Mensch(Aristoteles) \wedge Mensch(Platon) \wedge Philosoph(Aristoteles)$ so sind sowohl Aristoteles als auch Platon Objektkonstanten.
 
 \section{Intuitionistische Logik}
 Die Intuitionistische oder auch nichtklassiche Logik ist ein anderes logisches Paradigma. Anstelle von wahren und falschen Aussagen und Atomen, behandelt die intuitionistische Logik beweisbare bzw. widerlegbare Aussagen und Atome. Beispielsweise wird die Aussage $\alpha\vee\neg\alpha$ in klassischer Logik als ``\textit{$\alpha$ trifft entweder zu, oder $\alpha$ trifft nicht zu}'' interpretiert. Die intuitionistische Interpretation lautet hingegen ``\textit{$\alpha$ ist beweisbar, oder $\alpha$ ist widerlegbar}''.
 
-Dies klingt zuerst nach rein sprachlicher Formalität, hat aber einige Implikationen. Beispielsweise gilt der in klassischer Logik geltende Satz des ausgeschlossenen Dritten im Intuitionismus nicht. Der Satz des ausgeschlossenen Dritten besagt, dass jede Aussage entweder wahr oder falsch sein muss. Wie Gödel mit dem Gödelschen Unvollständigkeitssatz bewiesen hat, gibt es allerdings auch Aussagen die weder beweisbar noch widerlegbar sind \cite{B62}. 
+Dies klingt zuerst nach rein sprachlicher Formalität, hat aber einige Implikationen. Beispielsweise gilt der in klassischer Logik geltende Satz des ausgeschlossenen Dritten im Intuitionismus nicht. Der Satz des ausgeschlossenen Dritten besagt, dass jede Aussage entweder wahr oder falsch sein muss. Wie Gödel mit dem Gödelschen Unvollständigkeitssatz bewiesen hat, gibt es allerdings auch Aussagen die weder beweisbar noch widerlegbar sind \cite{B62}.
 
 Dies betrifft nicht nur Aussagen, die weder beweisbar noch nicht beweisbar sind sondern kann auch als ``Weder $\alpha$ noch $\neg\alpha$ konnten bis heute bewiesen werden'', interpretiert werden. Die Ungültigkeit des Satzes vom ausgeschlossenen Dritten hat einige Implikationen \cite{B62}
 \begin{itemize}

@@ -1,0 +1,12 @@
+1.2 -> Definition Prädikate verbessert.
+
+1.2.1 -> Definition (A)x,y und (E)x,y statt (A)x(A)y und (E)x(E)y
+
+1.2.2 -> Formationsregeln erlauben keine freien Variablen und erlauben Funktionen
+
+1.2.2 -> Quantoren nur erlaubt wenn Quantifizierte Formel die Variable enthält
+
+1.2.3 -> Formeln mit freien Variablen nicht wff
+
+1.2.3 -> Diskursuniversum mit {}
+

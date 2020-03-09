@@ -5,6 +5,7 @@ from antlr4.tree.Tree import *
 
 from gen.FOPLParser import FOPLParser
 from src.Model.Visitor import visitor
+from src.Parser.ParseException import ParseException
 
 
 class FoplExpressionTree:
@@ -75,8 +76,9 @@ class Term:
                     if name in tree.var_stack:
                         t.append(Var.create(term_context.children[0]))
                     else:
-                        raise RecognitionException(f"The variable {name} is not in the scope of a quantor.\n"
-                                                   "Begin with an uppercase letter to turn into a constant or add a quantor.")
+                        raise ParseException(f"The variable {name} is not in the scope of a quantor.\n"
+                                              "Begin with an uppercase letter to turn into a constant or add a quantor.",
+                                              term_context.start.column, len(name))
                 elif type(term_context.children[0]) == FOPLParser.ConstContext:
                     t.append(Const.create(term_context.children[0], tree=tree))
                 elif type(term_context.children[0]) == FOPLParser.FuncContext:
@@ -249,10 +251,12 @@ class Quantor(Expr):
                 type(expr) == FOPLParser.ExprContext
             ):
                 var_list = []
+                column_list = []
                 var_context: FOPLParser.VarContext = quantor.children[1]
                 var_list_context: FOPLParser.VarlistContext = quantor.children[2]
                 while True:
                     var_list.append(Var.create(var_context))
+                    column_list.append(var_context.start.column)
                     if (
                         var_list_context.children is not None and
                         len(var_list_context.children) == 3
@@ -264,10 +268,11 @@ class Quantor(Expr):
 
                 # Add Variables to the Stack
                 variable_name_list = [i.name for i in var_list]
-                for n in variable_name_list:
+                for i, n in enumerate(variable_name_list):
                     if n in tree.var_stack:
-                        raise RecognitionException(f"The variable {n} is already in scope of another Quantor."
-                                                   "Change the name of the Variable.")
+                        raise ParseException(f"The variable {n} is already in scope of another Quantor."
+                                              "Change the name of the Variable.",
+                                              column_list[i], len(n))
                 tree.var_stack.extend(variable_name_list)
                 q = None
                 if quantor.children[0].symbol.type == FOPLParser.ALL_QUANTOR:
