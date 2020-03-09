@@ -204,6 +204,7 @@ class Predicate(Expr):
 @visitor
 class Not(Expr):
     name = "Negation"
+    printable_operator: str = '¬'
     op_priority = 2
 
     @staticmethod
@@ -226,9 +227,9 @@ class Not(Expr):
 
     def __str__(self):
         if self.expr.op_priority > self.op_priority:
-            return f"!({str(self.expr)})"
+            return f"{self.printable_operator}({str(self.expr)})"
         else:
-            return f"!{str(self.expr)}"
+            return f"{self.printable_operator}{str(self.expr)}"
 
     def priority(self, true_side: bool) -> int:
         return 0
@@ -305,7 +306,7 @@ class Quantor(Expr):
 @visitor
 class ExistentialQuantor(Quantor):
     name = "Existential Quantification"
-    printable_operator: str = "(E)"
+    printable_operator: str = "∃"
 
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 2
@@ -313,7 +314,7 @@ class ExistentialQuantor(Quantor):
 @visitor
 class AllQuantor(Quantor):
     name = "Universal Quantification"
-    printable_operator: str = "(A)"
+    printable_operator: str = "∀"
 
     def priority(self, true_side: bool) -> int:
         return 2 if true_side else 1
@@ -390,7 +391,7 @@ class Operation(Expr):
 class And(Operation):
     name = "Conjunction"
     op_priority = 3
-    printable_operator: str = "&"
+    printable_operator: str = "Λ"
 
     def priority(self, true_side: bool) -> int:
         return 0 if true_side else 1
@@ -400,7 +401,7 @@ class And(Operation):
 class Or(Operation):
     name = "Disjunction"
     op_priority = 4
-    printable_operator: str = "|"
+    printable_operator: str = "V"
 
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0
@@ -410,7 +411,7 @@ class Or(Operation):
 class Impl(Operation):
     name = "Conditional"
     op_priority = 5
-    printable_operator: str = "->"
+    printable_operator: str = "→"
 
     def __hash__(self):
         return str(self).__hash__()
@@ -431,7 +432,7 @@ class Impl(Operation):
 class Eq(Operation):
     name = "Biconditional"
     op_priority = 6
-    printable_operator: str = "<->"
+    printable_operator: str = "↔"
 
     def priority(self, true_side: bool) -> int:
         return 1
