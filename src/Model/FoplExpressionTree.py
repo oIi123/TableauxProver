@@ -416,7 +416,7 @@ class Or(Operation):
 class Impl(Operation):
     name = "Conditional"
     op_priority = 5
-    printable_operator: str = "→"
+    printable_operator: str = "🡒"
 
     def __hash__(self):
         return str(self).__hash__()
