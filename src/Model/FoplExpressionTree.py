@@ -406,7 +406,7 @@ class And(Operation):
 class Or(Operation):
     name = "Disjunction"
     op_priority = 4
-    printable_operator: str = "V"
+    printable_operator: str = "∨"
 
     def priority(self, true_side: bool) -> int:
         return 1 if true_side else 0

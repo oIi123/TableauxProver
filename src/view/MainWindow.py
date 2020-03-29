@@ -151,6 +151,8 @@ class MainWindow(BaseWindow):
             if (x,y) not in self.expr_btns:
                 btn = QPushButton(self.scroll_area_content)
                 btn.show()
+
+                btn.setFont(painter.btn_font)
                 btn.setText(text.replace('&', '&&'))
                 btn.setGeometry(x, y - 20, painter.get_text_width(text), 26)
                 btn.clicked.connect(self.manual_btn_pressed_wrapper(expr, tableau))
