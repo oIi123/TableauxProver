@@ -255,11 +255,13 @@ class FoplTableauxBuilder(BaseTableauxBuilder):
     def get_unprocessed_exprs(self, partially_in_trees=False):
         t, f, cf = super().get_unprocessed_exprs(partially_in_trees)
 
-        # if partially_in_trees, filter for multiprocess exprs
+        # if partially_in_trees, filter for multiprocess exprs -> display all in the lowest branch
         if partially_in_trees and len(self.children) > 0:
             t = [expr for expr in t if type(expr) is not AllQuantor]
             f = [expr for expr in f if type(expr) is not ExistentialQuantor]
-            return t, f, cf
+        elif partially_in_trees:
+            t = t + [expr for expr in self.sequent[true_exprs] if type(expr) is AllQuantor and expr not in t]
+            f = f + [expr for expr in self.sequent[false_exprs] if type(expr) is ExistentialQuantor and expr not in f]
         return t, f, cf
 
     def get_partially_processed_exprs(self, partially_in_trees=False):
