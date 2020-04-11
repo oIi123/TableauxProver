@@ -4,7 +4,7 @@
 In diesem Kapitel geht es um die Implementierung des automatischen und manuellen Modus.
 
 \section{Automatik Modus}
-Im Modus Automatik wird die im folgenden Beschriebene Logik ausgeführt. Der Beweiser überführt dabei sogenannte Sequenten. Ein Sequent enthält alle Formeln auf der Wahr bzw. auf der Falsch Seite sowie einige weitere Mengen.
+Im Modus Automatik wird die im folgenden Beschriebene Logik ausgeführt. Der Beweiser arbeitet dabei mit sogenannten Sequenten. Ein Sequent enthält alle Formeln auf der Wahr bzw. auf der Falsch Seite sowie einige weitere Mengen. Durch die Behandlung des aktuellen Tableau als Sequent, können die Ableitungsschritte mit Mengenoperationen umgesetzt werden. Die Definition der Sequenten, sowie der Mengenoperationen für die Ableitungsschritte in den unterschiedlichen Logiken, folgt über die nächsten Seiten.
 
 \subsection{Aussagenlogik}
 Für die Aussagenlogik ist der Sequent S ein Sechstupel (T, F, $\Gamma$, $\Pi$, $\Theta$, $\Psi$). Die Mengen sind wie folgt definiert:
@@ -34,14 +34,14 @@ Wenn $\neg\alpha\in\textrm{F}$ dann folgt S'=($\textrm{T}\cup\lbrace\alpha\rbrac
 
 \subsubsection{Konjunktion}
 Wenn $\alpha\wedge\beta\in\textrm{T}$ dann folgt S'=($(\textrm{T}\cup\lbrace\alpha,\beta\rbrace)\setminus\lbrace\alpha\wedge\beta\rbrace$, F, $\Gamma\cup\lbrace\alpha\wedge\beta\rbrace$, $\Pi$, $\Theta$, $\Psi$).\\
-Wenn $\alpha\wedge\beta\in\textrm{F}$ dann folgt S$_{1}$'=($\textrm{T}\setminus\lbrace\alpha\wedge\beta\rbrace$, $\textrm{F}\cup\lbrace\alpha\rbrace$, $\Gamma$, $\Pi\cup\lbrace\alpha\wedge\beta\rbrace$, $\Theta$, $\Psi$) und S$_{2}$'=($\textrm{T}\setminus\lbrace\alpha\wedge\beta\rbrace$, $\textrm{F}\cup\lbrace\beta\rbrace$, $\Gamma$, $\Pi\cup\lbrace\alpha\wedge\beta\rbrace$, $\Theta$, $\Psi$).
+Wenn $\alpha\wedge\beta\in\textrm{F}$ dann folgt S$_{1}$'=(T, $(\textrm{F}\cup\lbrace\alpha\rbrace)\setminus\lbrace\alpha\wedge\beta\rbrace$, $\Gamma$, $\Pi\cup\lbrace\alpha\wedge\beta\rbrace$, $\Theta$, $\Psi$) und S$_{2}$'=(T, $(\textrm{F}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\wedge\beta\rbrace$, $\Gamma$, $\Pi\cup\lbrace\alpha\wedge\beta\rbrace$, $\Theta$, $\Psi$).
 
 \subsubsection{Disjunktion}
 Wenn $\alpha\vee\beta\in\textrm{T}$ dann folgt S$_{1}$'=($(\textrm{T}\cup\lbrace\alpha\rbrace)\setminus\lbrace\alpha\vee\beta\rbrace$, F, $\Gamma\cup\lbrace\alpha\vee\beta\rbrace$, $\Pi$, $\Theta$, $\Psi$) und S$_{2}$'=($(\textrm{T}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\vee\beta\rbrace$, F, $\Gamma\cup\lbrace\alpha\vee\beta\rbrace$, $\Pi$, $\Theta$, $\Psi$).\\
 Wenn $\alpha\vee\beta\in\textrm{F}$ dann folgt S'=(T, $(\textrm{F}\cup\lbrace\alpha,\beta\rbrace)\setminus\lbrace\alpha\vee\beta\rbrace$, $\Gamma$, $\Pi\cup\lbrace\alpha\vee\beta\rbrace$, $\Theta$, $\Psi$).
 
 \subsubsection{Implikation}
-Wenn $\alpha\rightarrow\beta\in\textrm{T}$ dann folgt S$_{1}$'=($(\textrm{T}\cup\lbrace\alpha\rbrace)\setminus\lbrace\alpha\rightarrow\beta\rbrace$, F, $\Gamma\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Pi$, $\Theta$, $\Psi$) und S$_{2}$'=($\textrm{T}\setminus\lbrace\alpha\rightarrow\beta\rbrace$, $\textrm{F}\cup\lbrace\beta\rbrace$, $\Gamma\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Pi$, $\Theta$, $\Psi$).\\
+Wenn $\alpha\rightarrow\beta\in\textrm{T}$ dann folgt S$_{1}$'=($\textrm{T}\setminus\lbrace\alpha\rightarrow\beta\rbrace$, $\textrm{F}\cup\lbrace\alpha\rbrace$, $\Gamma\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Pi$, $\Theta$, $\Psi$) und S$_{2}$'=($(\textrm{T}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\rightarrow\beta\rbrace$, F, $\Gamma\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Pi$, $\Theta$, $\Psi$).\\
 Wenn $\alpha\rightarrow\beta\in\textrm{F}$ dann folgt S'=($\textrm{T}\cup\lbrace\alpha\rbrace$, $(\textrm{F}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\rightarrow\beta\rbrace$, $\Gamma$, $\Pi\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Theta$, $\Psi$).
 
 \subsubsection{Äquivalenz}
@@ -76,9 +76,9 @@ def visited_And(self, a: And):
 		self.add_to(true_exprs, a.rhs)
 \end{lstlisting}
 
-Die Methoden ``create\_copy'' und ``add\_to'' Abstrahieren das erstellen eines neuen TableauProver Objekts und das hinzufügen einer Formel zu einer Menge im Sequent. Da das entfernen der Formel aus der Menge T oder F sowie das hinzufügen zur Menge $\Gamma$ oder $\Pi$ bei jeder Ableitung nötig ist, wird dies bereits vor dem Aufruf der ``visit''-Methode ausgeführt. Bei Verzweigungen wird die Formel in der ``create\_copy''-Methode aus dem neuen Sequent entfernt.
+Die Methoden ``create\_copy'' und ``add\_to'' Abstrahieren das erstellen eines neuen TableauProver Objekts und das hinzufügen einer Formel zu einer Menge im Sequent. Da das entfernen der Formel aus der Menge T oder F sowie das hinzufügen zur Menge $\Gamma$ oder $\Pi$ bei jedem Ableitungsschritt nötig ist, wird dies bereits vor dem Aufruf der ``visit''-Methode ausgeführt. Bei Verzweigungen wird die Formel in der ``create\_copy''-Methode aus dem neuen Sequent entfernt.
 
-\subsubsection{\label{sec:heuristiken}Heuristik}
+\subsubsection{\label{sec:heuristiken}Heuristiken}
 Um die Effizienz des Beweisers zu erhöhen, also die Anzahl der benötigten Ableitungsschritte zu minimieren, erfolgt die Wahl der als nächstes Abzuleitenden Formel nach einigen Heuristiken. Für die klassische Aussagenlogik ist diese nur die nicht-Verzweigung der Ableitung. Dadurch wird z.B. eine Konjunktion auf der Wahr-Seite abgeleitet bevor eine Disjunktion auf der Wahr-Seite abgeleitet wird. Implementiert wird diese Heuristik durch Vergabe von Prioritäten für die einzelnen Operatoren, während der automatischen Ableitung, werden die Formeln nach dieser Priorität sortiert und dann Abgeleitet. Die Prioritäten der Formeln für Wahr- und Falsch-Seite sind in \autoref{tbl:ableitungs_prios_junktoren_pl} dargestellt.
 
 \begin{table}[h]
@@ -106,16 +106,16 @@ Mit dieser Heuristik werden Formeln mit niedrigerer Priorität bevorzugt.
 \subsection{Prädikatenlogik 1. Ordnung}
 Für die Prädikatenlogik 1. Ordnung muss der Sequent erweitert werden zu (T, F, $\Gamma$, $\Pi$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, C, $\Omega$). Die neu eingeführten Mengen haben folgende Bedeutung:
 \begin{description}
-\item \textbf{$\Sigma$}: Menge von Tupeln ($\alpha$, $\sigma$). Wobei $\alpha$ ein bereits abgeleiteter Quantor auf der Wahr-Seite ist, der mehrfach abgearbeitet werden kann und $\sigma$ die Menge die auf den Quantor bereits angewendet wurden.
+\item \textbf{$\Sigma$}: Menge von Tupeln ($\alpha$, $\sigma$). Wobei $\alpha$ ein bereits abgeleiteter Quantor auf der Wahr-Seite ist, der mehrfach abgearbeitet werden kann und $\sigma$ die Menge der Konstanten/Funktionen die auf den Quantor bereits angewendet wurden.
 
-\item \textbf{$\Phi$}: Menge von Tupeln ($\alpha$, $\sigma$). Wobei $\alpha$ ein bereits abgeleiteter Quantor auf der Falsch-Seite ist, der mehrfach abgearbeitet werden kann und $\sigma$ die Menge die auf den Quantor bereits angewendet wurden.
+\item \textbf{$\Phi$}: Menge von Tupeln ($\alpha$, $\sigma$). Wobei $\alpha$ ein bereits abgeleiteter Quantor auf der Falsch-Seite ist, der mehrfach abgearbeitet werden kann und $\sigma$ die Menge der Konstanten/Funktionen die auf den Quantor bereits angewendet wurden.
 
 \item \textbf{C}: Die Menge der eingeführten Konstanten. (Das Diskursuniversum)
 
 \item \textbf{$\Omega$}: Die Menge der eingeführten Funktionen.
 \end{description}
 
-Im Gegensatz zur Aussagenlogik, wird bei der Prädikatenlogik 1. Ordnung abgeleitet bis gilt $\exists\alpha(\alpha\in\Theta\wedge\alpha\in\Psi)\vee\neg\exists\alpha(\alpha\in\textrm{T})\wedge\neg\exists\alpha(\alpha\in\textrm{F})\wedge\forall\textrm{c}(\textrm{c}\in\textrm{C}\rightarrow\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Sigma\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Phi\wedge\textrm{c}\notin\sigma))$. Diese Regel gilt nur, wenn keine mehrstelligen Funktionen in $\Omega$ enthalten sind. Existiert eine solche Funktion und ein Allquantor auf der Wahr- bzw. ein Existenzquantor auf der Falsch-Seite, muss jede Verschachtelung der Funktion betrachtet werden. Z.B. mit der einstelligen Funktion f und dem Diskursuniversum \{A\}, muss eine quantifizierte Variable sowohl durch A als auch durch f(A), f(f(A)), f(f(..f(A)..)) ersetzt werden, was keine Terminierung des Beweisverfahrens (wenn keine Kontradiktion gefunden wird) mehr zulässt.
+Im Gegensatz zur Aussagenlogik, wird bei der Prädikatenlogik 1. Ordnung abgeleitet bis gilt $\exists\alpha(\alpha\in\Theta\wedge\alpha\in\Psi)\vee\neg\exists\alpha(\alpha\in\textrm{F}\vee\alpha\in\textrm{T})\wedge\forall\textrm{c}(\textrm{c}\in\textrm{C}\rightarrow\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Sigma\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Phi\wedge\textrm{c}\notin\sigma))$. Diese Regel gilt nur, wenn keine mehrstelligen Funktionen in $\Omega$ enthalten sind. Existiert eine solche Funktion und ein Allquantor auf der Wahr- bzw. ein Existenzquantor auf der Falsch-Seite, muss jede Verschachtelung der Funktion betrachtet werden. Z.B. mit der einstelligen Funktion f und dem Diskursuniversum \{A\}, muss eine quantifizierte Variable sowohl durch A als auch durch f(A), f(f(A)), f(f(..f(A)..)) ersetzt werden, was keine Terminierung des Beweisverfahrens (wenn keine Kontradiktion gefunden wird) mehr zulässt.
 
 Die Regeln der Operatoren bleiben für die Prädikatenlogik 1. Ordnung die selben, wobei die Mengen $\Sigma,\Phi$,C und $\Omega$ jeweils unberührt bleiben. Für die zusätzlichen Quantoren, müssen die Ableitungsregeln neu definiert werden. Zur Definition werden zwei Hilfsfunktionen ``applied'' und ``permute'' benötigt. applied(x, $\tau$, $\Lambda$) ist wahr gdw. gilt $\exists(\alpha,\sigma)((\alpha,\sigma)\in\Lambda\wedge\alpha\equiv\tau\wedge\textrm{x}\in\sigma)$. permute(C, $\Omega$) gibt alle möglichen Verschachtelungen der Konstanten mit den Funktionen zurück.
 
@@ -124,7 +124,7 @@ Wenn $\forall\textrm{x}$ $\alpha\in\textrm{T}$ und $\exists\textrm{t}(\textrm{t}
 
 Wenn $\forall\textrm{x}$ $\alpha\in\textrm{T}$ und $\neg\exists\textrm{t}(\textrm{t}\in\textrm{C})$ dann folgt S'=($(\textrm{T}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace)\setminus\lbrace\forall\textrm{x}$ $\alpha\rbrace$, F, $\Gamma\cup\lbrace\forall\textrm{x}$ $\alpha\rbrace$, $\Pi$, $\Theta$, $\Psi$, $\Sigma\cup\lbrace(\forall\textrm{x}$ $\alpha,\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace$, $\Phi$, $\lbrace\textrm{t}\rbrace$, $\Omega$).
 
-Wenn $\forall\textrm{x}$ $\alpha\in\Sigma$ dann folgt S'=($(\textrm{T}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\forall\textrm{x}$ $\alpha, \Sigma)\rbrace)\setminus\lbrace\forall\textrm{x}$ $\alpha\rbrace$, F, $\Gamma$, $\Pi$, $\Theta$, $\Psi$, $\lbrace(\beta,\sigma)|\forall(\beta,\sigma)((\beta,\sigma)\in\Sigma\wedge\beta \not\equiv \forall\textrm{x}$ $\alpha)\rbrace\cup\lbrace(\forall\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, $\Phi$, C, $\Omega$).
+Wenn $(\forall\textrm{x}$ $\alpha, \sigma)\in\Sigma$ dann folgt S'=($\textrm{T}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\forall\textrm{x}$ $\alpha, \Sigma)\rbrace$, F, $\Gamma$, $\Pi$, $\Theta$, $\Psi$, $(\Sigma\setminus\lbrace(\forall\textrm{x}$ $\alpha, \sigma)\rbrace)\cup\lbrace(\forall\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, $\Phi$, C, $\Omega$).
 
 Wenn $\forall\textrm{x}$ $\alpha\in\textrm{F}$ und k eine Konstante die nicht in C vorhanden, dann folgt S'=(T, $\textrm{F}\cup\lbrace\alpha[k/x]\rbrace$, $\Gamma$, $\Pi\cup\lbrace\forall\textrm{x}$ $\alpha\rbrace$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, $\textrm{C}\cup\lbrace\textrm{k}\rbrace$, $\Omega$).
 
@@ -135,7 +135,7 @@ Wenn $\exists\textrm{x}$ $\alpha\in\textrm{F}$ und $\exists\textrm{t}(\textrm{t}
 
 Wenn $\exists\textrm{x}$ $\alpha\in\textrm{F}$ und $\neg\exists\textrm{t}(\textrm{t}\in\textrm{C})$ dann folgt S'=(T, $(\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace)\setminus\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Gamma$, $\Pi\cup\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Theta$, $\Psi$, $\Sigma$, $\Phi\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace$, $\lbrace\textrm{t}\rbrace$, $\Omega$).
 
-Wenn $\exists\textrm{x}$ $\alpha\in\Phi$ dann folgt S'=(T, $(\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\exists\textrm{x}$ $\alpha, \Phi)\rbrace)\setminus\lbrace\forall\textrm{x}$ $\alpha\rbrace$, $\Gamma$, $\Pi$, $\Theta$, $\Psi$, $\Sigma$, $\lbrace(\beta,\sigma)|\forall(\beta,\sigma)((\beta,\sigma)\in\Phi\wedge\beta \not\equiv \exists\textrm{x}$ $\alpha)\rbrace\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, C, $\Omega$).
+Wenn $(\exists\textrm{x}$ $\alpha, \sigma)\in\Phi$ dann folgt S'=(T, $\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\exists\textrm{x}$ $\alpha, \Phi))\rbrace$, $\Gamma$, $\Pi$, $\Theta$, $\Psi$, $\Sigma$, $(\Phi\setminus\lbrace(\exists\textrm{x}$ $\alpha, \sigma)\rbrace)\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, C, $\Omega$).
 
 \subsubsection{Umsetzung}
 Wie bereits in \autoref{fig:class_diag_tableau_prover} angedeutet, werden die Ableitungsregeln für die Prädikatenlogik 1. Ordnung durch eine Subklasse der für die Aussagenlogik zuständigen Klasse angewandt. Diese implementiert dabei Funktionen zur Ableitung der Quantoren und überschreibt die Methode die bestimmt, wann das Beweisverfahren Terminiert. Eine Besonderheit stellt dabei die oben eingeführte ``permute''-Funktion dar, diese kann nicht direkt implementiert werden da diese eine unendlich große Menge erzeugt. Deshalb erzeugt diese die verschachtelten Funktionen nur bis zu einer Tiefe n=0, ist das Beweisverfahren an einem Punkt bei dem es Terminieren würde, wird n inkrementiert. Um alle möglichen Kombinationen zu erzeugen, wird ein Algorithmus zur Umwandelung von Zahlen in ein anderes Zahlensystem in etwas abgewandelter Form verwendet. Die Basis des Zahlensystems ist dabei |C| wobei die Zeichen die Elemente von C sind. Im ersten Schritt wird in diesem Zahlensystem von 0 bis |C|$^{\textbf{k}}$ gezählt und die ``Ziffern'' der Menge Z hinzugefügt, wobei k ein Parameter ist der angibt wie viele Zeichen permutiert werden sollen. Der erste Schritt wird für jede Funktion f mit Kardinalität k ausgeführt. Im nächsten Schritt wird das selbe mit einem Zahlensystem $\textrm{C}=\textrm{C}\cup\textrm{Z}$ durchgeführt. Dies wird n mal wiederholt.
@@ -189,9 +189,123 @@ In Intuitionistischer Aussagenlogik wird abgeleitet bis gilt $\exists\alpha(\alp
 
 Zu den Regeln der einzelnen Operatoren kommt jeweils eine Regel für Formeln in der definitiv Falsch Menge hinzu.
 
+\subsubsection{Atomare Aussage}
+Wenn $\alpha\in\textrm{T}$ dann folgt S'=($\textrm{T}\setminus\lbrace\alpha\rbrace$, F, CF, $\Gamma\cup\lbrace\alpha\rbrace$, $\Pi$, $\Lambda$, $\Theta\cup\lbrace\alpha\rbrace$, $\Psi$, Z, I).\\
+Wenn $\alpha\in\textrm{F}$ dann folgt S'=(T, $\textrm{F}\setminus\lbrace\alpha\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\alpha\rbrace$, $\Lambda$, $\Theta$, $\Psi\cup\lbrace\alpha\rbrace$, Z, I).\\
+Wenn $\alpha\in\textrm{CF}$ dann folgt S'=(T, F, $\textrm{CF}\setminus\lbrace\alpha\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\alpha\rbrace$, $\Theta$, $\Psi$, $\textrm{Z}\cup\lbrace\alpha\rbrace$, I).
+
+\subsubsection{Negation}
+Wenn $\neg\alpha\in\textrm{T}$ dann folgt S'=($\textrm{T}\setminus\lbrace\neg\alpha\rbrace$, F, $\textrm{CF}\cup\lbrace\alpha\rbrace$, $\Gamma\cup\lbrace\neg\alpha\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $\neg\alpha\in\textrm{F}$ dann folgt S'=($\textrm{T}\cup\lbrace\alpha\rbrace$, $\lbrace\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\neg\alpha\rbrace$, $\Lambda$, $\Theta$, $\Psi$, Z, I).
+Wenn $\neg\alpha\in\textrm{CF}$ dann folgt S'=($\textrm{T}\cup\lbrace\alpha\rbrace$, $\lbrace\rbrace$, $\textrm{CF}\setminus\lbrace\neg\alpha\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\neg\alpha\rbrace$, $\Theta$, $\Psi$, Z, I).
+
+\subsubsection{Konjunktion}
+Wenn $\alpha\wedge\beta\in\textrm{T}$ dann folgt S'=($(\textrm{T}\cup\lbrace\alpha,\beta\rbrace)\setminus\lbrace\alpha\wedge\beta\rbrace$, F, CF, $\Gamma\cup\lbrace\alpha\wedge\beta\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $\alpha\wedge\beta\in\textrm{F}$ dann folgt S$_{1}$'=(T, $(\textrm{F}\cup\lbrace\alpha\rbrace)\setminus\lbrace\alpha\wedge\beta\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\alpha\wedge\beta\rbrace$, $\Lambda$, $\Theta$, $\Psi$, Z, I) und S$_{2}$'=(T, $(\textrm{F}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\wedge\beta\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\alpha\wedge\beta\rbrace$, $\Lambda$, $\Theta$, $\Psi$, Z, I). \\
+Wenn $\alpha\wedge\beta\in\textrm{CF}$ dann folgt S$_{1}$'=(T, F, $(\textrm{CF}\cup\lbrace\alpha\rbrace)\setminus\lbrace\alpha\wedge\beta\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\alpha\wedge\beta\rbrace$, $\Theta$, $\Psi$, Z, I) und S$_{2}$'=(T, F, $(\textrm{CF}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\wedge\beta\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\alpha\wedge\beta\rbrace$, $\Theta$, $\Psi$, Z, I).
+
+\subsubsection{Disjunktion}
+Wenn $\alpha\vee\beta\in\textrm{T}$ dann folgt S$_{1}$'=($(\textrm{T}\cup\lbrace\alpha\rbrace)\setminus\lbrace\alpha\vee\beta\rbrace$, F, CF, $\Gamma\cup\lbrace\alpha\vee\beta\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I) und S$_{2}$'=($(\textrm{T}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\vee\beta\rbrace$, F, CF, $\Gamma\cup\lbrace\alpha\vee\beta\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $\alpha\vee\beta\in\textrm{F}$ dann folgt S'=(T, $(\textrm{F}\cup\lbrace\alpha,\beta\rbrace)\setminus\lbrace\alpha\vee\beta\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\alpha\vee\beta\rbrace$, $\Lambda$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $\alpha\vee\beta\in\textrm{CF}$ dann folgt S'=(T, F, $(\textrm{CF}\cup\lbrace\alpha,\beta\rbrace)\setminus\lbrace\alpha\vee\beta\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\alpha\vee\beta\rbrace$, $\Theta$, $\Psi$, Z, I).
+
+\subsubsection{Implikation}
+Wenn $\alpha\rightarrow\beta\in\textrm{T}$ dann folgt S$_{1}$'=($\textrm{T}\setminus\lbrace\alpha\rightarrow\beta\rbrace$, $\textrm{F}\cup\lbrace\alpha\rbrace$, CF, $\Gamma\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, $\textrm{I}\cup\lbrace(\alpha\rightarrow\beta, 1)\rbrace$) und S$_{2}$'=($(\textrm{T}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\rightarrow\beta\rbrace$, F, CF, $\Gamma\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $\alpha\rightarrow\beta\in\textrm{F}$ dann folgt S'=($\textrm{T}\cup\lbrace\alpha\rbrace$, $\lbrace\beta\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Lambda$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $\alpha\rightarrow\beta\in\textrm{CF}$ dann folgt S'=($\textrm{T}\cup\lbrace\alpha\rbrace$, $\lbrace\beta\rbrace$, $\textrm{CF}\setminus\lbrace\alpha\rightarrow\beta\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $(\alpha\rightarrow\beta, k)\in\textrm{I}$ dann folgt S$_{1}$'=(T, $\textrm{F}\cup\lbrace\alpha\rbrace$, CF, $\Gamma\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, $(\textrm{I}\setminus\lbrace(\alpha\rightarrow\beta, k)\rbrace)\cup\lbrace(\alpha\rightarrow\beta, k+1)\rbrace$) und S$_{2}$'=($(\textrm{T}\cup\lbrace\beta\rbrace)\setminus\lbrace\alpha\rightarrow\beta\rbrace$, F, CF, $\Gamma\cup\lbrace\alpha\rightarrow\beta\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I).
+
+\subsubsection{Äquivalenz}
+Wenn $\alpha\leftrightarrow\beta\in\textrm{T}$ dann folgt S'=($(\textrm{T}\cup\lbrace\alpha\rightarrow\beta\wedge\beta\rightarrow\alpha\rbrace)\setminus\lbrace\alpha\leftrightarrow\beta\rbrace$, F, CF, $\Gamma\cup\lbrace\alpha\leftrightarrow\beta\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $\alpha\leftrightarrow\beta\in\textrm{F}$ dann folgt S'=(T, $(\textrm{F}\cup\lbrace\alpha\rightarrow\beta\wedge\beta\rightarrow\alpha\rbrace)\setminus\lbrace\alpha\leftrightarrow\beta\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\alpha\leftrightarrow\beta\rbrace$, $\Lambda$, $\Theta$, $\Psi$, Z, I).\\
+Wenn $\alpha\leftrightarrow\beta\in\textrm{CF}$ dann folgt S'=(T, F, $(\textrm{CF}\cup\lbrace\alpha\rightarrow\beta\wedge\beta\rightarrow\alpha\rbrace)\setminus\lbrace\alpha\leftrightarrow\beta\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\alpha\leftrightarrow\beta\rbrace$, $\Theta$, $\Psi$, Z, I).
+
+\subsubsection{Heuristiken}
+Zusätzlich zu den bereits zuvor definierten Heuristiken, kann in der intuitionistischen Logik eine Heuristik zur Ableitung von Implikationen in I eingeführt werden. Diese werden erst abgeleitet, wenn keine anderen Formeln mehr abzuleiten sind. Dann gilt, die nächste abzuleitende Implikation, ist die, die mit der kleinsten Zahl im Tupel in I steht.
 
 
+\subsection{Intuitionistische Prädikatenlogik 1. Ordnung}
+Zur Berechnung von Intuitionistischer Prädikatenlogik 1. Ordnung, wird der Sequent der Intuitionistischen Aussagenlogik um weitere Mengen erweitert. Es werden die bereits für die klassische Prädikatenlogik 1. Ordnung eingeführten Mengen für mehrfach ableitbare Quantifizierungen und 2 Mengen für mehrfach ableitbare Quantifizierungen aus der Menge der definitiv Falschen Aussagen eingeführt. Es ergibt sich ein 16-Tupel (T, F, CF, $\Gamma$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, $\Sigma$, $\Phi$, K, U, I, C, $\Omega$). Die zusätzlichen Mengen haben folgende Bedeutung:
 
+\begin{description}
+\item \textbf{K}: Menge von Tupeln $(\alpha, \sigma)$. Wobei $\alpha$ ein bereits abgeleiteter Existenzquantor in der Menge der definitiv Falschen Aussagen ist und $\sigma$ die Menge der Konstanten/Funktionen die bereits auf den Quantor angewendet wurden.
+
+\item \textbf{U}: Menge von Tupeln $(\alpha, \textrm{k})$. Wobei $\alpha$ ein bereits abgeleiteter Allquantor in der Menge der definitiv Falschen Aussagen ist der bereits k mal abgeleitet wurde.
+\end{description}
+
+In Intuitionistischer Prädikatenlogik 1. Ordnung wird abgeleitet bis gilt $\exists\alpha(\alpha\in\Theta\wedge(\alpha\in\Psi\vee\alpha\in\textrm{Z}))\vee\neg\exists\alpha(\alpha\in\textrm{T}\vee\alpha\in\textrm{F}\vee\alpha\in\textrm{CF}\vee\alpha\in\textrm{I}\vee\alpha\in\textrm{U})\wedge\forall\textrm{c}(\textrm{c}\in\textrm{C}\rightarrow\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Sigma\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Phi\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\textrm{K}\wedge\textrm{c}\notin\sigma))$. Wie auch in der klassischen Prädikatenlogik 1. Ordnung, gilt diese Aussage nur, wenn es keine mehrstelligen Funktionen in $\Omega$ vorhanden sind, da ansonsten unendlich Tiefe Verschachtelungen auf mehrfach ableitbare Quantoren angewandt werden müssen.
+
+Die Ableitungsregeln der Quantoren sind die folgt definiert.
+\subsubsection{Allquantor}
+Wenn $\forall\textrm{x}$ $\alpha\in\textrm{T}$ und $\exists\textrm{t}(\textrm{t}\in\textrm{C})$ dann folgt S'=($(\textrm{T}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega))\rbrace)\setminus\lbrace\forall\textrm{x}$ $\alpha\rbrace$, F, CF, $\Gamma\cup\lbrace\forall\textrm{x}$ $\alpha\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, $\Sigma\cup\lbrace(\forall\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega))\rbrace$, $\Phi$, K, U, I, C, $\Omega$).
+
+Wenn $\forall\textrm{x}$ $\alpha\in\textrm{T}$ und $\neg\exists\textrm{t}(\textrm{t}\in\textrm{C})$ dann folgt S'=($(\textrm{T}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace)\setminus\lbrace\forall\textrm{x}$ $\alpha\rbrace$, F, CF, $\Gamma\cup\lbrace\forall\textrm{x}$ $\alpha\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, $\Sigma\cup\lbrace(\forall\textrm{x}$ $\alpha,\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace$, $\Phi$, K, U, I, $\lbrace\textrm{t}\rbrace$, $\Omega$).
+
+Wenn $(\forall\textrm{x}$ $\alpha, \sigma)\in\Sigma$ dann folgt S'=($\textrm{T}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\forall\textrm{x}$ $\alpha, \Sigma)\rbrace$, F, CF, $\Gamma$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, $(\Sigma\setminus\lbrace(\forall\textrm{x}$ $\alpha, \sigma)\rbrace)\cup\lbrace(\forall\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, $\Phi$, K, U, I, C, $\Omega$).
+
+Wenn $\forall\textrm{x}$ $\alpha\in\textrm{F}$ und k eine Konstante die nicht in C vorhanden, dann folgt S'=(T, $\lbrace\alpha[k/x]\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\forall\textrm{x}$ $\alpha\rbrace$, $\Lambda$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, K, U, I, $\textrm{C}\cup\lbrace\textrm{k}\rbrace$, $\Omega$).
+
+Wenn $\forall\textrm{x}$ $\alpha\in\textrm{CF}$ und k eine Konstante die nicht in C vorhanden, dann folgt S'=(T, $\lbrace\alpha[k/x]\rbrace$, CF, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\forall\textrm{x}$ $\alpha\rbrace$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, K, $\textrm{U}\cup\lbrace(\forall\textrm{x}$ $\alpha, 1)\rbrace$, I, $\textrm{C}\cup\lbrace\textrm{k}\rbrace$, $\Omega$).
+
+Wenn $(\forall\textrm{x}$ $\alpha, i)\in\textrm{U}$ und k eine Konstante die nicht in C vorhanden, dann folgt S'=(T, $\lbrace\alpha[k/x]\rbrace$, CF, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\forall\textrm{x}$ $\alpha\rbrace$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, K, $(\textrm{U}\setminus\lbrace(\forall\textrm{x}$ $\alpha, i)\rbrace)\cup\lbrace(\forall\textrm{x}$ $\alpha, i+1)\rbrace$, I, $\textrm{C}\cup\lbrace\textrm{k}\rbrace$, $\Omega$).
+
+\subsubsection{Existenzquantor}
+Wenn $\exists\textrm{x}$ $\alpha\in\textrm{T}$ und k eine Konstante die nicht in C vorhanden, dann folgt S'=($\textrm{T}\cup\lbrace\alpha[k/x]\rbrace$, F, CF, $\Gamma\cup\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, K, U, I, $\textrm{C}\cup\lbrace\textrm{k}\rbrace$, $\Omega$).
+
+Wenn $\exists\textrm{x}$ $\alpha\in\textrm{F}$ und $\exists\textrm{t}(\textrm{t}\in\textrm{C})$ dann folgt S'=(T, $(\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega))\rbrace)\setminus\lbrace\exists\textrm{x}$ $\alpha\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Lambda$, $\Theta$, $\Psi$, $\Sigma$, $\Phi\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega))\rbrace$, K, U, I, C, $\Omega$).
+
+Wenn $\exists\textrm{x}$ $\alpha\in\textrm{F}$ und $\neg\exists\textrm{t}(\textrm{t}\in\textrm{C})$ dann folgt S'=(T, $(\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace)\setminus\lbrace\exists\textrm{x}$ $\alpha\rbrace$, CF, $\Gamma$, $\Pi\cup\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Lambda$, $\Theta$, $\Psi$, $\Sigma$, $\Phi\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace$, K, U, I, $\lbrace\textrm{t}\rbrace$, $\Omega$).
+
+Wenn $(\exists\textrm{x}$ $\alpha, \sigma)\in\Phi$ dann folgt S'=(T, $\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\exists\textrm{x}$ $\alpha, \Phi))\rbrace$, CF, $\Gamma$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, $\Sigma$, $(\Phi\setminus\lbrace(\exists\textrm{x}$ $\alpha, \sigma)\rbrace)\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, K, U, I, C, $\Omega$).
+
+Wenn $\exists\textrm{x}$ $\alpha\in\textrm{CF}$ und $\exists\textrm{t}(\textrm{t}\in\textrm{C})$ dann folgt S'=(T, $\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega))\rbrace)$, $\textrm{CF}\setminus\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, $\textrm{K}\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega))\rbrace$, U, I, C, $\Omega$).
+
+Wenn $\exists\textrm{x}$ $\alpha\in\textrm{CF}$ und $\neg\exists\textrm{t}(\textrm{t}\in\textrm{C})$ dann folgt S'=(T, $\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace$, $\textrm{CF}\setminus\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Gamma$, $\Pi$, $\Lambda\cup\lbrace\exists\textrm{x}$ $\alpha\rbrace$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, $\textrm{K}\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(}\lbrace\textrm{t}\rbrace,\Omega))\rbrace$, U, I, $\lbrace\textrm{t}\rbrace$, $\Omega$).
+
+Wenn $(\exists\textrm{x}$ $\alpha, \sigma)\in\textrm{K}$ dann folgt S'=(T, $\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\exists\textrm{x}$ $\alpha, \textrm{K}))\rbrace$, CF, $\Gamma$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, $\Sigma$, $\Phi$, $(\textrm{K}\setminus\lbrace(\exists\textrm{x}$ $\alpha, \sigma)\rbrace)\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, U, I, C, $\Omega$).
+
+
+\subsection{Ablauf}
+Wie bereits während der Definition der Sequenten angedeutet, läuft die Berechnung im Automatik Modus in 3 Schritten ab:
+
+\begin{enumerate}
+\item Prüfe ob Bedingung zur Weiterberechnung erfüllt (siehe Definition). Falls nicht, fertig.
+
+\item Wähle unter Verwendung der definierten Heuristiken die nächste abzuleitende Formel $\alpha$ aus.
+
+\item Leite $\alpha$ mit den definierten Regeln ab, indem die ``visit''-Funktion auf $\alpha$ aufgerufen wird, welche die entsprechende Ableitungsregel-Funktion auf dem Tableau aufruft. Weiter bei 1.
+\end{enumerate}
+
+Das Tableau wird zur Berechnung in einer Baumstruktur gehalten. Das heißt, wird eine verzweigende Ableitung berechnet, werden neue Tableaux erzeugt und als Kindknoten gehalten. Wenn ein Tableau Kindknoten hält, wird der Ablauf auf jedem Kindknoten ausgeführt.
+
+\section{Manueller Modus}
+Der Grundgedanke hinter dem Manuellen Modus ist folgender: Im manuellen Modus, wird die Wahl der als nächstes abzuleitenden Formel dem User überlassen. Wählt dieser eine Formel durch betätigen des entsprechenden Buttons aus, wird ein temporäres Tableau welches nur die ausgewählte Formel hält erzeugt. Für diese wird anschließend die Ableitungsregel ausgeführt. Die vom User eingegebene Ableitung, wird dann mit der im temporären Tableau verglichen. Sind die beiden identisch, wird das temporäre Tableau mit dem ``Haup''-Tableau gemerged und die nächste Formel kann vom User ausgewählt werden.
+
+Der beschriebene Ablauf ist in einigen Fällen noch nicht ganz optimal, weshalb dieser noch erweitert werden muss.
+
+\subsection{Permutation des Syntaxbaums}
+In \autoref{sec:parsen}, wurde beschrieben, dass die Formeln als Syntaxbaum im Speicher gehalten werden. Nun ist es so, dass eine Formel wie ``$\alpha\wedge\beta\wedge\gamma$'' zu unterschiedlichen Syntaxbäumen umgewandelt werden kann. Für das Beispiel währen dies $\wedge(\wedge(\alpha,\beta),\gamma)$ und $\wedge(\alpha,\wedge(\beta,\gamma))$. Je nach Aufbau des Syntaxbaums, wird beim oben definierten automatischen Ableiten ein anderer Zwischenschritt erzeugt (siehe \autoref{fig:example_different_syntax_trees}).
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{images/example_different_syntax_trees.png}
+\caption{Zwischenschritte nach Ableiten des Syntaxbaums $\wedge(\wedge(\textrm{a},\textrm{b}),\textrm{c})$ (links) und $\wedge(\textrm{a},\wedge(\textrm{b},\textrm{c}))$ (rechts)}
+\label{fig:example_different_syntax_trees}
+\end{center}
+\end{figure}
+
+Würde der manuelle Modus rein wie oben beschrieben umgesetzt, müsste der User die Ableitung immer entsprechend der Form des Syntaxbaums (welche diesem nicht zugänglich ist) eingeben. Deshalb wird der Syntaxbaum vor erzeugen des temporären Tableau permutiert und für jede der Permutationen ein zusätzliches Tableau erzeugt, welches mit der vom User eingegebenen Ableitung abgeglichen wird. Da die Reihenfolge (von links nach rechts) beibehalten und nur die Hierarchie im Baum permutiert werden soll, können rekursiv Einfachrotationen auf dem Baum ausgeführt werden und die dabei entstehenden Bäume zur Permutationsliste hinzugefügt werden. Eine Rotation darf nur angewendet werden, wenn der Kindknoten die selbe Operation wie der aktuelle Knoten repräsentiert und diese keine Implikation ist. Die Einfachrotation ist in \autoref{fig:example_tree_rotation} dargestellt.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{images/example_tree_rotation.png}
+\caption{Einfachrotation Rechts am Wurzelknoten eines Syntaxbaums (Links vor Rotation, Rechts danach)}
+\label{fig:example_tree_rotation}
+\end{center}
+\end{figure}
+
+\subsection{Konstanten und Funktionen}
+Beim erzeugen des temporären Tableau, müssen natürlich die aktuell eingeführten Konstanten und Funktionen mit übergeben werden. Ein Problem stellt allerdings die Berechnung von mehrstelligen Funktionen dar. Hierfür muss eine praktische Grenze der Verschachtelungstiefe gefunden werden. Im Automatik Modus, wird diese Schrittweise erhöht bis eine Kontradiktion gefunden wird oder die maximale Schrittzahl überschritten wurde. Im manuellen Modus ist dies nicht Praktikabel, da der Nutzer ansonsten bei Eingabe einer falschen Ableitung warten müsste bis diese Grenze erreicht ist, was einige Zeit in Anspruch nimmt. Aus diesem Grund, wird vor erzeugen des temporären Tableau, die eingegebene Ableitung untersucht. Bei dieser wird die Verschachtelungstiefe der Funktionen gezählt und die maximale als Obergrenze für das temporäre Tableau verwendet.
 
 
 
