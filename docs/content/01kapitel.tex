@@ -180,7 +180,7 @@ Betrachten wir beispielsweise die Aussage $\alpha\wedge\beta$ auf der Wahr-Seite
 
 Damit kann schon der Großteil der Ableitungsregeln hergeleitet werden. Eine Ausnahme stellt die Situation dar, bei der beispielsweise $\alpha\vee\beta$ auf der Wahr-Seite steht. Es gibt mehrere Möglichkeiten mit denen diese Aussage wahr wird. Es kann entweder $\alpha$ oder $\beta$ wahr sein. In einer solchen Situation wird das Tableau in zwei voneinander unabhängige Pfade aufgeteilt. In beiden müssen alle noch nicht abgearbeiteten Aussagen unabhängig voneinander abgearbeitet werden. Siehe Abbildung \ref{tableaux_prop_or}. Die übrigen Ableitungsregeln sind in Abbildung \ref{tableaux_class_prop_all_rules} dargestellt.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_Or_Prop_Logic.png}
 \caption{Tableaux der Aussage $\alpha\vee\beta$ in klassischer Logik. Links: Tableau vor Anwendung der Ableitungsregel. Rechts: Tableau nach Anwendung der Ableitungsregel.}
@@ -188,7 +188,7 @@ Damit kann schon der Großteil der Ableitungsregeln hergeleitet werden. Eine Aus
 \end{center}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{images/Tableaux_Rules_Prop_Logic.png}
 \caption{Tableaux Ableitungsregeln in klassischer Aussagenlogik}
@@ -199,16 +199,16 @@ Damit kann schon der Großteil der Ableitungsregeln hergeleitet werden. Eine Aus
 Die Ableitungsregeln werden wiederholt, bis keine weiteren nicht abgearbeiteten Aussagen (nicht unterstrichen) übrig sind, oder eine Aussage sowohl auf der Wahr- als auch auf der Falsch-Seite steht. In einem solchen Fall, gilt der Pfad als geschlossen und wird mit einem doppelten Unterstrich unter der Trennlinie zwischen den beiden Seiten dargestellt. Sind alle Pfade eines Tableau geschlossen, wurde damit bewiesen, dass es keine Möglichkeit gibt, mit der die ursprüngliche Aussage den gegebenen Wahrheitswert annimmt. Will man also eine Aussage auf Tautologie untersuchen, beginnt man mit der Aussage auf der Falsch-Seite, schließt das Tableau wurde durch Kontradiktion bewiesen, dass die Aussage eine Tautologie ist. Bleibt ein Pfad offen, so wurde ein Gegenbeispiel durch die Atome auf der Wahr- und Falsch-Seite konstruiert \cite{KB14}.
 
 \subsection{\label{tableaux_classic_pred}Klassische Prädikatenlogik 1. Ordnung}
-Da die klassische Prädikatenlogik 1. Ordnung eine Erweiterung der Aussagenlogik ist, können die in Abbildung \ref{tableaux_classic_pred} vorgestellten Regeln dafür ebenfalls angewandt werden. Die Quantoren benötigen allerdings eine gesonderte Betrachtung. Zur einfacheren Behandlung dieser Regeln führen wir folgende Notation ein ``$\alpha$[t/x]''. Diese besagt, jedes Vorkommnis der Variable x in $\alpha$ wird durch t ersetzt \cite{DGHP99}.
+Da die klassische Prädikatenlogik 1. Ordnung eine Erweiterung der Aussagenlogik ist, können die in \autoref{tableaux_class_prop_all_rules} vorgestellten Regeln dafür ebenfalls angewandt werden. Die Quantoren benötigen allerdings eine gesonderte Betrachtung. Zur einfacheren Behandlung dieser Regeln führen wir folgende Notation ein ``$\alpha$[t/x]''. Diese besagt, jedes Vorkommnis der Variable x in $\alpha$ wird durch t ersetzt \cite{DGHP99}.
 
 Ähnlich den Regeln der Ableitungsregeln für die klassische Aussagenlogik, können nun die Regeln für die klassische Prädikatenlogik hergeleitet werden. Die Aussage $\forall$x $\alpha$ auf der Wahr-Seite, bedeutet für jedes beliebige Objekt t im Diskursuniversum muss die Aussage $\alpha$[t/x] wahr sein um die Aussage zu erfüllen. Beim Abarbeiten der Aussage wird also $\alpha$[t/x] für jede Konstante t des Diskursuniversums auf die Wahr-Seite geschrieben. Ist das Diskursuniversum zum Zeitpunkt der Abarbeitung leer, muss dem Diskursuniversum eine neue Konstante hinzugefügt werden. Die Aussage darf allerdings nie als vollständig abgearbeitet betrachtet werden. Wird das Diskursuniversum während der weiteren Abarbeitung um eine neue Konstante k erweitert, kann die Aussage erneut mit $\alpha$[k/x] abgearbeitet werden \cite{KB14}. Die nicht vollständige Abarbeitung wird hier mit einer gestrichelten Unterstreichung der Aussage dargestellt.
 
-Steht die Aussage $\forall$x $\alpha$ auf der Falsch-Seite, bedeutet dies, es gibt ein Objekt t, für das die Aussage $\alpha$[t/x] falsch wird. Deshalb wird bei der Abarbeitung von $\forall$x $\alpha$ auf der Falsch-Seite, eine neue Konstante k eingeführt und $\alpha$[k/x] auf die Falsch-Seite geschrieben. Die Abarbeitungsregeln für den Allquantor und Existenzquantor werden in Abbildung \ref{tableaux_class_pred_all_rules} dargestellt.
+Steht die Aussage $\forall$x $\alpha$ auf der Falsch-Seite, bedeutet dies, es gibt ein Objekt t, für das die Aussage $\alpha$[t/x] falsch wird. Deshalb wird bei der Abarbeitung von $\forall$x $\alpha$ auf der Falsch-Seite, eine neue Konstante k eingeführt und $\alpha$[k/x] auf die Falsch-Seite geschrieben. Die Abarbeitungsregeln für den Allquantor und Existenzquantor werden in \autoref{tableaux_class_pred_all_rules} dargestellt.
 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.7]{images/Tableaux_Rules_Pred_Logic.png}
-\caption{Tableaux Ableitungsregeln in klassischer Aussagenlogik}
+\caption{Tableaux Ableitungsregeln in klassischer Prädikatenlogik}
 \label{tableaux_class_pred_all_rules}
 \end{center}
 \end{figure}
@@ -238,7 +238,7 @@ Es wird also erforderlich, die Aussagenmengen auf den beiden Seiten nach einer A
 \end{center}
 \end{figure}
 
-Bei Betrachtung der Negation, wird wie bereits in Abschnitt \ref{intu_non_proof_sentence} erwähnt wurde, die Negation $\neg\alpha$ durch $\alpha\rightarrow\perp$ substituiert. Bei einem automatischen Beweisverfahren, wird die Negation auf eine etwas andere Weise behandelt, wie in Abschnitt \textbf{EINFÜGEN!!!!} erarbeitet wird. Die sonstigen Ableitungsregeln sind allerdings Äquivalent zur klassischen Logik.
+Bei Betrachtung der Negation, wird wie bereits in Abschnitt \ref{intu_non_proof_sentence} erwähnt wurde, die Negation $\neg\alpha$ durch $\alpha\rightarrow\perp$ substituiert. Bei einem automatischen Beweisverfahren, wird die Negation auf eine etwas andere Weise behandelt, wie in \autoref{sec:intuitionistic_rules} erarbeitet wird. Die sonstigen Ableitungsregeln sind allerdings Äquivalent zur klassischen Logik.
 
 \subsection{Nichtklassische Prädikatenlogik}
 Die nichtklassische Prädikatenlogik, welche Äquivalent zur klassischen Logik eine Erweiterung der nichtklassischen Aussagenlogik ist, bedarf einer Behandlung der Quantoren. Für den Allquantor in der Prämissenmenge bzw. den Existenzquantor in der Folgerungsmenge, gelten die Äquivalenten Regeln zur klassischen Prädikatenlogik. Aus $\forall$x $\alpha$ wird für jede Konstante t $\alpha$[x/t] zur Prämissenmenge hinzugefügt \cite{DGHP99}.
@@ -256,5 +256,22 @@ Die Ableitungsregeln sind in Abbildung \ref{tableaux_quantors_ifopl} dargestellt
 \label{tableaux_quantors_ifopl}
 \end{center}
 \end{figure}
+
+\subsection{\label{sec:intuitionistic_rules}Tableaux mit definitv falschen Aussagen}
+Neben der bereits vorgestellten möglichkeit, die Negation als $\alpha\rightarrow\perp$ zu behandeln, in das Beweisverfahren eine Menge von ``definitv Falschen'' Aussagen F$_{c}$ einzuführen. In diesem System, gibt es also 3 Aussagenmengen. Die Menge der Wahren (T), der Falschen (F) und der definitiv Falschen (F$_{c}$) Aussagen. In dem hier vorgestellten Beweiser, wird eine Aussage $\alpha\in\textrm{F}_{c}$, als [$\alpha$] auf der rechten Seite des Tableau dargestellt notiert. Eine Negation $\neg\alpha\in\textrm{T}_{c}$ wird dann beim ableiten der Menge F$_{c}$ hinzugefügt. \cite{DGHP99}
+
+Die Einführung der F$_{c}$-Menge erfordert es zudem, neue Ableitungsregeln für Aussagen in der Menge einzuführen. Die Ableitungsregeln sind in \autoref{tableau_rules_intuitionistic_logic} dargestellt. Zudem sind Ableitungen die bisher die Falsch-Menge ``geleert'' haben, neu zu definieren. Bei diesen wird nur die Menge der Falschen Aussagen neu definiert, die Menge der definitiv falschen Aussagen bleibt unberührt.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{images/tableau_rules_intuitionistic_logic_2.png}
+\caption{Ableitungsregeln in nichtklassischer Logik mit definitiv falsch Menge}
+\label{tableau_rules_intuitionistic_logic}
+\end{center}
+\end{figure}
+
+Mit Ausnahme der Äquivalenz, werden Ableitungsregeln die in \autoref{tableau_rules_intuitionistic_logic} nicht dargestellt sind, nach den selben Regeln wie in der klassischen Logik abgeleitet. Die Äquivalenz $\alpha\leftrightarrow\beta$ wird jeweils durch $\alpha\rightarrow\beta\wedge\beta\rightarrow\alpha$ substituiert.
+
+
 
 

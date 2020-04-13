@@ -4,7 +4,7 @@
 In diesem Kapitel geht es um die Implementierung des automatischen und manuellen Modus.
 
 \section{Automatik Modus}
-Im Modus Automatik wird die im folgenden Beschriebene Logik ausgeführt. Der Beweiser arbeitet dabei mit sogenannten Sequenten. Ein Sequent enthält alle Formeln auf der Wahr bzw. auf der Falsch Seite sowie einige weitere Mengen. Durch die Behandlung des aktuellen Tableau als Sequent, können die Ableitungsschritte mit Mengenoperationen umgesetzt werden. Die Definition der Sequenten, sowie der Mengenoperationen für die Ableitungsschritte in den unterschiedlichen Logiken, folgt über die nächsten Seiten.
+Im Modus Automatik wird die im folgenden beschriebene Logik ausgeführt. Der Beweiser arbeitet dabei mit sogenannten Sequenten. Ein Sequent enthält alle Formeln auf der Wahr bzw. auf der Falsch Seite, sowie einige weitere Mengen. Durch die Behandlung des aktuellen Tableau als Sequent, können die Ableitungsschritte mit Mengenoperationen umgesetzt werden. Die Definition der Sequenten, sowie der Mengenoperationen für die Ableitungsschritte in den unterschiedlichen Logiken, folgt über die nächsten Seiten.
 
 \subsection{Aussagenlogik}
 Für die Aussagenlogik ist der Sequent S ein Sechstupel (T, F, $\Gamma$, $\Pi$, $\Theta$, $\Psi$). Die Mengen sind wie folgt definiert:
@@ -59,7 +59,7 @@ Die definierten Ableitungsregeln, werden mit dem Visitor Pattern abgearbeitet. \
 \end{center}
 \end{figure}
 
-Dabei wird im Automatik Modus nach einigen in \autoref{sec:heuristiken} beschriebenen Heurisitken eine Formel in T oder F ausgewählt und darauf die Methode ``visit'' aufgerufen. Die Methode ``visit'' ist mit einem Python-Decorator definiert, und ruft auf dem übergebenden Objekt die Methode ``visited\_[Operator-Name]'' auf. Die entsprechende Operator-Methode führt dann die Ableitung am in einem Dictionary gespeicherten Sequent aus. Beispielhaft ist die Implementierung der Ableitungsregel für die Konjunktion in \autoref{lst:impl_res_conjunction} dargestellt.
+Dabei wird im Automatik Modus nach einigen in \autoref{sec:heuristiken} beschriebenen Heurisitken eine Formel in T oder F ausgewählt und darauf die Methode ``visit'' aufgerufen. Die Methode ``visit'' ist mit einem Python-Decorator definiert, und ruft auf dem übergebenden Objekt die Methode ``visited\_[Operator-Name]'' auf. Die entsprechende Operator-Methode führt dann die Ableitung am, in einem Dictionary gespeicherten Sequent aus. Beispielhaft ist die Implementierung der Ableitungsregel für die Konjunktion in \autoref{lst:impl_res_conjunction} dargestellt.
 
 \begin{lstlisting}[caption={Implementierung der Ableitungsregel für die Konjunktion in Aussagenlogik},label=lst:impl_res_conjunction]
 def visited_And(self, a: And):
@@ -76,10 +76,10 @@ def visited_And(self, a: And):
 		self.add_to(true_exprs, a.rhs)
 \end{lstlisting}
 
-Die Methoden ``create\_copy'' und ``add\_to'' Abstrahieren das erstellen eines neuen TableauProver Objekts und das hinzufügen einer Formel zu einer Menge im Sequent. Da das entfernen der Formel aus der Menge T oder F sowie das hinzufügen zur Menge $\Gamma$ oder $\Pi$ bei jedem Ableitungsschritt nötig ist, wird dies bereits vor dem Aufruf der ``visit''-Methode ausgeführt. Bei Verzweigungen wird die Formel in der ``create\_copy''-Methode aus dem neuen Sequent entfernt.
+Die Methoden ``create\_copy'' und ``add\_to'' abstrahieren das Erstellen eines neuen TableauProver Objekts und das Hinzufügen einer Formel zu einer Menge im Sequent. Da das Entfernen der Formel aus der Menge T oder F sowie das Hinzufügen zur Menge $\Gamma$ oder $\Pi$ bei jedem Ableitungsschritt nötig ist, wird dies bereits vor dem Aufruf der ``visit''-Methode ausgeführt. Bei Verzweigungen wird die Formel in der ``create\_copy''-Methode aus dem neuen Sequent entfernt.
 
 \subsubsection{\label{sec:heuristiken}Heuristiken}
-Um die Effizienz des Beweisers zu erhöhen, also die Anzahl der benötigten Ableitungsschritte zu minimieren, erfolgt die Wahl der als nächstes Abzuleitenden Formel nach einigen Heuristiken. Für die klassische Aussagenlogik ist diese nur die nicht-Verzweigung der Ableitung. Dadurch wird z.B. eine Konjunktion auf der Wahr-Seite abgeleitet bevor eine Disjunktion auf der Wahr-Seite abgeleitet wird. Implementiert wird diese Heuristik durch Vergabe von Prioritäten für die einzelnen Operatoren, während der automatischen Ableitung, werden die Formeln nach dieser Priorität sortiert und dann Abgeleitet. Die Prioritäten der Formeln für Wahr- und Falsch-Seite sind in \autoref{tbl:ableitungs_prios_junktoren_pl} dargestellt.
+Um die Effizienz des Beweisers zu erhöhen, also die Anzahl der benötigten Ableitungsschritte zu minimieren, erfolgt die Wahl der als nächstes abzuleitenden Formel nach einigen Heuristiken. Für die klassische Aussagenlogik ist diese nur die nicht-Verzweigung der Ableitung. Dadurch wird z.B. eine Konjunktion auf der Wahr-Seite abgeleitet, bevor eine Disjunktion auf der Wahr-Seite abgeleitet wird. Implementiert wird diese Heuristik durch Vergabe von Prioritäten für die einzelnen Operatoren, während der automatischen Ableitung, werden die Formeln nach dieser Priorität sortiert und dann abgeleitet. Die Prioritäten der Formeln für Wahr- und Falsch-Seite sind in \autoref{tbl:ableitungs_prios_junktoren_pl} dargestellt.
 
 \begin{table}[h]
 \begin{center}
@@ -138,14 +138,14 @@ Wenn $\exists\textrm{x}$ $\alpha\in\textrm{F}$ und $\neg\exists\textrm{t}(\textr
 Wenn $(\exists\textrm{x}$ $\alpha, \sigma)\in\Phi$ dann folgt S'=(T, $\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\exists\textrm{x}$ $\alpha, \Phi))\rbrace$, $\Gamma$, $\Pi$, $\Theta$, $\Psi$, $\Sigma$, $(\Phi\setminus\lbrace(\exists\textrm{x}$ $\alpha, \sigma)\rbrace)\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, C, $\Omega$).
 
 \subsubsection{Umsetzung}
-Wie bereits in \autoref{fig:class_diag_tableau_prover} angedeutet, werden die Ableitungsregeln für die Prädikatenlogik 1. Ordnung durch eine Subklasse der für die Aussagenlogik zuständigen Klasse angewandt. Diese implementiert dabei Funktionen zur Ableitung der Quantoren und überschreibt die Methode die bestimmt, wann das Beweisverfahren Terminiert. Eine Besonderheit stellt dabei die oben eingeführte ``permute''-Funktion dar, diese kann nicht direkt implementiert werden da diese eine unendlich große Menge erzeugt. Deshalb erzeugt diese die verschachtelten Funktionen nur bis zu einer Tiefe n=0, ist das Beweisverfahren an einem Punkt bei dem es Terminieren würde, wird n inkrementiert. Um alle möglichen Kombinationen zu erzeugen, wird ein Algorithmus zur Umwandelung von Zahlen in ein anderes Zahlensystem in etwas abgewandelter Form verwendet. Die Basis des Zahlensystems ist dabei |C| wobei die Zeichen die Elemente von C sind. Im ersten Schritt wird in diesem Zahlensystem von 0 bis |C|$^{\textbf{k}}$ gezählt und die ``Ziffern'' der Menge Z hinzugefügt, wobei k ein Parameter ist der angibt wie viele Zeichen permutiert werden sollen. Der erste Schritt wird für jede Funktion f mit Kardinalität k ausgeführt. Im nächsten Schritt wird das selbe mit einem Zahlensystem $\textrm{C}=\textrm{C}\cup\textrm{Z}$ durchgeführt. Dies wird n mal wiederholt.
+Wie bereits in \autoref{fig:class_diag_tableau_prover} angedeutet, werden die Ableitungsregeln für die Prädikatenlogik 1. Ordnung durch eine Subklasse der für die Aussagenlogik zuständigen Klasse angewandt. Diese implementiert dabei Funktionen zur Ableitung der Quantoren und überschreibt die Methode, die bestimmt, wann das Beweisverfahren terminiert. Eine Besonderheit stellt dabei die oben eingeführte ``permute''-Funktion dar, diese kann nicht direkt implementiert werden, da diese eine unendlich große Menge erzeugt. Deshalb erzeugt diese die verschachtelten Funktionen nur bis zu einer Tiefe n=0, ist das Beweisverfahren an einem Punkt, bei dem es terminieren würde, wird n inkrementiert. Um alle möglichen Kombinationen zu erzeugen, wird ein Algorithmus zur Umwandelung von Zahlen in ein anderes Zahlensystem in etwas abgewandelter Form verwendet. Die Basis des Zahlensystems ist dabei |C| wobei die Zeichen die Elemente von C sind. Im ersten Schritt wird in diesem Zahlensystem von 0 bis |C|$^{\textbf{k}}$ gezählt und die ``Ziffern'' der Menge Z hinzugefügt, wobei k ein Parameter ist, der angibt wie viele Zeichen permutiert werden sollen. Der erste Schritt wird für jede Funktion f mit Kardinalität k ausgeführt. Im nächsten Schritt wird das Selbe mit einem Zahlensystem $\textrm{C}=\textrm{C}\cup\textrm{Z}$ durchgeführt. Dies wird n mal wiederholt.
 
 Zur einfacheren Implementierung der ``applied''-Funktion sowie der Ableitungsregeln, werden die Mengen $\Sigma$ und $\Phi$ als Python-Dictionaries mit der Formel als Index implementiert.
 
 \subsubsection{Heuristiken}
 Zusätzlich zur in \autoref{sec:heuristiken} vorgestellten Heuristik, die im folgenden erweitert wird, kann für die Prädikatenlogik 1. Ordnung zusätzlich eine weitere Heuristik angewendet werden.
 
-Die Heuristik die Bestimmt, ob die Ableitung eines Operators verzweigt, muss um die Quantoren erweitert werden. Die neuen Prioritäten sind in \autoref{tbl:ableitungs_prios_junktoren_fopl} dargestellt. Um zu verhindern, dass der Beweiser immer neue Ableitungen von mehrfach Ableitbaren Formeln erzeugt, bekommen die eine niedrige Priorität. Das einführen neuer Konstanten ist dem zu bevorzugen weshalb dies eine höhere Priorität bekommt.
+Die Heuristik die bestimmt, ob die Ableitung eines Operators verzweigt, muss um die Quantoren erweitert werden. Die neuen Prioritäten sind in \autoref{tbl:ableitungs_prios_junktoren_fopl} dargestellt. Um zu verhindern, dass der Beweiser immer neue Ableitungen von mehrfach ableitbaren Formeln erzeugt, bekommen die eine niedrige Priorität. Das Einführen neuer Konstanten ist dem zu bevorzugen weshalb dies eine höhere Priorität bekommt.
 
 \begin{table}[h]
 \begin{center}
@@ -169,18 +169,18 @@ Existenzquantor & 2 & 3 \\
 \caption{\label{tbl:ableitungs_prios_junktoren_fopl}Erste Heuristik für Prädikatenlogik 1. Ordnung}
 \end{table}
 
-Die zweite Heuristik die für Prädikatenlogik 1. Ordnung angewandt werden kann, ist zur Auswahl eines abzuleitenden mehrfach ableitbaren Quantors. Die Heuristik Ordnet jeder Formel eine Priorität zu, die der Kardinalität der Menge der bereits auf den Quantor angewandten Konstanten und Funktionen entspricht. Quantoren mit niedrigerer Kardinalität werden gegenüber solchen mit höherer bevorzugt da diese seltener abgeleitet wurden.
+Die zweite Heuristik die für Prädikatenlogik 1. Ordnung angewandt werden kann, ist zur Auswahl eines abzuleitenden mehrfach ableitbaren Quantors. Die Heuristik ordnet jeder Formel eine Priorität zu, die der Kardinalität der Menge der bereits auf den Quantor angewandten Konstanten und Funktionen entspricht. Quantoren mit niedrigerer Kardinalität werden gegenüber solchen mit höherer bevorzugt da diese seltener abgeleitet wurden.
 
 
 \subsection{Intuitionistische Aussagenlogik}
-Wie in \textbf{EINFÜGEN!!!!} eingeführt, wird zur Berechnung von Intuitionistischer Aussagenlogik eine Menge von definitiv Falschen Aussagen eingeführt. Diese werden in dem Seqent ebenfalls durch zusätzliche Mengen repräsentiert. Zudem wird eine Menge für die mehrfach Ableitbaren Implikationen benötigt. Der Sequent S ist also ein Zehntupel (T, F, CF, $\Gamma$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I). Die zusätzlichen Mengen haben folgende Bedeutung:
+Wie in \autoref{sec:intuitionistic_rules} eingeführt, wird zur Berechnung von Intuitionistischer Aussagenlogik eine Menge von definitiv falschen Aussagen eingeführt. Diese werden in dem Seqent ebenfalls durch zusätzliche Mengen repräsentiert. Zudem wird eine Menge für die mehrfach Ableitbaren Implikationen benötigt. Der Sequent S ist also ein Zehntupel (T, F, CF, $\Gamma$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, I). Die zusätzlichen Mengen haben folgende Bedeutung:
 
 \begin{description}
-\item \textbf{CF}: Die Menge der definitiv Falschen Aussagen.
+\item \textbf{CF}: Die Menge der definitiv falschen Aussagen.
 
-\item \textbf{$\Lambda$}: Die Menge der Formeln die in vorherigen Ableitungsschritten abgeleitet wurden und dabei in der Menge der definitiv Falschen Aussagen war.
+\item \textbf{$\Lambda$}: Die Menge der Formeln die in vorherigen Ableitungsschritten abgeleitet wurden und dabei in der Menge der definitiv falschen Aussagen war.
 
-\item \textbf{Z}: Die Menge der definitiv Falschen atomaren Aussagen.
+\item \textbf{Z}: Die Menge der definitiv falschen atomaren Aussagen.
 
 \item \textbf{I}: Menge von Tupeln ($\alpha$, k). Wobei $\alpha$ eine bereits k-Mal abgeleitete Implikation auf der Wahr-Seite ist.
 \end{description}
@@ -225,15 +225,15 @@ Zusätzlich zu den bereits zuvor definierten Heuristiken, kann in der intuitioni
 
 
 \subsection{Intuitionistische Prädikatenlogik 1. Ordnung}
-Zur Berechnung von Intuitionistischer Prädikatenlogik 1. Ordnung, wird der Sequent der Intuitionistischen Aussagenlogik um weitere Mengen erweitert. Es werden die bereits für die klassische Prädikatenlogik 1. Ordnung eingeführten Mengen für mehrfach ableitbare Quantifizierungen und 2 Mengen für mehrfach ableitbare Quantifizierungen aus der Menge der definitiv Falschen Aussagen eingeführt. Es ergibt sich ein 16-Tupel (T, F, CF, $\Gamma$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, $\Sigma$, $\Phi$, K, U, I, C, $\Omega$). Die zusätzlichen Mengen haben folgende Bedeutung:
+Zur Berechnung von intuitionistischer Prädikatenlogik 1. Ordnung, wird der Sequent der intuitionistischen Aussagenlogik um weitere Mengen erweitert. Es werden die bereits für die klassische Prädikatenlogik 1. Ordnung eingeführten Mengen für mehrfach ableitbare Quantifizierungen und 2 Mengen für mehrfach ableitbare Quantifizierungen aus der Menge der definitiv Falschen Aussagen eingeführt. Es ergibt sich ein 16-Tupel (T, F, CF, $\Gamma$, $\Pi$, $\Lambda$, $\Theta$, $\Psi$, Z, $\Sigma$, $\Phi$, K, U, I, C, $\Omega$). Die zusätzlichen Mengen haben folgende Bedeutung:
 
 \begin{description}
-\item \textbf{K}: Menge von Tupeln $(\alpha, \sigma)$. Wobei $\alpha$ ein bereits abgeleiteter Existenzquantor in der Menge der definitiv Falschen Aussagen ist und $\sigma$ die Menge der Konstanten/Funktionen die bereits auf den Quantor angewendet wurden.
+\item \textbf{K}: Menge von Tupeln $(\alpha, \sigma)$. Wobei $\alpha$ ein bereits abgeleiteter Existenzquantor in der Menge der definitiv falschen Aussagen ist und $\sigma$ die Menge der Konstanten/Funktionen die bereits auf den Quantor angewendet wurden.
 
-\item \textbf{U}: Menge von Tupeln $(\alpha, \textrm{k})$. Wobei $\alpha$ ein bereits abgeleiteter Allquantor in der Menge der definitiv Falschen Aussagen ist der bereits k mal abgeleitet wurde.
+\item \textbf{U}: Menge von Tupeln $(\alpha, \textrm{k})$. Wobei $\alpha$ ein bereits abgeleiteter Allquantor in der Menge der definitiv falschen Aussagen ist der bereits k mal abgeleitet wurde.
 \end{description}
 
-In Intuitionistischer Prädikatenlogik 1. Ordnung wird abgeleitet bis gilt $\exists\alpha(\alpha\in\Theta\wedge(\alpha\in\Psi\vee\alpha\in\textrm{Z}))\vee\neg\exists\alpha(\alpha\in\textrm{T}\vee\alpha\in\textrm{F}\vee\alpha\in\textrm{CF}\vee\alpha\in\textrm{I}\vee\alpha\in\textrm{U})\wedge\forall\textrm{c}(\textrm{c}\in\textrm{C}\rightarrow\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Sigma\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Phi\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\textrm{K}\wedge\textrm{c}\notin\sigma))$. Wie auch in der klassischen Prädikatenlogik 1. Ordnung, gilt diese Aussage nur, wenn es keine mehrstelligen Funktionen in $\Omega$ vorhanden sind, da ansonsten unendlich Tiefe Verschachtelungen auf mehrfach ableitbare Quantoren angewandt werden müssen.
+In Intuitionistischer Prädikatenlogik 1. Ordnung wird abgeleitet bis gilt $\exists\alpha(\alpha\in\Theta\wedge(\alpha\in\Psi\vee\alpha\in\textrm{Z}))\vee\neg\exists\alpha(\alpha\in\textrm{T}\vee\alpha\in\textrm{F}\vee\alpha\in\textrm{CF}\vee\alpha\in\textrm{I}\vee\alpha\in\textrm{U})\wedge\forall\textrm{c}(\textrm{c}\in\textrm{C}\rightarrow\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Sigma\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Phi\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\textrm{K}\wedge\textrm{c}\notin\sigma))$. Wie auch in der klassischen Prädikatenlogik 1. Ordnung, gilt diese Aussage nur, wenn es keine mehrstelligen Funktionen in $\Omega$ vorhanden sind, da ansonsten unendlich tiefe Verschachtelungen auf mehrfach ableitbare Quantoren angewandt werden müssen.
 
 Die Ableitungsregeln der Quantoren sind die folgt definiert.
 \subsubsection{Allquantor}
@@ -269,7 +269,7 @@ Wenn $(\exists\textrm{x}$ $\alpha, \sigma)\in\textrm{K}$ dann folgt S'=(T, $\tex
 Wie bereits während der Definition der Sequenten angedeutet, läuft die Berechnung im Automatik Modus in 3 Schritten ab:
 
 \begin{enumerate}
-\item Prüfe ob Bedingung zur Weiterberechnung erfüllt (siehe Definition). Falls nicht, fertig.
+\item Prüfe, ob Bedingung zur Weiterberechnung erfüllt (siehe Definition). Falls nicht, fertig.
 
 \item Wähle unter Verwendung der definierten Heuristiken die nächste abzuleitende Formel $\alpha$ aus.
 
@@ -284,7 +284,7 @@ Der Grundgedanke hinter dem Manuellen Modus ist folgender: Im manuellen Modus, w
 Der beschriebene Ablauf ist in einigen Fällen noch nicht ganz optimal, weshalb dieser noch erweitert werden muss.
 
 \subsection{Permutation des Syntaxbaums}
-In \autoref{sec:parsen}, wurde beschrieben, dass die Formeln als Syntaxbaum im Speicher gehalten werden. Nun ist es so, dass eine Formel wie ``$\alpha\wedge\beta\wedge\gamma$'' zu unterschiedlichen Syntaxbäumen umgewandelt werden kann. Für das Beispiel währen dies $\wedge(\wedge(\alpha,\beta),\gamma)$ und $\wedge(\alpha,\wedge(\beta,\gamma))$. Je nach Aufbau des Syntaxbaums, wird beim oben definierten automatischen Ableiten ein anderer Zwischenschritt erzeugt (siehe \autoref{fig:example_different_syntax_trees}).
+In \autoref{sec:parsen}, wurde beschrieben, dass die Formeln als Syntaxbaum im Speicher gehalten werden. Nun ist es so, dass eine Formel wie ``$\alpha\wedge\beta\wedge\gamma$'' zu unterschiedlichen Syntaxbäumen umgewandelt werden kann. Für das Beispiel wären dies $\wedge(\wedge(\alpha,\beta),\gamma)$ und $\wedge(\alpha,\wedge(\beta,\gamma))$. Je nach Aufbau des Syntaxbaums, wird beim oben definierten automatischen Ableiten ein anderer Zwischenschritt erzeugt (siehe \autoref{fig:example_different_syntax_trees}).
 
 \begin{figure}[H]
 \begin{center}
@@ -294,7 +294,7 @@ In \autoref{sec:parsen}, wurde beschrieben, dass die Formeln als Syntaxbaum im S
 \end{center}
 \end{figure}
 
-Würde der manuelle Modus rein wie oben beschrieben umgesetzt, müsste der User die Ableitung immer entsprechend der Form des Syntaxbaums (welche diesem nicht zugänglich ist) eingeben. Deshalb wird der Syntaxbaum vor erzeugen des temporären Tableau permutiert und für jede der Permutationen ein zusätzliches Tableau erzeugt, welches mit der vom User eingegebenen Ableitung abgeglichen wird. Da die Reihenfolge (von links nach rechts) beibehalten und nur die Hierarchie im Baum permutiert werden soll, können rekursiv Einfachrotationen auf dem Baum ausgeführt werden und die dabei entstehenden Bäume zur Permutationsliste hinzugefügt werden. Eine Rotation darf nur angewendet werden, wenn der Kindknoten die selbe Operation wie der aktuelle Knoten repräsentiert und diese keine Implikation ist. Die Einfachrotation ist in \autoref{fig:example_tree_rotation} dargestellt.
+Würde der manuelle Modus rein wie oben beschrieben umgesetzt, müsste der User die Ableitung immer entsprechend der Form des Syntaxbaums (welche diesem nicht zugänglich ist) eingeben. Deshalb wird der Syntaxbaum vor Erzeugen des temporären Tableau permutiert und für jede der Permutationen ein zusätzliches Tableau erzeugt, welches mit der vom User eingegebenen Ableitung abgeglichen wird. Da die Reihenfolge (von links nach rechts) beibehalten und nur die Hierarchie im Baum permutiert werden soll, können rekursiv Einfachrotationen auf dem Baum ausgeführt werden und die dabei entstehenden Bäume zur Permutationsliste hinzugefügt werden. Eine Rotation darf nur angewendet werden, wenn der Kindknoten die selbe Operation, wie der aktuelle Knoten repräsentiert und diese keine Implikation ist. Die Einfachrotation ist in \autoref{fig:example_tree_rotation} dargestellt.
 
 \begin{figure}[H]
 \begin{center}
@@ -305,7 +305,9 @@ Würde der manuelle Modus rein wie oben beschrieben umgesetzt, müsste der User 
 \end{figure}
 
 \subsection{Konstanten und Funktionen}
-Beim erzeugen des temporären Tableau, müssen natürlich die aktuell eingeführten Konstanten und Funktionen mit übergeben werden. Ein Problem stellt allerdings die Berechnung von mehrstelligen Funktionen dar. Hierfür muss eine praktische Grenze der Verschachtelungstiefe gefunden werden. Im Automatik Modus, wird diese Schrittweise erhöht bis eine Kontradiktion gefunden wird oder die maximale Schrittzahl überschritten wurde. Im manuellen Modus ist dies nicht Praktikabel, da der Nutzer ansonsten bei Eingabe einer falschen Ableitung warten müsste bis diese Grenze erreicht ist, was einige Zeit in Anspruch nimmt. Aus diesem Grund, wird vor erzeugen des temporären Tableau, die eingegebene Ableitung untersucht. Bei dieser wird die Verschachtelungstiefe der Funktionen gezählt und die maximale als Obergrenze für das temporäre Tableau verwendet.
+Beim Erzeugen des temporären Tableau, müssen natürlich die aktuell eingeführten Konstanten und Funktionen mit übergeben werden. Ein Problem stellt allerdings die Berechnung von mehrstelligen Funktionen dar. Hierfür muss eine praktische Grenze der Verschachtelungstiefe gefunden werden. Im Automatik Modus, wird diese Schrittweise erhöht bis eine Kontradiktion gefunden wird oder die maximale Schrittzahl überschritten wurde. Im manuellen Modus ist dies nicht Praktikabel, da der Nutzer ansonsten bei Eingabe einer falschen Ableitung warten müsste, bis diese Grenze erreicht ist, was einige Zeit in Anspruch nimmt. Aus diesem Grund, wird vor Erzeugen des temporären Tableau, die eingegebene Ableitung untersucht. Bei dieser wird die Verschachtelungstiefe der Funktionen gezählt und die Maximale als Obergrenze für das temporäre Tableau verwendet.
+
+In der bisherigen Definition, ist es nötig, jeweils alle Ableitungen die das temporäre Tableau berechnet, manuell aufzuzählen. Es ist aber in den seltensten Fällen nötig alle Permutationen bis zur maximalen Verschachtelungstiefe aufzuzählen. Aus diesem Grund muss für Ableitungen von Quantoren die Bedingung, wann eine Ableitung als korrekt akzeptiert wird gelockert werden. Diese ist in diesem Fall korrekt, sobald mindestens ein Element der Permutationsmenge, dass noch nicht auf den Quantor angewendet wurde vom User aufgelistet wurde. Beim Mergen der Tableaux, werden dann nur die vom User aufgelisteten Elemente beachtet.
 
 
 
