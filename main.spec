@@ -7,7 +7,7 @@ block_cipher = None
 cwd = os.getcwd()
 
 datas = []
-for dir in ['src/view/images/', 'src/view/Help/', 'src/view/Help/images/', 'src/view/Help/images/derivation_rules/']:
+for dir in ['src/res/', 'src/view/images/', 'src/view/Help/', 'src/view/Help/images/', 'src/view/Help/images/derivation_rules/']:
    datas.extend([(dir + f, dir) for f in os.listdir(cwd + '/' + dir) if os.path.isfile(dir + '/' + f)])
 
 a = Analysis(['src\\main.py'],
