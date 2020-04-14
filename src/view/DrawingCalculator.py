@@ -1,4 +1,4 @@
-from src.TableauxBuilder.BaseTableauxBuilder import BaseTableauxBuilder
+from src.TableauxBuilder.BaseTableauxBuilder import BaseTableauxBuilder, established_constants, processed_true_quantor_expressions, processed_false_quantor_expressions, processed_certain_false_allquantor_exprs, processed_certain_false_exquantor_exprs
 
 
 def curry(function, *c_args, **c_kwargs):
@@ -53,13 +53,19 @@ class DrawingCalculator:
     def calc_expr_positions(self, draw_btn_fun):
         child_clears_false = self.get_child_clears_false()
 
-        # a close tableau does not need to draw unprocessed exprs
+        # a closed tableau does not need to draw unprocessed exprs
         not_include_unprocessed = self.closed
         if self.intuitionistic:
+            # show unprocessed expressions only if no child clears false expressions
+            #   if so, they are displayed again under the horizontal line
             not_include_unprocessed = not child_clears_false
-            if len(self.tableau.children) == 0:
-                not_include_unprocessed = not self.manual
+            if not child_clears_false:
+                # when child doesnt clear false expressions unprocessed expressions are
+                # always drawn in manual mode
+                not_include_unprocessed = not self.manual#
         else:
+            # in classical logic unprocessed expressions are only NOT displayed when
+            # the tableau is closed
             not_include_unprocessed = self.closed
         unprocessed_exprs = ([], [], []) if not_include_unprocessed else self.tableau.get_unprocessed_exprs(self.manual)
         atom_exprs = self.tableau.get_atom_exprs()

@@ -47,8 +47,8 @@ class BaseTableauxBuilder:
                 true_exprs: [ex for ex in kwargs.get('true_exprs', []) if not ex.is_atom],
                 false_atoms: [at for at in kwargs.get('false_exprs', []) if at.is_atom],
                 true_atoms: [at for at in kwargs.get('true_exprs', []) if at.is_atom],
-                false_processed: [],
-                true_processed: [],
+                false_processed: kwargs.get('false_processed', []),
+                true_processed: kwargs.get('true_processed', []),
                 certain_falsehood_exprs: kwargs.get('cf_exprs', []),
                 certain_falsehood_atoms: [],
                 certain_falsehood_processed: [],
@@ -319,14 +319,19 @@ class BaseTableauxBuilder:
             self.add_to(side, expr, True)
 
         # merge mutliprocessed exprs
-        for exprs in [processed_true_quantor_expressions, processed_false_quantor_expressions]:
+        for exprs in [processed_true_quantor_expressions, processed_false_quantor_expressions,
+                        processed_certain_false_allquantor_exprs, processed_certain_false_exquantor_exprs,
+                        processed_true_impls]:
             for other in other_sequent[exprs]:
                 if other not in self.sequent[exprs]:
                     self.sequent[exprs][other] = other_sequent[exprs][other]
                 else:
-                    for x in other_sequent[exprs]:
-                        if x not in self.sequent[exprs][other]:
-                            self.sequent[exprs][other].append(x)
+                    if exprs in [processed_certain_false_allquantor_exprs, processed_true_impls]:
+                        self.sequent[exprs][other] += other_sequent[exprs][other]
+                    else:
+                        for x in other_sequent[exprs]:
+                            if x not in self.sequent[exprs][other]:
+                                self.sequent[exprs][other].append(x)
 
     def _add_constants(self, constants):
         # merge constants
