@@ -1,6 +1,6 @@
 import PySide2
 
-from PySide2.QtGui import QPainter, QFontMetrics
+from PySide2.QtGui import QPainter, QFontMetrics, QFontDatabase
 from PySide2.QtCore import QFile, Qt
 from src.builder_factory import LogicType
 
@@ -8,10 +8,12 @@ from src.builder_factory import LogicType
 class CustomPainter(QPainter):
     def __init__(self, widget):
         super().__init__()
-        font_family = 'Yu Gothic UI Semibold'
-        self.btn_font = PySide2.QtGui.QFont(font_family, 10)
-        self.normal_font = PySide2.QtGui.QFont(font_family, 14)
-        self.underlined_font = PySide2.QtGui.QFont(font_family, 14)
+        font_family = 'Yu Gothic UI'
+        font_style = 'Semibold'
+        db = QFontDatabase()
+        self.btn_font = db.font(font_family, font_style, 10)
+        self.normal_font = db.font(font_family, font_style, 14)
+        self.underlined_font = db.font(font_family, font_style, 14)
         self.underlined_font.setUnderline(True)
 
         self.widget = widget
