@@ -1,6 +1,6 @@
 %!TEX root = ../dokumentation.tex
 
-\chapter{Implementierung}
+\chapter{\label{sec:implementierung}Implementierung}
 In diesem Kapitel geht es um die Implementierung des automatischen und manuellen Modus.
 
 \section{Automatik Modus}
@@ -112,10 +112,10 @@ Für die Prädikatenlogik 1. Ordnung muss der Sequent erweitert werden zu (T, F,
 
 \item \textbf{C}: Die Menge der eingeführten Konstanten. (Das Diskursuniversum)
 
-\item \textbf{$\Omega$}: Die Menge der eingeführten Funktionen.
+\item \textbf{$\Omega$}: Die Menge der eingeführten Funktionen, wobei nur ein Name geführt wird und davon Ausgegangen wird, dass das Ergebnis zweier Funktionen gleich ist gdw. alle Eingabeparameter gleich sind. Z.B. für die Aussage P(f(X), Y), wäre die Funktion f Element der Menge $\Omega$.
 \end{description}
 
-Im Gegensatz zur Aussagenlogik, wird bei der Prädikatenlogik 1. Ordnung abgeleitet bis gilt $\exists\alpha(\alpha\in\Theta\wedge\alpha\in\Psi)\vee\neg\exists\alpha(\alpha\in\textrm{F}\vee\alpha\in\textrm{T})\wedge\forall\textrm{c}(\textrm{c}\in\textrm{C}\rightarrow\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Sigma\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Phi\wedge\textrm{c}\notin\sigma))$. Diese Regel gilt nur, wenn keine mehrstelligen Funktionen in $\Omega$ enthalten sind. Existiert eine solche Funktion und ein Allquantor auf der Wahr- bzw. ein Existenzquantor auf der Falsch-Seite, muss jede Verschachtelung der Funktion betrachtet werden. Z.B. mit der einstelligen Funktion f und dem Diskursuniversum \{A\}, muss eine quantifizierte Variable sowohl durch A als auch durch f(A), f(f(A)), f(f(..f(A)..)) ersetzt werden, was keine Terminierung des Beweisverfahrens (wenn keine Kontradiktion gefunden wird) mehr zulässt.
+Im Gegensatz zur Aussagenlogik, wird bei der Prädikatenlogik 1. Ordnung abgeleitet bis gilt $\exists\alpha(\alpha\in\Theta\wedge\alpha\in\Psi)\vee\neg\exists\alpha(\alpha\in\textrm{F}\vee\alpha\in\textrm{T})\wedge\forall\textrm{c}(\textrm{c}\in\textrm{C}\rightarrow\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Sigma\wedge\textrm{c}\notin\sigma)\wedge\neg\exists(\alpha,\sigma)((\alpha,\sigma)\in\Phi\wedge\textrm{c}\notin\sigma))$. Diese Regel gilt nur, wenn keine Funktionen mit einer Stelligkeit >0 in $\Omega$ enthalten sind, also Funktionen der Form f($x_{1},x_{2},...,x_{i}$) mit i$\geq$1. Existiert eine solche Funktion und ein Allquantor auf der Wahr- bzw. ein Existenzquantor auf der Falsch-Seite, muss jede Verschachtelung der Funktion betrachtet werden. Sei z.B. $\Omega=\lbrace\textrm{f}\rbrace$, $\textrm{C}=\lbrace\textrm{A}\rbrace$ und $\forall\textrm{x P(x)}\in\textrm{T}$, dann muss die quantifizierte Variable x sowohl durch A als auch durch f(A), f(f(A)), f(f(..f(A)..)) ersetzt werden, was keine Terminierung des Beweisverfahrens (wenn keine Kontradiktion gefunden wird) mehr zulässt.
 
 Die Regeln der Operatoren bleiben für die Prädikatenlogik 1. Ordnung die selben, wobei die Mengen $\Sigma,\Phi$,C und $\Omega$ jeweils unberührt bleiben. Für die zusätzlichen Quantoren, müssen die Ableitungsregeln neu definiert werden. Zur Definition werden zwei Hilfsfunktionen ``applied'' und ``permute'' benötigt. applied(x, $\tau$, $\Lambda$) ist wahr gdw. gilt $\exists(\alpha,\sigma)((\alpha,\sigma)\in\Lambda\wedge\alpha\equiv\tau\wedge\textrm{x}\in\sigma)$. permute(C, $\Omega$) gibt alle möglichen Verschachtelungen der Konstanten mit den Funktionen zurück.
 
@@ -137,8 +137,29 @@ Wenn $\exists\textrm{x}$ $\alpha\in\textrm{F}$ und $\neg\exists\textrm{t}(\textr
 
 Wenn $(\exists\textrm{x}$ $\alpha, \sigma)\in\Phi$ dann folgt S'=(T, $\textrm{F}\cup\lbrace\alpha[t/x]|\forall\textrm{t}(\textrm{t}\in\textrm{permute(C,}\Omega)\wedge\neg\textrm{applied(t},\exists\textrm{x}$ $\alpha, \Phi))\rbrace$, $\Gamma$, $\Pi$, $\Theta$, $\Psi$, $\Sigma$, $(\Phi\setminus\lbrace(\exists\textrm{x}$ $\alpha, \sigma)\rbrace)\cup\lbrace(\exists\textrm{x}$ $\alpha,\textrm{permute(C,}\Omega)\rbrace$, C, $\Omega$).
 
-\subsubsection{Umsetzung}
-Wie bereits in \autoref{fig:class_diag_tableau_prover} angedeutet, werden die Ableitungsregeln für die Prädikatenlogik 1. Ordnung durch eine Subklasse der für die Aussagenlogik zuständigen Klasse angewandt. Diese implementiert dabei Funktionen zur Ableitung der Quantoren und überschreibt die Methode, die bestimmt, wann das Beweisverfahren terminiert. Eine Besonderheit stellt dabei die oben eingeführte ``permute''-Funktion dar, diese kann nicht direkt implementiert werden, da diese eine unendlich große Menge erzeugt. Deshalb erzeugt diese die verschachtelten Funktionen nur bis zu einer Tiefe n=0, ist das Beweisverfahren an einem Punkt, bei dem es terminieren würde, wird n inkrementiert. Um alle möglichen Kombinationen zu erzeugen, wird ein Algorithmus zur Umwandelung von Zahlen in ein anderes Zahlensystem in etwas abgewandelter Form verwendet. Die Basis des Zahlensystems ist dabei |C| wobei die Zeichen die Elemente von C sind. Im ersten Schritt wird in diesem Zahlensystem von 0 bis |C|$^{\textbf{k}}$ gezählt und die ``Ziffern'' der Menge Z hinzugefügt, wobei k ein Parameter ist, der angibt wie viele Zeichen permutiert werden sollen. Der erste Schritt wird für jede Funktion f mit Kardinalität k ausgeführt. Im nächsten Schritt wird das Selbe mit einem Zahlensystem $\textrm{C}=\textrm{C}\cup\textrm{Z}$ durchgeführt. Dies wird n mal wiederholt.
+\subsubsection{\label{sec:umsetzung_pred_logic}Umsetzung}
+Wie bereits in \autoref{fig:class_diag_tableau_prover} angedeutet, werden die Ableitungsregeln für die Prädikatenlogik 1. Ordnung durch eine Subklasse der für die Aussagenlogik zuständigen Klasse angewandt. Diese implementiert dabei Funktionen zur Ableitung der Quantoren und überschreibt die Methode, die bestimmt, wann das Beweisverfahren terminiert. Eine Besonderheit stellt dabei die oben eingeführte ``permute''-Funktion dar, diese kann nicht direkt implementiert werden, da diese teilweise auf unendlich große Mengen abbildet. Deshalb erzeugt diese die verschachtelten Funktionen nur bis zu einer Verschachtelungstiefe n, ist das Beweisverfahren an einem Punkt, bei dem es terminieren würde (ohne Kontradiktion), wird n inkrementiert.
+
+Um alle möglichen Kombinationen zu erzeugen, wird ein Algorithmus zur Umwandelung von Zahlen in ein anderes Zahlensystem in etwas abgewandelter Form verwendet:
+\begin{description}
+\item \textbf{1.} Setze ZS = C
+\item \textbf{2.} Nehme |ZS| als Basis des Zahlensystems und die Elemente von ZS als dessen Zeichensatz.
+\item \textbf{3.} Für jede Funktion $\textrm{f}\in\Omega$ mit Kardinalität k, zähle in diesem Zahlensystem von 0 bis |ZS|$^{\textbf{k}}$-1. Jede der ``Ziffern'' bildet einen Parametersatz der Funktion f, wobei mit führenden ``Nullen'' (in dem Zahlensystem) aufgefüllt wird, um auf die Länge k zu kommen. Die so erzeugten Funktionen werden der Menge Z hinzugefügt.
+\item \textbf{4.} Setze $\textrm{ZS}=\textrm{ZS}\cup\textrm{Z}$ und wiederhole 2. n mal.
+\item \textbf{5.} Gebe ZS zurück.
+\end{description}
+
+\textbf{Beispiel:} Sei $\textrm{C}=\lbrace\textrm{A,B}\rbrace$, $\Omega=\lbrace\textrm{f}\rbrace$ und n=2 wobei f eine zweistellige Funktion ist:
+\begin{description}
+\item \textbf{1. (1)} $\textrm{ZS}=\lbrace\textrm{A,B}\rbrace$
+\item \textbf{2. (2)} Nehme 2 als Basis des Zahlensystems und $\lbrace\textrm{A,B}\rbrace$ als dessen Zeichensatz.
+\item \textbf{3. (3)} Zähle von 0 bis 2$^{\textbf{2}}$-1=3: A, B, BA, BB $\Rightarrow$ $\textrm{Z}=\lbrace\textrm{f(A,A), f(A,B), f(B,A), f(B,B)}\rbrace$
+\item \textbf{4. (4)} $\textrm{ZS}=\lbrace\textrm{A, B, f(A,A), f(A,B), f(B,A), f(B,B)}\rbrace$
+\item \textbf{5. (2)} Nehme 6 als Basis des Zahlensystems und $\lbrace\textrm{A, B, f(A,A), f(A,B), f(B,A), f(B,B)}\rbrace$ als dessen Zeichensatz.
+\item \textbf{6. (3)} Zähle von 0 bis 6$^{\textbf{2}}$-1=36: A, B, f(A,A), f(A,B), ..., f(B,B)f(B,B) $\Rightarrow$ \\ $\textrm{Z}=\lbrace\textrm{f(A,A), f(A,B), f(A,f(A,A)), f(A,f(A,B)), ..., f(f(B,B),f(B,B))}\rbrace$
+\item \textbf{7. (4)} $\textrm{ZS}=\lbrace\textrm{A, B, f(A,A), f(A,B), f(B,A), f(B,B), f(A,f(A,A)), f(A,f(A,B)), ..., f(f(B,B), f(B,B))}\rbrace$
+\item \textbf{8. (5)} Gebe $\lbrace\textrm{A, B, f(A,A), f(A,B), f(B,A), f(B,B), f(A,f(A,A)), f(A,f(A,B)), ..., f(f(B,B), f(B,B))}\rbrace$ zurück.
+\end{description}
 
 Zur einfacheren Implementierung der ``applied''-Funktion sowie der Ableitungsregeln, werden die Mengen $\Sigma$ und $\Phi$ als Python-Dictionaries mit der Formel als Index implementiert.
 
@@ -305,9 +326,11 @@ Würde der manuelle Modus rein wie oben beschrieben umgesetzt, müsste der User 
 \end{figure}
 
 \subsection{Konstanten und Funktionen}
-Beim Erzeugen des temporären Tableau, müssen natürlich die aktuell eingeführten Konstanten und Funktionen mit übergeben werden. Ein Problem stellt allerdings die Berechnung von mehrstelligen Funktionen dar. Hierfür muss eine praktische Grenze der Verschachtelungstiefe gefunden werden. Im Automatik Modus, wird diese Schrittweise erhöht bis eine Kontradiktion gefunden wird oder die maximale Schrittzahl überschritten wurde. Im manuellen Modus ist dies nicht Praktikabel, da der Nutzer ansonsten bei Eingabe einer falschen Ableitung warten müsste, bis diese Grenze erreicht ist, was einige Zeit in Anspruch nimmt. Aus diesem Grund, wird vor Erzeugen des temporären Tableau, die eingegebene Ableitung untersucht. Bei dieser wird die Verschachtelungstiefe der Funktionen gezählt und die Maximale als Obergrenze für das temporäre Tableau verwendet.
+Wie bereits in \autoref{sec:umsetzung_pred_logic} erwähnt, wird zur Implementierung der permute-Funktion die erzeugte Verschachtelungstiefe schrittweise erhöht. Würde dieser Ansatz im manuellen Modus naiv weiterverfolgt, müsste jede Verschachtelungstiefe erzeugt und geprüft werden ob der Benutzer alle dieser Formeln eingegeben hat. Dies hat zwei Probleme zur Folge. Erstens, steigt die Menge der erzeugten Formeln mit der Tiefe exponentiell wobei meist nur einige wenige dieser Formeln Zielführend für den Beweis sind. Zu erzwingen, dass der Benutzer alle erzeugten Formeln auflistet ist deshalb nicht zumutbar. Das zweite Problem entsteht, wenn der Benutzer eine falsche Ableitung eingibt. Ist dies der Fall, würden so lange Formeln erzeugt und verglichen, bis die maximale Anzahl an Ableitungsschritten erreicht wurde. Bis diese erreicht ist, dauert allerdings relativ lange, weshalb dieser Ansatz auch unpraktikabel ist.
 
-In der bisherigen Definition, ist es nötig, jeweils alle Ableitungen die das temporäre Tableau berechnet, manuell aufzuzählen. Es ist aber in den seltensten Fällen nötig alle Permutationen bis zur maximalen Verschachtelungstiefe aufzuzählen. Aus diesem Grund muss für Ableitungen von Quantoren die Bedingung, wann eine Ableitung als korrekt akzeptiert wird gelockert werden. Diese ist in diesem Fall korrekt, sobald mindestens ein Element der Permutationsmenge, dass noch nicht auf den Quantor angewendet wurde vom User aufgelistet wurde. Beim Mergen der Tableaux, werden dann nur die vom User aufgelisteten Elemente beachtet.
+Zur Lösung des ersten Problems, wird die Prüfung auf Korrektheit der Ableitung bei Quantoren gelockert. Diese ist in diesem Fall korrekt, sobald mindestens ein Element der Permutationsmenge, dass noch nicht auf den Quantor angewendet wurde vom User aufgelistet wurde. Beim Mergen der Tableaux, werden dann nur die vom User aufgelisteten Elemente beachtet.
+
+Die Lösung des zweiten Problems ist etwas schwieriger. Hierfür muss eine praktische Obergrenze der Verschachtelungstiefe gefunden werden. Dafür wird vor dem Erzeugen des temporären Tableau, die eingegebene Ableitung untersucht. Es werden die Verschachtelungstiefen der Funktionen gezählt und die Maximale als Obergrenze für das temporäre Tableau verwendet.
 
 
 

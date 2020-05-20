@@ -1,0 +1,21 @@
+%!TEX root = ../dokumentation.tex
+
+\chapter{Fazit}
+Im Rahmen der Studienarbeit, wurde ein graphischer Tableaubeweiser erarbeitet und implementiert. Dieser ist nicht nur zur automatischen Beweisführung für Aussagen in klassischer und nichtklassischer Aussagen- und Prädikatenlogik 1. Ordnung, sondern auch als didaktisches Werkzeug für Studenten verwendbar. Im manuellen Modus können hierfür die einzelnen Schritte manuell ausgeführt werden. Diese werden dabei von dem entwickelten Programm auf Korrektheit geprüft.
+
+In \autoref{sec:parsen} wurde eine Datenstruktur, in der eine logische Aussage im Speicher gehalten werden kann, erarbeitet. Zudem wurde ein Parser, der die Aussage von der Benutzereingabe als Zeichenkette in diese Datenstruktur Umwandelt konzipiert und implementiert. Der Parser wurde dabei mit Hilfe des Open-Source Tools ANTLR, das auf dem LL(*)-Verfahren basiert, erzeugt.
+
+Der automatische Beweis wird dabei, wie in \autoref{sec:implementierung} erarbeitet, mit Hilfe von verschiedenen Heuristiken optimiert, um mit möglichst wenigen Ableitungsschritten zu einem geschlossenen Tableau zu kommen. Neben der Minimierung von Ableitungsschritten, können hierdurch auch mehr Prädikatenlogische Aussagen bewiesen werden. Bei diesen terminiert der Beweiser dennoch nicht immer, weshalb manche Beweise nur im manuellen Modus geführt werden können.
+
+Wie ein Tableau auf möglichst einfache Weise dargestellt werden kann, wurde in \autoref{sec:darstellung_interaktion} behandelt. Es wurde ein Konzept entwickelt, mit dem das Tableau einfach zu navigieren und insbesondere der manuelle Modus intuitiv bedienbar ist. Dieses Konzept wurde dann in der Implementierung des Beweisers umgesetzt.
+
+Abschließend lässt sich sagen, dass das Projekt sehr gut gelungen und ein funktionsfähiger Beweiser erarbeitet und entwickelt wurde. Dieser ist fähig, Tableaux in allen geplanten Logiken zu berechnen und lässt eine manuelle Berechnung dieser zu. 
+
+Eine Weiterentwicklung des Beweisers wäre in unterschiedlichste Richtungen denkbar.
+Eine Möglichkeit wäre es, diesen um weitere Logiken, wie beispielsweise die mehrwertige Logik zu erweitern. Hierfür müsste der bisherige Beweiskern um eine weitere Ableitung der BaseTableauProver Klasse erweitert werden, in dieser müsste dann die Logik zur Berechnung von mehrwertiger Logik implementiert werden.
+
+Verbesserungen am bestehenden Beweiskern wären ebenfalls möglich. So wäre eine Verbesserung, die Berechnungen in Prädikatenlogik durch Skolemisierung zu optimieren. Mit dieser wäre, die im letzten Kapitel vorgestellte ``permute''-Funktion hinfällig und Formeln mit Funktionen könnten deutlich effizienter berechnet werden. Zudem könnten viele Tableaux, die bisher nicht im automatik Modus berechnet werden können, dadurch berechnet werden.
+
+
+
+
